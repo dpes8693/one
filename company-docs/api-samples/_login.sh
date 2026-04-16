@@ -5,7 +5,15 @@ set -e
 
 OPENNEBULA_URL="${OPENNEBULA_URL:-http://10.1.1.79:2616}"
 OPENNEBULA_USER="${OPENNEBULA_USER:-oneadmin}"
-OPENNEBULA_PASS="${OPENNEBULA_PASS:?請先 export OPENNEBULA_PASS=... 或從 ../env/test-pc.md 載入}"
+# 自動載入學校環境的 env 檔（gitignore，含密碼）
+SCRIPT_DIR_LOGIN="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_TEST_PC="$SCRIPT_DIR_LOGIN/../env/test-pc.md"
+if [ -f "$ENV_TEST_PC" ]; then
+  # 從 markdown 抓 OPENNEBULA_* 設定
+  eval "$(grep -E '^OPENNEBULA_' "$ENV_TEST_PC")"
+fi
+
+OPENNEBULA_PASS="${OPENNEBULA_PASS:?請設定 OPENNEBULA_PASS，或建立 company-docs/env/test-pc.md（已 gitignore）}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

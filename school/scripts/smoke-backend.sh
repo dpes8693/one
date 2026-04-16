@@ -1,8 +1,28 @@
 #!/bin/bash
 # GPU 算力平台 Backend Smoke Test
 # 使用方式：
-#   1. 確認 backend 在跑（port 4000）：node src/server.js
+#   1. 確認 backend 在跑（port 4000）：node src/index.js
 #   2. bash smoke-backend.sh
+# 帳密自動從 ../.env 載入（OPENNEBULA_USER / OPENNEBULA_PASS）
+
+# 自動載入 .env（如果存在）
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_FILE="$SCRIPT_DIR/../.env"
+if [ -f "$ENV_FILE" ]; then
+  set -a
+  # shellcheck disable=SC1090
+  source "$ENV_FILE"
+  set +a
+fi
+
+# ADMIN_PASS 優先讀 ADMIN_PASS，沒設則用 OPENNEBULA_PASS
+export ADMIN_USER="${ADMIN_USER:-${OPENNEBULA_USER:-oneadmin}}"
+export ADMIN_PASS="${ADMIN_PASS:-$OPENNEBULA_PASS}"
+
+if [ -z "$ADMIN_PASS" ]; then
+  echo "[ERROR] 請設定 ADMIN_PASS 或 OPENNEBULA_PASS（建議寫到 school/.env）"
+  exit 1
+fi
 
 BASE=http://localhost:4000
 

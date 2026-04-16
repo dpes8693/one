@@ -30,6 +30,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
+    "dotenv": "^17.4.2",
     "jsdom": "^29.0.2",
     "pg": "^8.20.0",
     "postcss": "^8.4.47",
