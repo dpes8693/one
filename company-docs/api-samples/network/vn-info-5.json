@@ -1,0 +1,73 @@
+{
+    "id": 200,
+    "message": "OK",
+    "data": {
+        "VNET": {
+            "ID": "5",
+            "UID": "0",
+            "GID": "0",
+            "UNAME": "oneadmin",
+            "GNAME": "oneadmin",
+            "NAME": "lan-dhcp-onebr3",
+            "PERMISSIONS": {
+                "OWNER_U": "1",
+                "OWNER_M": "1",
+                "OWNER_A": "0",
+                "GROUP_U": "0",
+                "GROUP_M": "0",
+                "GROUP_A": "0",
+                "OTHER_U": "0",
+                "OTHER_M": "0",
+                "OTHER_A": "0"
+            },
+            "CLUSTERS": {
+                "ID": "0"
+            },
+            "BRIDGE": "onebr3",
+            "BRIDGE_TYPE": "linux",
+            "STATE": "1",
+            "PREV_STATE": "1",
+            "PARENT_NETWORK_ID": "",
+            "VN_MAD": "bridge",
+            "PHYDEV": "enp4s0",
+            "VLAN_ID": "",
+            "OUTER_VLAN_ID": "",
+            "VLAN_ID_AUTOMATIC": "0",
+            "OUTER_VLAN_ID_AUTOMATIC": "0",
+            "USED_LEASES": "1",
+            "VROUTERS": "",
+            "UPDATED_VMS": {
+                "ID": "0"
+            },
+            "OUTDATED_VMS": "",
+            "UPDATING_VMS": "",
+            "ERROR_VMS": "",
+            "TEMPLATE": {
+                "BRIDGE": "onebr3",
+                "BRIDGE_TYPE": "linux",
+                "OUTER_VLAN_ID": "",
+                "PHYDEV": "enp4s0",
+                "SECURITY_GROUPS": "0",
+                "VLAN_ID": "",
+                "VN_MAD": "bridge"
+            },
+            "AR_POOL": {
+                "AR": {
+                    "AR_ID": "0",
+                    "MAC": "02:00:80:7d:95:da",
+                    "NAME": "AR0",
+                    "SIZE": "10",
+                    "TYPE": "ETHER",
+                    "MAC_END": "02:00:80:7d:95:e3",
+                    "USED_LEASES": "1",
+                    "LEASES": {
+                        "LEASE": {
+                            "MAC": "02:00:80:7d:95:da",
+                            "VM": "0"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

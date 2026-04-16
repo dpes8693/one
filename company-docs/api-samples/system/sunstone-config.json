@@ -1,0 +1,36 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "keep_me_logged": true,
+    "leases": {
+      "terminate": {
+        "edit": false,
+        "execute_after_weeks": 2,
+        "warn_before_days": 1
+      }
+    },
+    "supported_fs": [
+      "ext4",
+      "ext3",
+      "ext2",
+      "xfs"
+    ],
+    "currency": "EUR",
+    "default_lang": "zh_TW",
+    "langs": {
+      "de": "German",
+      "en": "English",
+      "es_ES": "Spanish",
+      "fr_FR": "French",
+      "it_IT": "Italian",
+      "ru": "Russian",
+      "sk_SK": "Slavak",
+      "zh_CN": "Chinese (China)",
+      "zh_TW": "Chinese (Taiwan)"
+    },
+    "currentTimeZone": "Asia/Taipei",
+    "rowStyle": "card",
+    "fullViewMode:": "false"
+  }
+}

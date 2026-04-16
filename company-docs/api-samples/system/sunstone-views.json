@@ -1,0 +1,3507 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "views": {
+      "admin": [
+        {
+          "resource_name": "ACL",
+          "actions": {
+            "create_dialog": true,
+            "create_dialog_string": true,
+            "delete": true
+          },
+          "filters": {
+            "id": true,
+            "idresourcename": true,
+            "idresourcetype": true,
+            "idusername": true,
+            "idusertype": true,
+            "zonename": true,
+            "zonetype": true,
+            "test": true
+          }
+        },
+        {
+          "resource_name": "BACKUP",
+          "actions": {
+            "restore": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            },
+            "increments": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "BACKUPJOBS",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "delete": true,
+            "chown": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true,
+            "start": true,
+            "cancel": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true,
+                  "priority": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            },
+            "sched_actions": {
+              "enabled": true,
+              "actions": {
+                "sched_action_create": true,
+                "sched_action_update": true,
+                "sched_action_delete": true
+              }
+            }
+          },
+          "dialogs": {
+            "create_dialog": {
+              "general": true,
+              "vms": true,
+              "datastores": true,
+              "sched_actions": true
+            }
+          }
+        },
+        {
+          "resource_name": "CLUSTER",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "delete": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "overcommitment": {
+                "enabled": true,
+                "actions": {
+                  "update_cpu": true,
+                  "update_memory": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "host": {
+              "enabled": true
+            },
+            "vnet": {
+              "enabled": true
+            },
+            "datastore": {
+              "enabled": true
+            },
+            "drs": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "DATASTORE",
+          "actions": {
+            "create_dialog": true,
+            "import_dialog": true,
+            "change_cluster": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true,
+            "enable": true,
+            "disable": true,
+            "edit_labels": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "images": {
+              "enabled": true
+            },
+            "clusters": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "FILE",
+          "actions": {
+            "create_dialog": true,
+            "import_dialog": true,
+            "disable": true,
+            "enable": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "GROUP",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "delete": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "user": {
+              "enabled": true,
+              "actions": {
+                "edit_admins": true,
+                "add_users": true,
+                "remove_users": true
+              }
+            },
+            "quota": {
+              "enabled": true,
+              "actions": {
+                "quotas_dialog": true
+              }
+            },
+            "accounting": {
+              "enabled": true,
+              "actions": {
+                "get_accounting": true
+              }
+            },
+            "showback": {
+              "enabled": true,
+              "actions": {
+                "get_showback": true
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "HOST",
+          "actions": {
+            "create_dialog": true,
+            "change_cluster": true,
+            "enable": true,
+            "disable": true,
+            "offline": true,
+            "flush": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "nsx_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              },
+              "monitoring_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": false,
+                  "add": false,
+                  "edit": false,
+                  "delete": false
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            },
+            "graphs": {
+              "enabled": true
+            },
+            "wild": {
+              "enabled": true
+            },
+            "zombies": {
+              "enabled": true
+            },
+            "esx": {
+              "enabled": true
+            },
+            "pci": {
+              "enabled": true
+            },
+            "numa": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "create_dialog": {
+              "information": true
+            }
+          }
+        },
+        {
+          "resource_name": "IMAGE",
+          "actions": {
+            "create_dialog": true,
+            "import_dialog": true,
+            "clone": true,
+            "lock": true,
+            "unlock": true,
+            "disable": true,
+            "enable": true,
+            "persistent": true,
+            "nonpersistent": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true,
+            "locked": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            },
+            "snapshot": {
+              "enabled": true,
+              "actions": {
+                "snapshot_flatten": true,
+                "snapshot_revert": true,
+                "snapshot_delete": true
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "MARKETPLACE-APP",
+          "actions": {
+            "create_dialog": true,
+            "export": true,
+            "download": true,
+            "chown": true,
+            "chgrp": true,
+            "enable": true,
+            "disable": true,
+            "delete": true,
+            "edit_labels": true,
+            "lock": true,
+            "unlock": true
+          },
+          "filters": {
+            "owner": true,
+            "group": true,
+            "state": true,
+            "type": true,
+            "marketplace": true,
+            "zone": true,
+            "hypervisor": true,
+            "architecture": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "MARKETPLACE",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true,
+            "disable": true,
+            "enable": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "apps": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "SECURITY-GROUP",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "clone": true,
+            "commit": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "rules_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "SERVICE",
+          "actions": {
+            "instantiate_dialog": true,
+            "recover": true,
+            "recover_delete": true,
+            "delete": true,
+            "chown": true,
+            "chgrp": true,
+            "share": true,
+            "unshare": true,
+            "edit_labels": true
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              }
+            },
+            "roles": {
+              "enabled": true
+            },
+            "log": {
+              "enabled": true
+            },
+            "sched_actions": {
+              "enabled": true,
+              "actions": {
+                "sched-add": true,
+                "sched-update": false,
+                "sched-delete": false,
+                "charter_create": true,
+                "perform_action": true
+              }
+            }
+          },
+          "dialogs": null
+        },
+        {
+          "resource_name": "SERVICE-TEMPLATE",
+          "actions": {
+            "create_dialog": true,
+            "instantiate_dialog": true,
+            "update_dialog": true,
+            "deploy_dialog": true,
+            "create_app_dialog": true,
+            "clone": true,
+            "delete": true,
+            "chown": true,
+            "recover": true,
+            "chgrp": true,
+            "share": true,
+            "unshare": true,
+            "edit_labels": true
+          },
+          "filters": {
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              }
+            },
+            "roles": {
+              "enabled": true
+            },
+            "template": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "deploy_dialog": null,
+            "create_dialog": null
+          }
+        },
+        {
+          "resource_name": "SUPPORT",
+          "actions": {
+            "create_dialog": true,
+            "logout": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true
+              }
+            },
+            "comments": {
+              "enabled": true,
+              "actions": {
+                "comment": true
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "USER",
+          "actions": {
+            "create_dialog": true,
+            "chgrp": true,
+            "delete": true,
+            "enable": true,
+            "disable": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "group": {
+              "enabled": true,
+              "actions": {
+                "chgrp": true,
+                "add_to_group": true,
+                "remove_from_group": true,
+                "change_primary_group": true
+              }
+            },
+            "quota": {
+              "enabled": true,
+              "actions": {
+                "quotas_dialog": true
+              }
+            },
+            "accounting": {
+              "enabled": true,
+              "actions": {
+                "get_accounting": true
+              }
+            },
+            "showback": {
+              "enabled": true,
+              "actions": {
+                "get_showback": true
+              }
+            },
+            "authentication": {
+              "enabled": true,
+              "actions": {
+                "change_authentication": true,
+                "update_password": true,
+                "login_token": true,
+                "two_factor_auth": true,
+                "public_ssh_key": true,
+                "private_ssh_key": true,
+                "private_ssh_key_passphrase": true
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "VIRTUAL-DATA-CENTER",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "delete": true,
+            "edit_labels": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "groups": {
+              "enabled": true
+            },
+            "clusters": {
+              "enabled": true
+            },
+            "datastores": {
+              "enabled": true
+            },
+            "hosts": {
+              "enabled": true
+            },
+            "vnets": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "create_dialog": {
+              "clusters": true,
+              "datastores": true,
+              "hosts": true,
+              "vnets": true
+            }
+          }
+        },
+        {
+          "resource_name": "VM-GROUP",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "enable": true,
+            "disable": true,
+            "chgrp": true,
+            "chown": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "cgrp": true
+                }
+              },
+              "roles_panel": {
+                "enabled": true
+              },
+              "roles-affinity_panel": {
+                "enabled": true
+              }
+            },
+            "vms": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "VM",
+          "actions": {
+            "create_dialog": true,
+            "create_app_dialog": true,
+            "deploy": true,
+            "migrate": true,
+            "live-migrate": true,
+            "hold": true,
+            "release": true,
+            "suspend": true,
+            "resume": true,
+            "stop": true,
+            "recover": true,
+            "reboot": true,
+            "reboot-hard": true,
+            "poweroff": true,
+            "poweroff-hard": true,
+            "undeploy": true,
+            "undeploy-hard": true,
+            "terminate": true,
+            "terminate-hard": true,
+            "resched": true,
+            "unresched": true,
+            "save_as_template": true,
+            "chown": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true,
+            "vnc": true,
+            "ssh": true,
+            "rdp": true,
+            "edit_labels": true,
+            "backup": true,
+            "restore": true
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true,
+            "type": true,
+            "locked": true,
+            "ips": true,
+            "hostname": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "capacity_panel": {
+                "enabled": true,
+                "actions": {
+                  "resize": true
+                }
+              },
+              "lxc_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              },
+              "monitoring_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "storage": {
+              "enabled": true,
+              "actions": {
+                "disk-attach": {
+                  "enabled": true
+                },
+                "disk-detach": true,
+                "disk-snapshot-create": true,
+                "disk-snapshot-delete": true,
+                "disk-snapshot-rename": true,
+                "disk-snapshot-revert": true,
+                "disk-resize": true,
+                "disk-saveas": {
+                  "enabled": true
+                }
+              }
+            },
+            "network": {
+              "enabled": true,
+              "actions": {
+                "nic-attach": true,
+                "nic-detach": true,
+                "nic-update": true,
+                "sg-attach": true,
+                "sg-detach": true
+              }
+            },
+            "pci": {
+              "enabled": true,
+              "actions": {
+                "pci-attach": true,
+                "pci-detach": true
+              }
+            },
+            "snapshot": {
+              "enabled": true,
+              "actions": {
+                "snapshot-create": true,
+                "snapshot-revert": true,
+                "snapshot-delete": true
+              }
+            },
+            "backup": {
+              "enabled": true
+            },
+            "history": {
+              "enabled": true
+            },
+            "sched_actions": {
+              "enabled": true,
+              "actions": {
+                "sched-add": true,
+                "sched-update": true,
+                "sched-delete": true,
+                "charter_create": true
+              }
+            },
+            "configuration": {
+              "enabled": true,
+              "actions": {
+                "update_configuration": true
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "VM-TEMPLATE",
+          "features": {
+            "hide_cpu": false,
+            "cpu_factor": false
+          },
+          "actions": {
+            "create_dialog": true,
+            "import_dialog": true,
+            "update_dialog": true,
+            "instantiate_dialog": true,
+            "create_app_dialog": true,
+            "clone": true,
+            "delete": true,
+            "chown": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true,
+            "share": true,
+            "unshare": true,
+            "edit_labels": true
+          },
+          "filters": {
+            "owner": true,
+            "group": true,
+            "locked": true,
+            "vrouter": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "instantiate_dialog": {
+              "information": true,
+              "ownership": true,
+              "capacity": true,
+              "vm_group": true,
+              "network": true,
+              "storage": true,
+              "pci": true,
+              "placement": true,
+              "sched_action": true,
+              "booting": true,
+              "backup": true
+            },
+            "create_dialog": {
+              "ownership": true,
+              "capacity": true,
+              "showback": true,
+              "vm_group": true,
+              "network": true,
+              "storage": true,
+              "placement": true,
+              "pci": true,
+              "input_output": true,
+              "sched_action": true,
+              "context": true,
+              "booting": true,
+              "numa": true,
+              "backup": true
+            }
+          }
+        },
+        {
+          "resource_name": "VIRTUAL-NETWORK",
+          "actions": {
+            "create_dialog": true,
+            "import_dialog": true,
+            "instantiate_dialog": true,
+            "reserve_dialog": true,
+            "update_dialog": true,
+            "change_cluster": true,
+            "chown": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true,
+            "locked": true,
+            "vn_mad": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "qos_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "address": {
+              "enabled": true,
+              "actions": {
+                "add_ar": true,
+                "update_ar": true,
+                "delete_ar": true
+              }
+            },
+            "lease": {
+              "enabled": true,
+              "actions": {
+                "hold_lease": true,
+                "release_lease": true
+              }
+            },
+            "security": {
+              "enabled": true,
+              "actions": {
+                "add_secgroup": true,
+                "delete_secgroup": true
+              }
+            },
+            "virtual_router": {
+              "enabled": true
+            },
+            "cluster": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "NETWORK-TEMPLATE",
+          "actions": {
+            "create_dialog": true,
+            "instantiate_dialog": true,
+            "update_dialog": true,
+            "delete": true,
+            "chown": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "qos_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "address": {
+              "enabled": true,
+              "actions": {
+                "add_ar": true,
+                "update_ar": true,
+                "delete_ar": true
+              }
+            },
+            "security": {
+              "enabled": true
+            },
+            "cluster": {
+              "enabled": true
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "VROUTER",
+          "actions": {
+            "instantiate_dialog": true,
+            "delete": true,
+            "chown": true,
+            "recover": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true,
+            "edit_labels": true
+          },
+          "filters": {
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "deploy_dialog": null,
+            "create_dialog": null
+          }
+        },
+        {
+          "resource_name": "VROUTER-TEMPLATE",
+          "actions": {
+            "create_dialog": true,
+            "instantiate_dialog": true,
+            "update_dialog": true,
+            "deploy_dialog": true,
+            "clone": true,
+            "delete": true,
+            "chown": true,
+            "recover": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true,
+            "share": true,
+            "unshare": true,
+            "edit_labels": true
+          },
+          "filters": {
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              }
+            },
+            "roles": {
+              "enabled": true
+            },
+            "template": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "deploy_dialog": null,
+            "create_dialog": null
+          }
+        },
+        {
+          "resource_name": "ZONE",
+          "actions": {
+            "create_dialog": true,
+            "delete": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "server_pool_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            }
+          }
+        }
+      ],
+      "groupadmin": [
+        {
+          "resource_name": "GROUP",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "user": {
+              "enabled": true,
+              "actions": {
+                "edit_admins": true,
+                "add_users": true
+              }
+            },
+            "quota": {
+              "enabled": true,
+              "actions": {
+                "quotas_dialog": false
+              }
+            },
+            "accounting": {
+              "enabled": true,
+              "actions": {
+                "get_accounting": true
+              }
+            },
+            "showback": {
+              "enabled": true,
+              "actions": {
+                "get_showback": true
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "MARKETPLACE-APP",
+          "actions": {
+            "create_dialog": false,
+            "export": true,
+            "download": true,
+            "chown": false,
+            "chgrp": false,
+            "enable": false,
+            "disable": false,
+            "delete": false,
+            "edit_labels": false,
+            "lock": false,
+            "unlock": false
+          },
+          "filters": {
+            "owner": true,
+            "group": true,
+            "state": true,
+            "type": true,
+            "marketplace": true,
+            "zone": true,
+            "hypervisor": true,
+            "architecture": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              },
+              "attributes_panel": {
+                "enabled": false,
+                "actions": {
+                  "copy": false,
+                  "add": false,
+                  "edit": false,
+                  "delete": false
+                }
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "SECURITY-GROUP",
+          "actions": {
+            "create_dialog": false,
+            "update_dialog": false,
+            "clone": false,
+            "commit": false,
+            "chown": false,
+            "chgrp": false,
+            "delete": false
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              },
+              "rules_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "SERVICE",
+          "actions": {
+            "instantiate_dialog": true,
+            "create_dialog": true,
+            "recover": true,
+            "recover_delete": true,
+            "delete": true,
+            "chown": true,
+            "chgrp": true,
+            "share": true,
+            "unshare": true,
+            "edit_labels": true
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              }
+            },
+            "roles": {
+              "enabled": true
+            },
+            "log": {
+              "enabled": true
+            },
+            "sched_actions": {
+              "enabled": true,
+              "actions": {
+                "sched-add": true,
+                "sched-update": false,
+                "sched-delete": false,
+                "charter_create": true,
+                "perform_action": true
+              }
+            }
+          },
+          "dialogs": null
+        },
+        {
+          "resource_name": "SERVICE-TEMPLATE",
+          "actions": {
+            "create_dialog": false,
+            "instantiate_dialog": true,
+            "update_dialog": false,
+            "deploy_dialog": true,
+            "create_app_dialog": true,
+            "clone": false,
+            "delete": false,
+            "chown": false,
+            "recover": false,
+            "chgrp": false,
+            "share": false,
+            "unshare": false,
+            "edit_labels": false
+          },
+          "filters": {
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              }
+            },
+            "roles": {
+              "enabled": true
+            },
+            "template": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "deploy_dialog": null,
+            "create_dialog": null
+          }
+        },
+        {
+          "resource_name": "USER",
+          "actions": {
+            "create_dialog": true,
+            "chgrp": true,
+            "delete": true,
+            "enable": true,
+            "disable": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "group": {
+              "enabled": true,
+              "actions": {
+                "chgrp": true
+              }
+            },
+            "quota": {
+              "enabled": true,
+              "actions": {
+                "quotas_dialog": true
+              }
+            },
+            "accounting": {
+              "enabled": true,
+              "actions": {
+                "get_accounting": true
+              }
+            },
+            "showback": {
+              "enabled": true,
+              "actions": {
+                "get_showback": true
+              }
+            },
+            "authentication": {
+              "enabled": true,
+              "actions": {
+                "change_authentication": true,
+                "update_password": true,
+                "login_token": true,
+                "two_factor_auth": true,
+                "public_ssh_key": true,
+                "private_ssh_key": true,
+                "private_ssh_key_passphrase": true
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "VM-GROUP",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "enable": true,
+            "disable": true,
+            "chgrp": true,
+            "chown": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "cgrp": true
+                }
+              },
+              "roles_panel": {
+                "enabled": true
+              },
+              "roles-affinity_panel": {
+                "enabled": true
+              }
+            },
+            "vms": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "VM",
+          "actions": {
+            "create_dialog": true,
+            "create_app_dialog": true,
+            "deploy": false,
+            "migrate": true,
+            "migrate_live": true,
+            "hold": true,
+            "release": true,
+            "suspend": true,
+            "resume": true,
+            "stop": true,
+            "recover": true,
+            "reboot": true,
+            "reboot-hard": true,
+            "poweroff": true,
+            "poweroff-hard": true,
+            "undeploy": true,
+            "undeploy-hard": true,
+            "terminate": true,
+            "terminate-hard": true,
+            "resched": true,
+            "unresched": true,
+            "save_as_template": false,
+            "chown": false,
+            "chgrp": false,
+            "lock": true,
+            "unlock": true,
+            "vnc": true,
+            "ssh": true,
+            "rdp": true,
+            "edit_labels": false,
+            "backup": true
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true,
+            "type": true,
+            "locked": true,
+            "ips": true,
+            "hostname": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              },
+              "capacity_panel": {
+                "enabled": true,
+                "actions": {
+                  "resize_capacity": true
+                }
+              },
+              "lxc_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": false,
+                  "edit": false,
+                  "delete": false
+                }
+              },
+              "monitoring_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": false,
+                  "delete": false
+                }
+              }
+            },
+            "storage": {
+              "enabled": true,
+              "actions": {
+                "attach_disk": {
+                  "enabled": true
+                },
+                "disk-detach": true,
+                "snapshot_disk_create": true,
+                "snapshot_disk_rename": true,
+                "snapshot_disk_revert": true,
+                "snapshot_disk_delete": true,
+                "resize_disk": true,
+                "disk_saveas": {
+                  "enabled": true
+                }
+              }
+            },
+            "network": {
+              "enabled": true,
+              "actions": {
+                "attach_nic": true,
+                "detach_nic": true,
+                "update_nic": true,
+                "attach_secgroup": true,
+                "detach_secgroup": true
+              }
+            },
+            "snapshot": {
+              "enabled": true,
+              "actions": {
+                "snapshot-create": true,
+                "snapshot-revert": true,
+                "snapshot-delete": true
+              }
+            },
+            "backup": {
+              "enabled": true
+            },
+            "history": {
+              "enabled": true
+            },
+            "sched_actions": {
+              "enabled": true,
+              "actions": {
+                "sched_action_create": true,
+                "sched_action_update": true,
+                "sched_action_delete": true,
+                "charter_create": true
+              }
+            },
+            "configuration": {
+              "enabled": true,
+              "actions": {
+                "update_configuration": true
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "VM-TEMPLATE",
+          "features": {
+            "hide_cpu": true,
+            "cpu_factor": 1
+          },
+          "actions": {
+            "create_dialog": false,
+            "import_dialog": false,
+            "update_dialog": true,
+            "instantiate_dialog": true,
+            "create_app_dialog": false,
+            "clone": true,
+            "delete": true,
+            "chown": true,
+            "chgrp": false,
+            "lock": true,
+            "unlock": true,
+            "share": true,
+            "unshare": true,
+            "edit_labels": false
+          },
+          "filters": {
+            "owner": true,
+            "group": true,
+            "locked": true,
+            "vrouter": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "instantiate_dialog": {
+              "information": true,
+              "ownership": true,
+              "capacity": true,
+              "vm_group": true,
+              "network": true,
+              "storage": true,
+              "placement": true,
+              "sched_action": true,
+              "booting": true
+            },
+            "create_dialog": {
+              "ownership": true,
+              "capacity": true,
+              "showback": true,
+              "vm_group": true,
+              "network": true,
+              "storage": true,
+              "placement": true,
+              "input_output": true,
+              "sched_action": true,
+              "context": true,
+              "booting": true,
+              "numa": {
+                "enabled": true,
+                "not_on": [
+                  "lxc"
+                ]
+              },
+              "backup": true
+            }
+          }
+        },
+        {
+          "resource_name": "VIRTUAL-NETWORK",
+          "actions": {
+            "create_dialog": false,
+            "import_dialog": false,
+            "instantiate_dialog": true,
+            "reserve_dialog": true,
+            "update_dialog": false,
+            "change_cluster": false,
+            "chown": false,
+            "chgrp": false,
+            "lock": true,
+            "unlock": true,
+            "delete": false
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true,
+            "locked": true,
+            "vn_mad": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              },
+              "qos_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": false,
+                  "add": false,
+                  "edit": false,
+                  "delete": false
+                }
+              }
+            },
+            "address": {
+              "enabled": true,
+              "actions": {
+                "add_ar": false,
+                "update_ar": false,
+                "delete_ar": false
+              }
+            },
+            "lease": {
+              "enabled": true,
+              "actions": {
+                "hold_lease": false,
+                "release_lease": false
+              }
+            },
+            "security": {
+              "enabled": true,
+              "actions": {
+                "add_secgroup": false,
+                "delete_secgroup": false
+              }
+            },
+            "virtual_router": {
+              "enabled": true
+            },
+            "cluster": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "NETWORK-TEMPLATE",
+          "actions": {
+            "create_dialog": false,
+            "instantiate_dialog": true,
+            "update_dialog": true,
+            "delete": true,
+            "chown": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "qos_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "address": {
+              "enabled": true,
+              "actions": {
+                "add_ar": true,
+                "update_ar": true,
+                "delete_ar": true
+              }
+            },
+            "security": {
+              "enabled": true
+            },
+            "cluster": {
+              "enabled": true
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "VROUTER",
+          "actions": {
+            "instantiate_dialog": true,
+            "delete": true,
+            "chown": true,
+            "recover": true,
+            "chgrp": true,
+            "lock": true,
+            "unlock": true,
+            "edit_labels": true
+          },
+          "filters": {
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "deploy_dialog": null,
+            "create_dialog": null
+          }
+        },
+        {
+          "resource_name": "VROUTER-TEMPLATE",
+          "actions": {
+            "create_dialog": false,
+            "instantiate_dialog": true,
+            "update_dialog": false,
+            "deploy_dialog": true,
+            "clone": true,
+            "delete": true,
+            "chown": true,
+            "recover": false,
+            "chgrp": false,
+            "lock": false,
+            "unlock": false,
+            "share": true,
+            "unshare": true,
+            "edit_labels": false
+          },
+          "filters": {
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": false
+                }
+              }
+            },
+            "roles": {
+              "enabled": true
+            },
+            "template": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "deploy_dialog": null,
+            "create_dialog": null
+          }
+        }
+      ],
+      "user": [
+        {
+          "resource_name": "BACKUP",
+          "actions": {
+            "restore": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            },
+            "increments": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "FILE",
+          "actions": {
+            "create_dialog": true,
+            "import_dialog": true,
+            "disable": true,
+            "enable": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "IMAGE",
+          "actions": {
+            "create_dialog": true,
+            "import_dialog": true,
+            "clone": true,
+            "lock": true,
+            "unlock": true,
+            "disable": true,
+            "enable": true,
+            "persistent": true,
+            "nonpersistent": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true,
+            "locked": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            },
+            "snapshot": {
+              "enabled": true,
+              "actions": {
+                "snapshot_flatten": true,
+                "snapshot_revert": true,
+                "snapshot_delete": true
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "MARKETPLACE-APP",
+          "actions": {
+            "create_dialog": true,
+            "export": true,
+            "download": true,
+            "chown": true,
+            "chgrp": true,
+            "enable": true,
+            "disable": true,
+            "delete": true,
+            "edit_labels": true
+          },
+          "filters": {
+            "owner": true,
+            "group": true,
+            "state": true,
+            "type": true,
+            "marketplace": true,
+            "zone": true,
+            "hypervisor": true,
+            "architecture": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "SECURITY-GROUP",
+          "actions": {
+            "create_dialog": true,
+            "update_dialog": true,
+            "clone": true,
+            "commit": true,
+            "chown": true,
+            "chgrp": true,
+            "delete": true
+          },
+          "filters": null,
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              },
+              "rules_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "vms": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "VM",
+          "actions": {
+            "create_dialog": true,
+            "create_app_dialog": true,
+            "deploy": false,
+            "migrate": true,
+            "live-migrate": true,
+            "hold": true,
+            "release": true,
+            "suspend": true,
+            "resume": true,
+            "stop": true,
+            "recover": true,
+            "reboot": true,
+            "reboot-hard": true,
+            "poweroff": true,
+            "poweroff-hard": true,
+            "undeploy": true,
+            "undeploy-hard": true,
+            "terminate": true,
+            "terminate-hard": true,
+            "resched": true,
+            "unresched": true,
+            "save_as_template": false,
+            "chown": false,
+            "chgrp": false,
+            "lock": true,
+            "unlock": true,
+            "vnc": true,
+            "ssh": true,
+            "rdp": true,
+            "edit_labels": false,
+            "backup": true,
+            "restore": false
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true,
+            "type": true,
+            "locked": true,
+            "ips": true,
+            "hostname": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              },
+              "capacity_panel": {
+                "enabled": true,
+                "actions": {
+                  "resize": true
+                }
+              },
+              "lxc_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": false,
+                  "edit": false,
+                  "delete": false
+                }
+              },
+              "monitoring_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": false,
+                  "delete": false
+                }
+              }
+            },
+            "storage": {
+              "enabled": true,
+              "actions": {
+                "disk-attach": {
+                  "enabled": true
+                },
+                "disk-detach": true,
+                "disk-snapshot-create": true,
+                "disk-snapshot-delete": true,
+                "disk-snapshot-rename": true,
+                "disk-snapshot-revert": true,
+                "disk-resize": true,
+                "disk-saveas": {
+                  "enabled": true
+                }
+              }
+            },
+            "network": {
+              "enabled": true,
+              "actions": {
+                "nic-attach": true,
+                "nic-detach": true,
+                "nic-update": true,
+                "sg-attach": true,
+                "sg-detach": true
+              }
+            },
+            "pci": {
+              "enabled": true,
+              "actions": {
+                "pci-attach": true,
+                "pci-detach": true
+              }
+            },
+            "snapshot": {
+              "enabled": true,
+              "actions": {
+                "snapshot-create": true,
+                "snapshot-revert": true,
+                "snapshot-delete": true
+              }
+            },
+            "backup": {
+              "enabled": true
+            },
+            "history": {
+              "enabled": true
+            },
+            "sched_actions": {
+              "enabled": true,
+              "actions": {
+                "sched-add": true,
+                "sched-update": true,
+                "sched-delete": true,
+                "charter_create": true
+              }
+            },
+            "configuration": {
+              "enabled": true,
+              "actions": {
+                "update_configuration": true
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "VM-TEMPLATE",
+          "features": {
+            "hide_cpu": true,
+            "cpu_factor": 1
+          },
+          "actions": {
+            "create_dialog": true,
+            "import_dialog": false,
+            "update_dialog": true,
+            "instantiate_dialog": true,
+            "create_app_dialog": false,
+            "clone": true,
+            "delete": true,
+            "chown": false,
+            "chgrp": false,
+            "lock": true,
+            "unlock": true,
+            "share": true,
+            "unshare": true,
+            "edit_labels": false
+          },
+          "filters": {
+            "owner": true,
+            "group": true,
+            "locked": true,
+            "vrouter": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": true
+                }
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "instantiate_dialog": {
+              "information": true,
+              "ownership": true,
+              "capacity": true,
+              "vm_group": true,
+              "network": true,
+              "storage": true,
+              "placement": true,
+              "sched_action": true,
+              "booting": true
+            },
+            "create_dialog": {
+              "ownership": true,
+              "capacity": true,
+              "showback": true,
+              "vm_group": true,
+              "network": true,
+              "storage": true,
+              "pci": true,
+              "placement": true,
+              "input_output": true,
+              "sched_action": true,
+              "context": true,
+              "booting": true,
+              "numa": {
+                "enabled": true,
+                "not_on": [
+                  "lxc"
+                ]
+              },
+              "backup": true
+            }
+          }
+        },
+        {
+          "resource_name": "VIRTUAL-NETWORK",
+          "actions": {
+            "create_dialog": false,
+            "import_dialog": false,
+            "instantiate_dialog": true,
+            "reserve_dialog": true,
+            "update_dialog": true,
+            "change_cluster": false,
+            "chown": false,
+            "chgrp": false,
+            "lock": true,
+            "unlock": true,
+            "delete": true
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true,
+            "locked": true,
+            "vn_mad": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": true
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": true
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              },
+              "qos_panel": {
+                "enabled": true
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true,
+                  "add": true,
+                  "edit": true,
+                  "delete": true
+                }
+              }
+            },
+            "address": {
+              "enabled": true,
+              "actions": {
+                "add_ar": false,
+                "update_ar": true,
+                "delete_ar": true
+              }
+            },
+            "lease": {
+              "enabled": true,
+              "actions": {
+                "hold_lease": true,
+                "release_lease": true
+              }
+            },
+            "security": {
+              "enabled": true,
+              "actions": {
+                "add_secgroup": true,
+                "delete_secgroup": true
+              }
+            },
+            "virtual_router": {
+              "enabled": true
+            },
+            "cluster": {
+              "enabled": true
+            }
+          }
+        }
+      ],
+      "cloud": [
+        {
+          "resource_name": "DASHBOARD",
+          "actions": {
+            "settings": true,
+            "instantiate": true
+          },
+          "graphs": {
+            "cpu": true,
+            "memory": true,
+            "disks": true,
+            "networks": true,
+            "host-cpu": true,
+            "host-memory": true
+          }
+        },
+        {
+          "resource_name": "MARKETPLACE-APP",
+          "actions": {
+            "create_dialog": false,
+            "export": true,
+            "download": true,
+            "chown": false,
+            "chgrp": false,
+            "enable": false,
+            "disable": false,
+            "delete": false,
+            "edit_labels": false,
+            "lock": false,
+            "unlock": false
+          },
+          "filters": {
+            "owner": true,
+            "group": true,
+            "state": true,
+            "type": true,
+            "marketplace": true,
+            "zone": true,
+            "hypervisor": true,
+            "architecture": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": true,
+                  "chgrp": false
+                }
+              },
+              "attributes_panel": {
+                "enabled": false,
+                "actions": {
+                  "copy": false,
+                  "add": false,
+                  "edit": false,
+                  "delete": false
+                }
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          }
+        },
+        {
+          "resource_name": "SERVICE",
+          "actions": {
+            "instantiate_dialog": true,
+            "create_dialog": true,
+            "recover": true,
+            "recover_delete": true,
+            "delete": true,
+            "chown": false,
+            "chgrp": false,
+            "share": false,
+            "unshare": false,
+            "edit_labels": false
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              }
+            },
+            "roles": {
+              "enabled": true
+            },
+            "log": {
+              "enabled": true
+            },
+            "sched_actions": {
+              "enabled": true,
+              "actions": {
+                "sched-add": true,
+                "sched-update": false,
+                "sched-delete": false,
+                "charter_create": true,
+                "perform_action": true
+              }
+            }
+          },
+          "dialogs": null
+        },
+        {
+          "resource_name": "USER",
+          "actions": {
+            "create_dialog": false,
+            "chgrp": false,
+            "delete": false,
+            "enable": false,
+            "disable": false
+          },
+          "filters": {
+            "label": false,
+            "state": false
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "attributes_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": false,
+                  "add": false,
+                  "edit": false,
+                  "delete": false
+                }
+              }
+            },
+            "group": {
+              "enabled": false,
+              "actions": {
+                "chgrp": false
+              }
+            },
+            "quota": {
+              "enabled": true,
+              "actions": {
+                "quotas_dialog": true
+              }
+            },
+            "accounting": {
+              "enabled": true,
+              "actions": {
+                "get_accounting": true
+              }
+            },
+            "showback": {
+              "enabled": true,
+              "actions": {
+                "get_showback": true
+              }
+            },
+            "authentication": {
+              "enabled": false,
+              "actions": {
+                "change_authentication": false,
+                "update_password": false,
+                "login_token": false,
+                "two_factor_auth": false,
+                "public_ssh_key": false,
+                "private_ssh_key": false,
+                "private_ssh_key_passphrase": false
+              }
+            }
+          }
+        },
+        {
+          "resource_name": "VM",
+          "actions": {
+            "create_dialog": true,
+            "create_app_dialog": true,
+            "deploy": false,
+            "migrate": false,
+            "migrate_live": false,
+            "hold": false,
+            "release": false,
+            "suspend": false,
+            "resume": true,
+            "stop": false,
+            "recover": false,
+            "reboot": true,
+            "reboot-hard": true,
+            "poweroff": true,
+            "poweroff-hard": true,
+            "undeploy": false,
+            "undeploy-hard": false,
+            "terminate": true,
+            "terminate-hard": true,
+            "resched": false,
+            "unresched": false,
+            "save_as_template": true,
+            "chown": false,
+            "chgrp": false,
+            "lock": false,
+            "unlock": false,
+            "vnc": true,
+            "ssh": true,
+            "rdp": true,
+            "edit_labels": false,
+            "backup": false
+          },
+          "filters": {
+            "state": true,
+            "owner": true,
+            "group": true,
+            "type": true,
+            "locked": true,
+            "ips": true,
+            "hostname": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              },
+              "capacity_panel": {
+                "enabled": true,
+                "actions": {
+                  "resize": true
+                }
+              },
+              "monitoring_panel": {
+                "enabled": true,
+                "actions": {
+                  "copy": true
+                }
+              },
+              "attributes_panel": {
+                "enabled": false,
+                "actions": {
+                  "copy": true,
+                  "add": false,
+                  "edit": false,
+                  "delete": false
+                }
+              }
+            },
+            "storage": {
+              "enabled": true,
+              "actions": {
+                "disk-attach": {
+                  "enabled": true
+                },
+                "disk-detach": true,
+                "disk-resize": true,
+                "disk_saveas": {
+                  "enabled": true
+                }
+              }
+            },
+            "network": {
+              "enabled": true,
+              "actions": {
+                "nic-attach": true,
+                "nic-detach": true,
+                "nic-update": true,
+                "sg-attach": true,
+                "sg-detach": true
+              }
+            },
+            "snapshot": {
+              "enabled": true,
+              "actions": {
+                "snapshot-create": true,
+                "snapshot-revert": true,
+                "snapshot-delete": true
+              }
+            },
+            "backup": {
+              "enabled": false
+            },
+            "history": {
+              "enabled": false
+            },
+            "sched_actions": {
+              "enabled": true,
+              "actions": {
+                "sched-add": true,
+                "sched-update": true,
+                "sched-delete": true,
+                "charter_create": true
+              }
+            },
+            "configuration": {
+              "enabled": false,
+              "actions": {
+                "update_configuration": false
+              }
+            },
+            "template": {
+              "enabled": false
+            }
+          }
+        },
+        {
+          "resource_name": "VM-TEMPLATE",
+          "features": {
+            "hide_cpu": true,
+            "cpu_factor": 1
+          },
+          "actions": {
+            "create_dialog": false,
+            "import_dialog": false,
+            "update_dialog": false,
+            "instantiate_dialog": true,
+            "create_app_dialog": false,
+            "clone": false,
+            "delete": true,
+            "chown": false,
+            "chgrp": false,
+            "lock": false,
+            "unlock": false,
+            "share": false,
+            "unshare": false,
+            "edit_labels": false
+          },
+          "filters": {
+            "owner": true,
+            "group": true,
+            "locked": true,
+            "vrouter": true
+          },
+          "info-tabs": {
+            "info": {
+              "enabled": true,
+              "information_panel": {
+                "enabled": true,
+                "actions": {
+                  "rename": false
+                }
+              },
+              "permissions_panel": {
+                "enabled": true,
+                "actions": {
+                  "chmod": false
+                }
+              },
+              "ownership_panel": {
+                "enabled": true,
+                "actions": {
+                  "chown": false,
+                  "chgrp": false
+                }
+              }
+            },
+            "template": {
+              "enabled": true
+            }
+          },
+          "dialogs": {
+            "instantiate_dialog": {
+              "information": true,
+              "ownership": true,
+              "capacity": true,
+              "vm_group": true,
+              "network": true,
+              "storage": true,
+              "placement": true,
+              "sched_action": true,
+              "booting": true
+            },
+            "create_dialog": {
+              "ownership": true,
+              "capacity": true,
+              "showback": true,
+              "vm_group": true,
+              "network": true,
+              "storage": true,
+              "placement": true,
+              "input_output": true,
+              "sched_action": true,
+              "context": true,
+              "booting": true,
+              "numa": {
+                "enabled": true,
+                "not_on": [
+                  "lxc"
+                ]
+              },
+              "backup": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

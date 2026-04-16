@@ -1,0 +1,119 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "VMTEMPLATE_POOL": {
+      "VMTEMPLATE": [
+        {
+          "ID": "1",
+          "UID": "0",
+          "GID": "0",
+          "UNAME": "oneadmin",
+          "GNAME": "oneadmin",
+          "NAME": "Ubuntu 2404-GPU",
+          "PERMISSIONS": {
+            "OWNER_U": "1",
+            "OWNER_M": "1",
+            "OWNER_A": "0",
+            "GROUP_U": "0",
+            "GROUP_M": "0",
+            "GROUP_A": "0",
+            "OTHER_U": "0",
+            "OTHER_M": "0",
+            "OTHER_A": "0"
+          },
+          "REGTIME": "1774610078",
+          "TEMPLATE": {
+            "CONTEXT": {
+              "NETWORK": "YES",
+              "SSH_PUBLIC_KEY": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFaGx4kgnkXBdsP+YX27VuXTw3LHmoY3b7O3heaHyJdn root@localhost.localdomain"
+            },
+            "CPU": "4",
+            "CPU_MODEL": {
+              "MODEL": "host-passthrough"
+            },
+            "DISK": {
+              "CACHE": "writeback",
+              "DEV_PREFIX": "vd",
+              "IMAGE": "Ubuntu 24.04",
+              "IMAGE_ID": "0",
+              "IMAGE_UNAME": "oneadmin",
+              "TARGET": "vda"
+            },
+            "FEATURES": {
+              "ACPI": "yes",
+              "GUEST_AGENT": "yes"
+            },
+            "GRAPHICS": {
+              "LISTEN": "0.0.0.0",
+              "TYPE": "VNC"
+            },
+            "HYPERVISOR": "kvm",
+            "LOGO": "images/logos/ubuntu.png",
+            "MEMORY": "8192",
+            "OS": {
+              "BOOT": "disk0",
+              "MACHINE": "q35"
+            },
+            "PCI": [
+              {
+                "CLASS": "0300",
+                "DEVICE": "2782",
+                "VENDOR": "10de"
+              },
+              {
+                "CLASS": "0403",
+                "DEVICE": "22bc",
+                "VENDOR": "10de"
+              }
+            ],
+            "SCHED_REQUIREMENTS": "HYPERVISOR=kvm",
+            "VCPU": "4"
+          }
+        },
+        {
+          "ID": "0",
+          "UID": "0",
+          "GID": "0",
+          "UNAME": "oneadmin",
+          "GNAME": "oneadmin",
+          "NAME": "Ubuntu 24.04",
+          "PERMISSIONS": {
+            "OWNER_U": "1",
+            "OWNER_M": "1",
+            "OWNER_A": "0",
+            "GROUP_U": "0",
+            "GROUP_M": "0",
+            "GROUP_A": "0",
+            "OTHER_U": "0",
+            "OTHER_M": "0",
+            "OTHER_A": "0"
+          },
+          "REGTIME": "1774604821",
+          "TEMPLATE": {
+            "CONTEXT": {
+              "NETWORK": "YES",
+              "SSH_PUBLIC_KEY": "$USER[SSH_PUBLIC_KEY]"
+            },
+            "CPU": "1",
+            "DISK": {
+              "IMAGE_ID": "0"
+            },
+            "GRAPHICS": {
+              "LISTEN": "0.0.0.0",
+              "TYPE": "vnc"
+            },
+            "HYPERVISOR": "kvm",
+            "LOGO": "images/logos/ubuntu.png",
+            "LXD_SECURITY_PRIVILEGED": "true",
+            "MEMORY": "768",
+            "OS": {
+              "ARCH": "x86_64"
+            },
+            "SCHED_REQUIREMENTS": "HYPERVISOR=kvm"
+          }
+        }
+      ]
+    }
+  }
+}

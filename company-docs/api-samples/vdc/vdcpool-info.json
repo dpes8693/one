@@ -1,0 +1,27 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "VDC_POOL": {
+      "VDC": {
+        "ID": "0",
+        "NAME": "default",
+        "GROUPS": {
+          "ID": "1"
+        },
+        "CLUSTERS": {
+          "CLUSTER": {
+            "ZONE_ID": "0",
+            "CLUSTER_ID": "-10"
+          }
+        },
+        "HOSTS": "",
+        "DATASTORES": "",
+        "VNETS": "",
+        "TEMPLATE": {
+          "DESCRIPTION": "Every new group is added to this VDC. Use it to store default access rules for your groups. NOTE: You may need to remove a group from the default VDC before assigning it to other VDC."
+        }
+      }
+    }
+  }
+}

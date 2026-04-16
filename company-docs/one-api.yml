@@ -1,0 +1,2384 @@
+openapi: 3.0.3
+info:
+  title: OpenNebula FireEdge API
+  version: 1.0.0-auto
+  description: 由 FireEdge 路由指令定義自動產生的 OpenAPI 文件。
+servers:
+  - url: /fireedge/api
+    description: Default FireEdge API base path
+  - url: /api
+    description: Direct API base path
+components:
+  securitySchemes:
+    FireedgeCookie:
+      type: apiKey
+      in: cookie
+      name: FireedgeToken
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        登入後從 POST /auth/ 的 response.data.token 取得 JWT。
+        後續請求帶 Authorization: Bearer <token> 即可訪問所有需要認證的端點。
+        實測 cookie 模式在某些環境失效，建議用 Bearer Token。
+security:
+  - FireedgeCookie: []
+  - BearerAuth: []
+paths:
+  /tfa:
+    post:
+      tags:
+        - 2fa
+      summary: 設定雙因素驗證
+      operationId: 2fa_tfa_setup_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: tfa.setup
+      security:
+        - FireedgeCookie: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+    get:
+      tags:
+        - 2fa
+      summary: 取得雙因素驗證 QR Code
+      operationId: 2fa_tfa_qr_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: tfa.qr
+      security:
+        - FireedgeCookie: []
+    delete:
+      tags:
+        - 2fa
+      summary: 刪除雙因素驗證設定
+      operationId: 2fa_tfa_delete_delete
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: tfa.delete
+      security:
+        - FireedgeCookie: []
+  /auth/:
+    post:
+      tags:
+        - auth
+      summary: 使用帳號登入系統
+      description: |
+        登入端點。成功回傳 token 在 response.data.token。
+        之後可用兩種方式認證：
+        1. Cookie: FireedgeToken={"token":"<token>"} (httpOnly cookie，瀏覽器自動處理)
+        2. Header: Authorization: Bearer <token> (推薦給 API 呼叫使用)
+      operationId: auth_authentication_post
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIwIiwic3ViIjoib25lYWRtaW4iLCJpYXQiOjE3MTk1MDAwMDAsImV4cCI6MTcxOTUwMzYwMH0.example"
+                  id: "0"
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: authentication
+      security: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                token:
+                  type: string
+                type:
+                  type: string
+                tfatoken:
+                  type: string
+                remember:
+                  type: string
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: 登出目前帳號
+      operationId: auth_logout_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: logout
+      security:
+        - FireedgeCookie: []
+  /auth/acs:
+    post:
+      tags:
+        - auth
+      summary: 使用 SAML 驗證登入
+      operationId: auth_authentication_saml_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: authentication.saml
+      security: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                SAMLResponse:
+                  type: string
+  /cluster/admininfo/{id}:
+    get:
+      tags:
+        - cluster
+      summary: 取得叢集管理資訊
+      operationId: cluster_cluster_adminInfo_get
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  ID: "0"
+                  NAME: "default"
+                  HOSTS:
+                    ID: "0"
+                  DATASTORES:
+                    ID:
+                      - "0"
+                      - "1"
+                      - "2"
+                  VNETS:
+                    ID:
+                      - "4"
+                      - "5"
+                  TEMPLATE:
+                    RESERVED_CPU: ""
+                    RESERVED_MEM: ""
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: cluster.adminInfo
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  /files/show:
+    get:
+      tags:
+        - files
+      summary: 取得檔案內容
+      operationId: files_file_show_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: file.show
+      security: []
+      parameters:
+        - in: query
+          name: file
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: token
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: app
+          required: false
+          schema:
+            type: string
+  /files:
+    get:
+      tags:
+        - files
+      summary: 列出檔案
+      operationId: files_file_list_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: file.list
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: app
+          required: false
+          schema:
+            type: string
+    post:
+      tags:
+        - files
+      summary: 上傳檔案
+      operationId: files_file_upload_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: file.upload
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: app
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: public
+          required: false
+          schema:
+            type: string
+    put:
+      tags:
+        - files
+      summary: 更新檔案
+      operationId: files_file_update_put
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: file.update
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: name
+          required: false
+          schema:
+            type: string
+    delete:
+      tags:
+        - files
+      summary: 刪除檔案
+      operationId: files_file_delete_delete
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: file.delete
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: file
+          required: false
+          schema:
+            type: string
+  /hostpool/admininfo:
+    get:
+      tags:
+        - host
+      summary: 取得主機池管理資訊
+      operationId: host_hostpool_adminInfo_get
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  HOST_POOL:
+                    HOST:
+                      ID: "0"
+                      NAME: "10.1.1.79"
+                      STATE: "2"
+                      PREV_STATE: "2"
+                      IM_MAD: "kvm"
+                      VM_MAD: "kvm"
+                      CLUSTER_ID: "0"
+                      CLUSTER: "default"
+                      HOST_SHARE:
+                        MEM_USAGE: "16777216"
+                        CPU_USAGE: "400"
+                        TOTAL_MEM: "65347080"
+                        TOTAL_CPU: "2400"
+                        MAX_MEM: "65347080"
+                        MAX_CPU: "2400"
+                        RUNNING_VMS: "1"
+                        PCI_DEVICES:
+                          PCI:
+                            - ADDRESS: "0000:01:00:0"
+                              DEVICE: "2782"
+                              DEVICE_NAME: "NVIDIA Corporation AD104 [GeForce RTX 4070 Ti]"
+                              VENDOR: "10de"
+                              VENDOR_NAME: "NVIDIA Corporation"
+                              CLASS: "0300"
+                              CLASS_NAME: "VGA compatible controller"
+                              VMID: "0"
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: hostpool.adminInfo
+      security:
+        - FireedgeCookie: []
+  /host/flush/{id}:
+    post:
+      tags:
+        - host
+      summary: 清空主機上的虛擬機
+      operationId: host_host_flush_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: host.flush
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destination:
+                  type: string
+                vms:
+                  type: string
+  /image/upload:
+    post:
+      tags:
+        - image
+      summary: 上傳映像檔
+      operationId: image_image_upload_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: image.upload
+      security:
+        - FireedgeCookie: []
+  /logo/:
+    get:
+      tags:
+        - logo
+      summary: 取得品牌 Logo
+      operationId: logo_logo_brand_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: logo.brand
+      security: []
+  /logo/templatelogos:
+    get:
+      tags:
+        - logo
+      summary: 取得範本 Logo 清單
+      operationId: logo_logo_templates_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: logo.templates
+      security: []
+  /marketapp/export/{id}:
+    post:
+      tags:
+        - marketapp
+      summary: 匯出市場應用
+      operationId: marketapp_marketapp_export_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: marketapp.export
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                datastore:
+                  type: string
+                file:
+                  type: string
+                associated:
+                  type: string
+                tag:
+                  type: string
+                template:
+                  type: string
+                vmname:
+                  type: string
+  /marketapp/download/{id}:
+    get:
+      tags:
+        - marketapp
+      summary: 下載市場應用
+      operationId: marketapp_marketapp_download_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: marketapp.download
+      security: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: token
+          required: false
+          schema:
+            type: string
+  /marketapp/vmimport/{id}:
+    post:
+      tags:
+        - marketapp
+      summary: 匯入市場應用
+      operationId: marketapp_marketapp_import_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: marketapp.import
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resource:
+                  type: string
+                associated:
+                  type: string
+                marketId:
+                  type: string
+                vmname:
+                  type: string
+  /service/{id}:
+    get:
+      tags:
+        - oneflow
+      summary: 檢視服務資訊
+      operationId: oneflow_service_show_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.show
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    delete:
+      tags:
+        - oneflow
+      summary: 刪除服務
+      operationId: oneflow_service_delete_delete
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.delete
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  /service/action/{id}:
+    post:
+      tags:
+        - oneflow
+      summary: 新增服務動作
+      operationId: oneflow_service_addaction_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.addaction
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+  /service/{id}/scale:
+    post:
+      tags:
+        - oneflow
+      summary: 新增服務擴縮動作
+      operationId: oneflow_service_addscale_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.addscale
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+  /service/{id}/role_action:
+    post:
+      tags:
+        - oneflow
+      summary: 新增服務角色
+      operationId: oneflow_service_addrole_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.addrole
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+  /service/{id}/role/{role}/action:
+    post:
+      tags:
+        - oneflow
+      summary: 新增服務角色動作
+      operationId: oneflow_service_addroleaction_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.addroleaction
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: role
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+  /service/sched_action/{id}:
+    post:
+      tags:
+        - oneflow
+      summary: 新增服務排程動作
+      operationId: oneflow_service_addscheaction_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.addscheaction
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sched_action:
+                  type: string
+  /service/sched_action/{id}/{id_sched}:
+    put:
+      tags:
+        - oneflow
+      summary: 更新服務排程動作
+      operationId: oneflow_service_updateschedaction_put
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.updateschedaction
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id_sched
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sched_action:
+                  type: string
+    delete:
+      tags:
+        - oneflow
+      summary: 刪除服務排程動作
+      operationId: oneflow_service_deleteschedaction_delete
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: service.deleteschedaction
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: id_sched
+          required: true
+          schema:
+            type: string
+  /service_template/action/{id}:
+    post:
+      tags:
+        - oneflow
+      summary: 對服務範本執行動作
+      operationId: oneflow_servicetemplate_action_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: servicetemplate.action
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+  /service_template:
+    post:
+      tags:
+        - oneflow
+      summary: 建立服務範本
+      operationId: oneflow_servicetemplate_create_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: servicetemplate.create
+      security:
+        - FireedgeCookie: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+  /service_template/{id}:
+    get:
+      tags:
+        - oneflow
+      summary: 檢視服務範本
+      operationId: oneflow_servicetemplate_show_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: servicetemplate.show
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    put:
+      tags:
+        - oneflow
+      summary: 更新服務範本
+      operationId: oneflow_servicetemplate_update_put
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: servicetemplate.update
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+    delete:
+      tags:
+        - oneflow
+      summary: 刪除服務範本
+      operationId: oneflow_servicetemplate_delete_delete
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: servicetemplate.delete
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  /drivers:
+    get:
+      tags:
+        - oneform
+      summary: 列出驅動程式
+      operationId: oneform_drivers_list_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: drivers.list
+      security:
+        - FireedgeCookie: []
+  /drivers/{name}:
+    get:
+      tags:
+        - oneform
+      summary: 檢視驅動程式
+      operationId: oneform_drivers_show_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: drivers.show
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+  /drivers/{name}/enable:
+    post:
+      tags:
+        - oneform
+      summary: 啟用驅動程式
+      operationId: oneform_drivers_enable_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: drivers.enable
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+  /drivers/{name}/disable:
+    post:
+      tags:
+        - oneform
+      summary: 停用驅動程式
+      operationId: oneform_drivers_disable_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: drivers.disable
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+  /drivers/sync:
+    post:
+      tags:
+        - oneform
+      summary: 同步驅動程式
+      operationId: oneform_drivers_sync_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: drivers.sync
+      security:
+        - FireedgeCookie: []
+  /providers:
+    get:
+      tags:
+        - oneform
+      summary: 列出供應商
+      operationId: oneform_providers_list_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: providers.list
+      security:
+        - FireedgeCookie: []
+    post:
+      tags:
+        - oneform
+      summary: 建立供應商
+      operationId: oneform_providers_create_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: providers.create
+      security:
+        - FireedgeCookie: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+  /providers/{id}:
+    get:
+      tags:
+        - oneform
+      summary: 檢視供應商
+      operationId: oneform_providers_show_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: providers.show
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+    patch:
+      tags:
+        - oneform
+      summary: 更新供應商
+      operationId: oneform_providers_update_patch
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: providers.update
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+    delete:
+      tags:
+        - oneform
+      summary: 刪除供應商
+      operationId: oneform_providers_delete_delete
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: providers.delete
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  /providers/{id}/chmod:
+    post:
+      tags:
+        - oneform
+      summary: 修改供應商權限
+      operationId: oneform_providers_chmod_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: providers.chmod
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                octet:
+                  type: string
+  /providers/{id}/chown:
+    post:
+      tags:
+        - oneform
+      summary: 變更供應商擁有者
+      operationId: oneform_providers_chown_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: providers.chown
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                owner_id:
+                  type: string
+                group_id:
+                  type: string
+  /providers/{id}/chgrp:
+    post:
+      tags:
+        - oneform
+      summary: 變更供應商群組
+      operationId: oneform_providers_chgrp_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: providers.chgrp
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group_id:
+                  type: string
+  /provisions:
+    get:
+      tags:
+        - oneform
+      summary: 列出部署項目
+      operationId: oneform_provisions_list_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.list
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: extended
+          required: false
+          schema:
+            type: string
+            default: "false"
+    post:
+      tags:
+        - oneform
+      summary: 建立部署項目
+      operationId: oneform_provisions_create_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.create
+      security:
+        - FireedgeCookie: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+  /provisions/{id}:
+    get:
+      tags:
+        - oneform
+      summary: 檢視部署項目
+      operationId: oneform_provisions_show_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.show
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: extended
+          required: false
+          schema:
+            type: string
+            default: "false"
+    patch:
+      tags:
+        - oneform
+      summary: 更新部署項目
+      operationId: oneform_provisions_update_patch
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.update
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+    delete:
+      tags:
+        - oneform
+      summary: 刪除部署項目
+      operationId: oneform_provisions_delete_delete
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.delete
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: force
+          required: false
+          schema:
+            type: string
+  /provisions/{id}/logs:
+    get:
+      tags:
+        - oneform
+      summary: 檢視部署紀錄
+      operationId: oneform_provisions_logs_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.logs
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: all
+          required: false
+          schema:
+            type: string
+            default: "true"
+  /provisions/{id}/undeploy:
+    post:
+      tags:
+        - oneform
+      summary: 取消部署
+      operationId: oneform_provisions_undeploy_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.undeploy
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                force:
+                  type: string
+  /provisions/{id}/retry:
+    post:
+      tags:
+        - oneform
+      summary: 重試部署
+      operationId: oneform_provisions_retry_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.retry
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  /provisions/{id}/scale:
+    post:
+      tags:
+        - oneform
+      summary: 調整部署規模
+      operationId: oneform_provisions_scale_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.scale
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nodes:
+                  type: string
+                direction:
+                  type: string
+  /provisions/{id}/add-ip:
+    post:
+      tags:
+        - oneform
+      summary: 新增 IP 位址
+      operationId: oneform_provisions_addIp_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.addIp
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: string
+  /provisions/{id}/remove-ip:
+    post:
+      tags:
+        - oneform
+      summary: 移除 IP 位址
+      operationId: oneform_provisions_removeIp_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.removeIp
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ar_id:
+                  type: string
+  /provisions/{id}/chmod:
+    post:
+      tags:
+        - oneform
+      summary: 修改部署項目權限
+      operationId: oneform_provisions_chmod_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.chmod
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                octet:
+                  type: string
+  /provisions/{id}/chown:
+    post:
+      tags:
+        - oneform
+      summary: 變更部署項目擁有者
+      operationId: oneform_provisions_chown_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.chown
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                owner_id:
+                  type: string
+                group_id:
+                  type: string
+  /provisions/{id}/chgrp:
+    post:
+      tags:
+        - oneform
+      summary: 變更部署項目群組
+      operationId: oneform_provisions_chgrp_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: provisions.chgrp
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group_id:
+                  type: string
+  /sunstone/views:
+    get:
+      tags:
+        - sunstone
+      summary: 取得 Sunstone 視圖
+      operationId: sunstone_sunstone_views_get
+      responses:
+        "200":
+          description: Successful response（93KB，僅列頂層結構）
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  views:
+                    admin:
+                      - resource_name: "ACL"
+                        actions: {}
+                        filters: {}
+                      - resource_name: "Cluster"
+                        actions: {}
+                        filters: {}
+                      - resource_name: "VM"
+                        actions: {}
+                        filters: {}
+                    user:
+                      - resource_name: "VM"
+                        actions: {}
+                        filters: {}
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: sunstone.views
+      security:
+        - FireedgeCookie: []
+  /sunstone/config:
+    get:
+      tags:
+        - sunstone
+      summary: 取得 Sunstone 設定
+      operationId: sunstone_sunstone_config_get
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  keep_me_logged: true
+                  leases:
+                    terminate:
+                      edit: false
+                      execute_after_weeks: 2
+                      warn_before_days: 1
+                  supported_fs:
+                    - "ext4"
+                    - "ext3"
+                    - "ext2"
+                    - "xfs"
+                  currency: "EUR"
+                  default_lang: "zh_TW"
+                  langs:
+                    en: "English"
+                    zh_TW: "Chinese (Taiwan)"
+                    zh_CN: "Chinese (China)"
+                  currentTimeZone: "Asia/Taipei"
+                  rowStyle: "card"
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: sunstone.config
+      security:
+        - FireedgeCookie: []
+  /sunstone/views/available:
+    get:
+      tags:
+        - sunstone
+      summary: 取得可用視圖
+      operationId: sunstone_sunstone_availableViews_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: sunstone.availableViews
+      security:
+        - FireedgeCookie: []
+  /support/check:
+    get:
+      tags:
+        - support
+      summary: 檢查支援服務狀態
+      operationId: support_support_check_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: support.check
+      security:
+        - FireedgeCookie: []
+  /system/config:
+    get:
+      tags:
+        - system
+      summary: 取得系統設定
+      operationId: system_system_config_get
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  AUTH_MAD:
+                    AUTHN: "ssh,x509,ldap,server_cipher,server_x509"
+                    EXECUTABLE: "one_auth_mad"
+                  CONTEXT_ALLOW_ETH_UPDATES: "NO"
+                  DEFAULT_COST:
+                    CPU_COST: "0"
+                    DISK_COST: "0"
+                    MEMORY_COST: "0"
+                  DRS_INTERVAL: "600"
+                  DS_MAD_CONF:
+                    - NAME: "ceph"
+                      PERSISTENT_ONLY: "NO"
+                      MARKETPLACE_ACTIONS: "export"
+                    - NAME: "fs"
+                      PERSISTENT_ONLY: "NO"
+                      MARKETPLACE_ACTIONS: "export"
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: system.config
+      security:
+        - FireedgeCookie: []
+  /system/vmmconfig:
+    get:
+      tags:
+        - system
+      summary: 取得虛擬化驅動設定
+      operationId: system_vmm_config_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vmm.config
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: hypervisor
+          required: false
+          schema:
+            type: string
+            default: kvm
+  /system/profiles:
+    get:
+      tags:
+        - system
+      summary: 取得系統設定檔
+      operationId: system_system_profiles_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: system.profiles
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: id
+          required: false
+          schema:
+            type: string
+            default: "-1"
+  /system/tab-manifest:
+    get:
+      tags:
+        - system
+      summary: 取得分頁設定
+      operationId: system_tab_config_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: tab.config
+      security: []
+  /system/default-labels:
+    get:
+      tags:
+        - system
+      summary: 取得預設標籤設定
+      operationId: system_defaultlabels_config_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: defaultlabels.config
+      security:
+        - FireedgeCookie: []
+  /vdc/create:
+    post:
+      tags:
+        - vdc
+      summary: 建立 VDC
+      operationId: vdc_vdc_create_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vdc.create
+      security:
+        - FireedgeCookie: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hosts:
+                  type: string
+                datastores:
+                  type: string
+                vnets:
+                  type: string
+                groups:
+                  type: string
+                clusters:
+                  type: string
+                template:
+                  type: string
+  /vdc/updateVdc/{id}:
+    put:
+      tags:
+        - vdc
+      summary: 更新 VDC
+      operationId: vdc_vdc_updateVdc_put
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vdc.updateVdc
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hosts:
+                  type: string
+                datastores:
+                  type: string
+                vnets:
+                  type: string
+                groups:
+                  type: string
+                clusters:
+                  type: string
+                template:
+                  type: string
+  /vm/save/{id}:
+    post:
+      tags:
+        - vm
+      summary: 儲存為範本
+      operationId: vm_vm_saveastemplate_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vm.saveastemplate
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                persistent:
+                  type: string
+  /vm/{id}/guacamole/{type}:
+    get:
+      tags:
+        - vm
+      summary: 取得 VM 遠端連線資訊
+      operationId: vm_vm_guacamole_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vm.guacamole
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: type
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: zone
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: download
+          required: false
+          schema:
+            type: string
+  /vm/{id}/logs:
+    get:
+      tags:
+        - vm
+      summary: 取得 VM 日誌
+      operationId: vm_vm_logs_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vm.logs
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+  /vmpool/accounting/filtered:
+    get:
+      tags:
+        - vmpool
+      summary: 查詢 VM 計費資料
+      operationId: vmpool_vmpool_accounting_filter_get
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  HISTORY_RECORDS:
+                    HISTORY:
+                      - OID: "0"
+                        SEQ: "0"
+                        HOSTNAME: "10.1.1.79"
+                        HID: "0"
+                        CID: "0"
+                        STIME: "1774615800"
+                        ETIME: "1774616728"
+                        VM_MAD: "kvm"
+                        TM_MAD: "local"
+                        DS_ID: "0"
+                        ACTION: "23"
+                        UID: "0"
+                        GID: "0"
+                        VM:
+                          ID: "0"
+                          NAME: "Ubuntu 2404-GPU -0"
+                          UNAME: "oneadmin"
+                          STATE: "3"
+                          LCM_STATE: "25"
+                          STIME: "1774615796"
+                          ETIME: "0"
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vmpool.accounting.filter
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: user
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: group
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: start
+          required: false
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          required: false
+          schema:
+            type: integer
+            default: -1
+  /vmpool/showback/filtered:
+    get:
+      tags:
+        - vmpool
+      summary: 查詢 VM showback 資料
+      operationId: vmpool_vmpool_showback_filter_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vmpool.showback.filter
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: user
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: group
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: startMonth
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: startYear
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: endMonth
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: endYear
+          required: false
+          schema:
+            type: string
+  /vmpool/info/paginated:
+    get:
+      tags:
+        - vmpool
+      summary: 分頁查詢 VM 資訊
+      operationId: vmpool_vmpool_info_paginated_get
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  - ID: "0"
+                    UID: "0"
+                    GID: "0"
+                    UNAME: "oneadmin"
+                    GNAME: "oneadmin"
+                    NAME: "Ubuntu 2404-GPU -0"
+                    STATE: "3"
+                    LCM_STATE: "3"
+                    STIME: "1774615796"
+                    ETIME: "0"
+                    DEPLOY_ID: "3e23434b-4b09-449a-bbc3-32c005fa7963"
+                    TEMPLATE:
+                      CPU: "4"
+                      MEMORY: "16384"
+                      PCI:
+                        - DEVICE: "2782"
+                          DEVICE_NAME: "NVIDIA Corporation AD104 [GeForce RTX 4070 Ti]"
+                          VENDOR: "10de"
+                          VENDOR_NAME: "NVIDIA Corporation"
+                      CONTEXT:
+                        ETH0_METHOD: "dhcp"
+                        NETWORK: "YES"
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: vmpool.info.paginated
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: query
+          name: extended
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: filter
+          required: false
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: offset
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: pageSize
+          required: false
+          schema:
+            type: integer
+            default: 200
+        - in: query
+          name: state
+          required: false
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: filterByKey
+          required: false
+          schema:
+            type: string
+  /zendesk/login:
+    post:
+      tags:
+        - zendesk
+      summary: 登入 Zendesk
+      operationId: zendesk_zendesk_login_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: zendesk.login
+      security:
+        - FireedgeCookie: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                pass:
+                  type: string
+  /zendesk:
+    post:
+      tags:
+        - zendesk
+      summary: 建立 Zendesk 工單
+      operationId: zendesk_zendesk_create_post
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: zendesk.create
+      security:
+        - FireedgeCookie: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                subject:
+                  type: string
+                body:
+                  type: string
+                version:
+                  type: string
+                severity:
+                  type: string
+    get:
+      tags:
+        - zendesk
+      summary: 列出 Zendesk 工單
+      operationId: zendesk_zendesk_list_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: zendesk.list
+      security:
+        - FireedgeCookie: []
+  /zendesk/{id}:
+    put:
+      tags:
+        - zendesk
+      summary: 更新 Zendesk 工單
+      operationId: zendesk_zendesk_update_put
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: zendesk.update
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                solved:
+                  type: string
+  /zendesk/comments/{id}:
+    get:
+      tags:
+        - zendesk
+      summary: 取得 Zendesk 留言
+      operationId: zendesk_zendesk_comment_get
+      responses:
+        "200":
+          description: Successful response
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      x-fireedge-action: zendesk.comment
+      security:
+        - FireedgeCookie: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string

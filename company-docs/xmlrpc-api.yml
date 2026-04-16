@@ -1,0 +1,4409 @@
+openapi: 3.0.3
+info:
+  title: OpenNebula FireEdge XML-RPC Proxy API
+  version: 1.0.0
+  description: |
+    FireEdge XML-RPC 代理路由完整文件。
+    這些路由由 src/fireedge/src/server/routes/entrypoints/Api/xmlrpc.js 動態產生，
+    直接代理 OpenNebula 核心 XML-RPC API。
+    URL 前綴: /fireedge/api
+    認證方式: 所有端點均需 FireedgeCookie (session token)。
+    來源定義: src/fireedge/src/server/utils/constants/commands/*.js
+servers:
+  - url: /fireedge/api
+    description: Default FireEdge API base path
+  - url: /api
+    description: Direct API base path
+components:
+  securitySchemes:
+    FireedgeCookie:
+      type: apiKey
+      in: cookie
+      name: FireedgeToken
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        登入後用 POST /auth/ 取得 token（在 response.data.token），
+        後續請求帶 Authorization: Bearer <token> 即可。
+        實測學校環境用此方式較穩定。
+  schemas:
+    ChmodParams:
+      type: object
+      properties:
+        ownerUse:
+          type: integer
+          default: -1
+        ownerManage:
+          type: integer
+          default: -1
+        ownerAdmin:
+          type: integer
+          default: -1
+        groupUse:
+          type: integer
+          default: -1
+        groupManage:
+          type: integer
+          default: -1
+        groupAdmin:
+          type: integer
+          default: -1
+        otherUse:
+          type: integer
+          default: -1
+        otherManage:
+          type: integer
+          default: -1
+        otherAdmin:
+          type: integer
+          default: -1
+    ChownParams:
+      type: object
+      properties:
+        user:
+          type: integer
+          default: -1
+        group:
+          type: integer
+          default: -1
+security:
+  - FireedgeCookie: []
+  - BearerAuth: []
+
+paths:
+  # ============================================================
+  # VM - 虛擬機器 (46 個端點)
+  # ============================================================
+  /vm/allocate:
+    put:
+      tags: [vm]
+      summary: 建立 VM (raw template)
+      operationId: vm_allocate
+      x-xmlrpc-method: vm.allocate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                  description: VM template 內容
+                status:
+                  type: boolean
+                  default: false
+                  description: 是否以 HOLD 狀態建立
+      responses:
+        "200":
+          description: 回傳新建 VM 的 ID
+
+  /vm/deploy/{id}:
+    put:
+      tags: [vm]
+      summary: 部署 VM 到指定 Host
+      operationId: vm_deploy
+      x-xmlrpc-method: vm.deploy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                host:
+                  type: integer
+                  default: -1
+                  description: 目標 Host ID
+                enforce:
+                  type: boolean
+                  default: false
+                  description: 是否強制部署（忽略排程限制）
+                datastore:
+                  type: integer
+                  default: -1
+                  description: 目標 Datastore ID
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/action/{id}:
+    put:
+      tags: [vm]
+      summary: 執行 VM 生命週期動作
+      operationId: vm_action
+      x-xmlrpc-method: vm.action
+      description: |
+        可用的 action 值:
+        - terminate: 正常關機並刪除
+        - terminate-hard: 強制關機並刪除
+        - poweroff: 正常關機（保留資源）
+        - poweroff-hard: 強制關機（保留資源）
+        - reboot: 正常重啟
+        - reboot-hard: 強制重啟
+        - hold: 暫停排程
+        - release: 恢復排程
+        - stop: 停止（儲存狀態到磁碟）
+        - suspend: 暫停（儲存狀態到記憶體）
+        - resume: 恢復運行
+        - resched: 重新排程
+        - unresched: 取消重新排程
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [action]
+              properties:
+                action:
+                  type: string
+                  default: stop
+                  enum: [terminate, terminate-hard, poweroff, poweroff-hard, reboot, reboot-hard, hold, release, stop, suspend, resume, resched, unresched]
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/migrate/{id}:
+    put:
+      tags: [vm]
+      summary: 遷移 VM 到其他 Host
+      operationId: vm_migrate
+      x-xmlrpc-method: vm.migrate
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                host:
+                  type: integer
+                  default: -1
+                live:
+                  type: boolean
+                  default: false
+                  description: 是否即時遷移
+                enforce:
+                  type: boolean
+                  default: false
+                datastore:
+                  type: integer
+                  default: -1
+                type:
+                  type: integer
+                  default: 0
+                  description: "0=遷移, 1=RDMA遷移"
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/disksaveas/{id}:
+    put:
+      tags: [vm]
+      summary: 將 VM 磁碟儲存為映像
+      operationId: vm_disksaveas
+      x-xmlrpc-method: vm.disksaveas
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disk:
+                  type: integer
+                  default: 0
+                name:
+                  type: string
+                type:
+                  type: string
+                snapshot:
+                  type: integer
+                  default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/disksnapshotcreate/{id}:
+    post:
+      tags: [vm]
+      summary: 建立磁碟快照
+      operationId: vm_disksnapshotcreate
+      x-xmlrpc-method: vm.disksnapshotcreate
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disk:
+                  type: integer
+                  default: 0
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/disksnapshotdelete/{id}:
+    delete:
+      tags: [vm]
+      summary: 刪除磁碟快照
+      operationId: vm_disksnapshotdelete
+      x-xmlrpc-method: vm.disksnapshotdelete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: disk
+          schema:
+            type: integer
+            default: 0
+        - in: query
+          name: snapshot
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/disksnapshotrevert/{id}:
+    put:
+      tags: [vm]
+      summary: 還原磁碟快照
+      operationId: vm_disksnapshotrevert
+      x-xmlrpc-method: vm.disksnapshotrevert
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disk:
+                  type: integer
+                  default: 0
+                snapshot:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/disksnapshotrename/{id}:
+    put:
+      tags: [vm]
+      summary: 重命名磁碟快照
+      operationId: vm_disksnapshotrename
+      x-xmlrpc-method: vm.disksnapshotrename
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disk:
+                  type: integer
+                  default: 0
+                snapshot:
+                  type: integer
+                  default: 0
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/attach/{id}:
+    put:
+      tags: [vm]
+      summary: 掛載磁碟到 VM
+      operationId: vm_attach
+      x-xmlrpc-method: vm.attach
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                  description: DISK vector attribute (XML)
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/detach/{id}:
+    put:
+      tags: [vm]
+      summary: 卸載磁碟
+      operationId: vm_detach
+      x-xmlrpc-method: vm.detach
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disk:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/diskresize/{id}:
+    put:
+      tags: [vm]
+      summary: 調整磁碟大小
+      operationId: vm_diskresize
+      x-xmlrpc-method: vm.diskresize
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                disk:
+                  type: integer
+                  default: 0
+                size:
+                  type: string
+                  description: 新大小 (MB)
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/attachnic/{id}:
+    put:
+      tags: [vm]
+      summary: 掛載網卡到 VM（取得網路/IP）
+      operationId: vm_attachnic
+      x-xmlrpc-method: vm.attachnic
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                  description: NIC vector attribute (XML)
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/detachnic/{id}:
+    put:
+      tags: [vm]
+      summary: 卸載網卡
+      operationId: vm_detachnic
+      x-xmlrpc-method: vm.detachnic
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nic:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/updatenic/{id}:
+    put:
+      tags: [vm]
+      summary: 更新網卡設定
+      operationId: vm_updatenic
+      x-xmlrpc-method: vm.updatenic
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nic:
+                  type: integer
+                  default: 0
+                template:
+                  type: string
+                append:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/attachsg/{id}:
+    put:
+      tags: [vm]
+      summary: 掛載安全群組到 NIC
+      operationId: vm_attachsg
+      x-xmlrpc-method: vm.attachsg
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nic:
+                  type: integer
+                  default: 0
+                secgroup:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/detachsg/{id}:
+    put:
+      tags: [vm]
+      summary: 卸載安全群組
+      operationId: vm_detachsg
+      x-xmlrpc-method: vm.detachsg
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nic:
+                  type: integer
+                  default: 0
+                secgroup:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/attachpci/{id}:
+    put:
+      tags: [vm]
+      summary: 掛載 PCI 裝置（GPU passthrough）
+      operationId: vm_attachpci
+      x-xmlrpc-method: vm.attachpci
+      description: 將 PCI 裝置（如 GPU）直通掛載到 VM。GPU 算力平台核心功能。
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                  description: PCI vector attribute (XML)，例如 VENDOR=10de, CLASS=0300
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/detachpci/{id}:
+    put:
+      tags: [vm]
+      summary: 卸載 PCI 裝置（GPU）
+      operationId: vm_detachpci
+      x-xmlrpc-method: vm.detachpci
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pci:
+                  type: integer
+                  default: 0
+                  description: PCI 裝置 ID
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/chmod/{id}:
+    put:
+      tags: [vm]
+      summary: 修改 VM 權限
+      operationId: vm_chmod
+      x-xmlrpc-method: vm.chmod
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChmodParams"
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/chown/{id}:
+    put:
+      tags: [vm]
+      summary: 修改 VM 擁有者
+      operationId: vm_chown
+      x-xmlrpc-method: vm.chown
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChownParams"
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/rename/{id}:
+    put:
+      tags: [vm]
+      summary: 重命名 VM
+      operationId: vm_rename
+      x-xmlrpc-method: vm.rename
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/snapshotcreate/{id}:
+    post:
+      tags: [vm]
+      summary: 建立 VM 快照
+      operationId: vm_snapshotcreate
+      x-xmlrpc-method: vm.snapshotcreate
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/snapshotrevert/{id}:
+    post:
+      tags: [vm]
+      summary: 還原 VM 快照
+      operationId: vm_snapshotrevert
+      x-xmlrpc-method: vm.snapshotrevert
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                snapshot:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/snapshotdelete/{id}:
+    delete:
+      tags: [vm]
+      summary: 刪除 VM 快照
+      operationId: vm_snapshotdelete
+      x-xmlrpc-method: vm.snapshotdelete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: snapshot
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/resize/{id}:
+    put:
+      tags: [vm]
+      summary: 調整 VM 規格（CPU/記憶體）
+      operationId: vm_resize
+      x-xmlrpc-method: vm.resize
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                  description: 包含 CPU/VCPU/MEMORY 的 template
+                enforce:
+                  type: boolean
+                  default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/update/{id}:
+    put:
+      tags: [vm]
+      summary: 更新 VM 的使用者 template
+      operationId: vm_update
+      x-xmlrpc-method: vm.update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 0
+                  description: "0=merge, 1=replace"
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/updateconf/{id}:
+    put:
+      tags: [vm]
+      summary: 更新 VM 配置屬性
+      operationId: vm_updateconf
+      x-xmlrpc-method: vm.updateconf
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 1
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/recover/{id}:
+    put:
+      tags: [vm]
+      summary: 復原卡住的 VM
+      operationId: vm_recover
+      x-xmlrpc-method: vm.recover
+      description: |
+        operation 值:
+        - 0: failure
+        - 1: success
+        - 2: retry
+        - 3: delete
+        - 4: delete-recreate
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operation:
+                  type: integer
+                  default: 1
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/restore:
+    post:
+      tags: [vm]
+      summary: 從備份還原 VM
+      operationId: vm_restore
+      x-xmlrpc-method: vm.restore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  default: -1
+                imageId:
+                  type: integer
+                  default: -1
+                incrementId:
+                  type: integer
+                  default: -1
+                diskId:
+                  type: integer
+                  default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/info/{id}:
+    get:
+      tags: [vm]
+      summary: 取得 VM 詳細資訊（含 NIC IP、PCI GPU、CONTEXT）
+      operationId: vm_info
+      x-xmlrpc-method: vm.info
+      description: |
+        取得 VM 詳細資訊。回傳的物件包含：
+        - VM.TEMPLATE.PCI[]: GPU passthrough 配置請求
+        - VM.TEMPLATE.NIC[]: 網路卡配置（DHCP 模式下無 IP）
+        - VM.TEMPLATE.CONTEXT: cloud-init 設定（含 SSH_PUBLIC_KEY）
+        - VM.MONITORING: 即時監控資料，**含原生 GPU 監控欄位**：
+          GPU_COUNT, GPU_UTILIZATION, GPU_MEMORY_FREE, GPU_MEMORY_UTILIZATION,
+          GPU_POWER_USAGE，每個還有 _FORECAST 預測版本
+        - VM.HISTORY_RECORDS: 歷史部署紀錄（HOSTNAME 在這）
+        GPU 算力平台核心 API。
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: 回傳 VM 完整資訊物件
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  VM:
+                    ID: "0"
+                    UID: "0"
+                    GID: "0"
+                    UNAME: "oneadmin"
+                    GNAME: "oneadmin"
+                    NAME: "Ubuntu 2404-GPU -0"
+                    STATE: "3"
+                    LCM_STATE: "3"
+                    STIME: "1774615796"
+                    ETIME: "0"
+                    DEPLOY_ID: "3e23434b-4b09-449a-bbc3-32c005fa7963"
+                    MONITORING:
+                      CPU: "64.92"
+                      CPU_FORECAST: "50.83"
+                      GPU_COUNT: "1"
+                      GPU_MEMORY_FREE: "11885.0"
+                      GPU_MEMORY_FREE_FORECAST: "11885.0"
+                      GPU_MEMORY_UTILIZATION: "0.0"
+                      GPU_MEMORY_UTILIZATION_FORECAST: "0.0"
+                      GPU_POWER_USAGE: "0.0"
+                      GPU_POWER_USAGE_FORECAST: "0.0"
+                      GPU_UTILIZATION: "0.0"
+                      GPU_UTILIZATION_FORECAST: "0.0"
+                      MEMORY: "16992056"
+                      TIMESTAMP: "1776317077"
+                      VM_QEMU_PING: "QEMU Guest Agent monitoring disabled"
+                    TEMPLATE:
+                      CPU: "4"
+                      MEMORY: "16384"
+                      VCPU: "4"
+                      CONTEXT:
+                        ETH0_METHOD: "dhcp"
+                        ETH0_IP: ""
+                        NETWORK: "YES"
+                        SSH_PUBLIC_KEY: "ssh-ed25519 AAAA... root@localhost"
+                      NIC:
+                        AR_ID: "0"
+                        BRIDGE: "onebr3"
+                        MAC: "02:00:80:7d:95:da"
+                        METHOD: "dhcp"
+                        NETWORK: "lan-dhcp-onebr3"
+                        NETWORK_ID: "5"
+                        NIC_ID: "0"
+                        SSH: "YES"
+                      PCI:
+                        - ADDRESS: "0000:01:00:0"
+                          BUS: "01"
+                          CLASS: "0300"
+                          DEVICE: "2782"
+                          VENDOR: "10de"
+                          PCI_ID: "0"
+                          SHORT_ADDRESS: "01:00.0"
+                        - ADDRESS: "0000:01:00:1"
+                          BUS: "01"
+                          CLASS: "0403"
+                          DEVICE: "22bc"
+                          VENDOR: "10de"
+                          PCI_ID: "1"
+                          SHORT_ADDRESS: "01:00.1"
+                      TEMPLATE_ID: "1"
+                    HISTORY_RECORDS:
+                      HISTORY:
+                        OID: "0"
+                        SEQ: "29"
+                        HOSTNAME: "10.1.1.79"
+                        HID: "0"
+                        CID: "0"
+                        VM_MAD: "kvm"
+
+  /vm/monitoring/{id}:
+    get:
+      tags: [vm]
+      summary: 取得 VM 監控紀錄
+      operationId: vm_monitoring
+      x-xmlrpc-method: vm.monitoring
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/lock/{id}:
+    put:
+      tags: [vm]
+      summary: 鎖定 VM
+      operationId: vm_lock
+      x-xmlrpc-method: vm.lock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: integer
+                  default: 4
+                  description: "1=Use, 2=Manage, 3=Admin, 4=All"
+                test:
+                  type: boolean
+                  default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/unlock/{id}:
+    put:
+      tags: [vm]
+      summary: 解鎖 VM
+      operationId: vm_unlock
+      x-xmlrpc-method: vm.unlock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/schedadd/{id}:
+    post:
+      tags: [vm]
+      summary: 新增排程動作
+      operationId: vm_schedadd
+      x-xmlrpc-method: vm.schedadd
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/schedupdate/{id}:
+    put:
+      tags: [vm]
+      summary: 更新排程動作
+      operationId: vm_schedupdate
+      x-xmlrpc-method: vm.schedupdate
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedId:
+                  type: integer
+                  default: 0
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/scheddelete/{id}:
+    delete:
+      tags: [vm]
+      summary: 刪除排程動作
+      operationId: vm_scheddelete
+      x-xmlrpc-method: vm.scheddelete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: schedId
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vm/backup/{id}:
+    post:
+      tags: [vm]
+      summary: 備份 VM
+      operationId: vm_backup
+      x-xmlrpc-method: vm.backup
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dsId:
+                  type: integer
+                  default: 0
+                  description: 備份目標 Datastore ID
+                reset:
+                  type: boolean
+                  default: false
+      responses:
+        "200":
+          description: Successful response
+
+  # ============================================================
+  # VMPool - 虛擬機器池 (6 個端點)
+  # ============================================================
+  /vmpool/info:
+    get:
+      tags: [vmpool]
+      summary: 取得 VM 列表
+      operationId: vmpool_info
+      x-xmlrpc-method: vmpool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+          description: "-2=所有, -1=自己的, >=0=指定使用者"
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: state
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: filterByKey
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 回傳 VM_POOL 物件
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  VM_POOL:
+                    VM:
+                      ID: "0"
+                      UID: "0"
+                      GID: "0"
+                      UNAME: "oneadmin"
+                      GNAME: "oneadmin"
+                      NAME: "Ubuntu 2404-GPU -0"
+                      STATE: "3"
+                      LCM_STATE: "3"
+                      STIME: "1774615796"
+                      DEPLOY_ID: "3e23434b-4b09-449a-bbc3-32c005fa7963"
+                      TEMPLATE:
+                        CPU: "4"
+                        MEMORY: "16384"
+                        VCPU: "4"
+                        DISK:
+                          DISK_ID: "0"
+                          DATASTORE: "default"
+                          IMAGE: "Ubuntu 24.04"
+                          IMAGE_ID: "0"
+                          SIZE: "61440"
+                          TYPE: "FILE"
+                        NIC:
+                          MAC: "02:00:80:7d:95:da"
+                          NETWORK: "lan-dhcp-onebr3"
+                          NETWORK_ID: "5"
+                          NIC_ID: "0"
+                        GRAPHICS:
+                          LISTEN: "0.0.0.0"
+                          PORT: "5900"
+                          TYPE: "VNC"
+                      MONITORING: ""
+                      HISTORY_RECORDS:
+                        HISTORY:
+                          OID: "0"
+                          SEQ: "29"
+                          HOSTNAME: "10.1.1.79"
+                          HID: "0"
+                          CID: "0"
+                          VM_MAD: "kvm"
+
+  /vmpool/infoextended:
+    get:
+      tags: [vmpool]
+      summary: 取得 VM 列表（擴展模式，含完整 TEMPLATE）
+      operationId: vmpool_infoextended
+      x-xmlrpc-method: vmpool.infoextended
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: state
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: filterBykey
+          schema:
+            type: string
+      responses:
+        "200":
+          description: 回傳擴展的 VM_POOL 物件
+
+  /vmpool/monitoring:
+    get:
+      tags: [vmpool]
+      summary: 取得所有 VM 監控紀錄
+      operationId: vmpool_monitoring
+      x-xmlrpc-method: vmpool.monitoring
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: seconds
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vmpool/accounting:
+    get:
+      tags: [vmpool]
+      summary: 取得 VM 帳務紀錄
+      operationId: vmpool_accounting
+      x-xmlrpc-method: vmpool.accounting
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -3
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vmpool/showback:
+    get:
+      tags: [vmpool]
+      summary: 取得 VM showback 費率紀錄
+      operationId: vmpool_showback
+      x-xmlrpc-method: vmpool.showback
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: startMonth
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: startYear
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: endMonth
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: endYear
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vmpool/calculateshowback:
+    get:
+      tags: [vmpool]
+      summary: 計算 VM showback 月費
+      operationId: vmpool_calculateshowback
+      x-xmlrpc-method: vmpool.calculateshowback
+      parameters:
+        - in: query
+          name: startMonth
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: startYear
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: endMonth
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: endYear
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  # ============================================================
+  # Host - 主機管理 (9 個端點) - GPU 資源所在
+  # ============================================================
+  /host/allocate:
+    put:
+      tags: [host]
+      summary: 新增 Host
+      operationId: host_allocate
+      x-xmlrpc-method: host.allocate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hostname:
+                  type: string
+                imMad:
+                  type: string
+                  description: Information Manager driver
+                vmmMad:
+                  type: string
+                  description: Virtual Machine Manager driver
+                cluster:
+                  type: integer
+                  default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /host/delete/{id}:
+    delete:
+      tags: [host]
+      summary: 刪除 Host
+      operationId: host_delete
+      x-xmlrpc-method: host.delete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /host/status/{id}:
+    put:
+      tags: [host]
+      summary: 變更 Host 狀態（啟用/停用/離線）
+      operationId: host_status
+      x-xmlrpc-method: host.status
+      description: "status 值: 0=enable, 1=disable, 2=offline"
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /host/update/{id}:
+    put:
+      tags: [host]
+      summary: 更新 Host template
+      operationId: host_update
+      x-xmlrpc-method: host.update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /host/rename/{id}:
+    put:
+      tags: [host]
+      summary: 重命名 Host
+      operationId: host_rename
+      x-xmlrpc-method: host.rename
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /host/info/{id}:
+    get:
+      tags: [host]
+      summary: 取得 Host 詳細資訊（含 PCI/GPU 裝置、NUMA 資訊）
+      operationId: host_info
+      x-xmlrpc-method: host.info
+      description: |
+        取得 Host 詳細資訊。GPU 算力平台核心 API。回傳包含：
+        - HOST.HOST_SHARE.PCI_DEVICES.PCI[]: 所有 PCI 裝置（含 GPU），含人類可讀欄位：
+          VENDOR_NAME（如 "NVIDIA Corporation"）
+          DEVICE_NAME（如 "NVIDIA Corporation AD104 [GeForce RTX 4070 Ti]"）
+          CLASS_NAME, VMID（哪台 VM 在用，-1 為空閒）
+        - HOST.HOST_SHARE.NUMA_NODES.NODE[]: NUMA 拓撲，含 CORE/HUGEPAGE
+        - HOST.MONITORING: Host 監控資料（注意：Host 層級的 MONITORING 不含 GPU_*，GPU 即時資料在 VM.MONITORING）
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: 回傳 HOST 完整資訊物件
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  HOST:
+                    ID: "0"
+                    NAME: "10.1.1.79"
+                    STATE: "2"
+                    IM_MAD: "kvm"
+                    VM_MAD: "kvm"
+                    CLUSTER_ID: "0"
+                    CLUSTER: "default"
+                    HOST_SHARE:
+                      MEM_USAGE: "16777216"
+                      CPU_USAGE: "400"
+                      TOTAL_MEM: "65347080"
+                      TOTAL_CPU: "2400"
+                      MAX_MEM: "65347080"
+                      MAX_CPU: "2400"
+                      RUNNING_VMS: "1"
+                      PCI_DEVICES:
+                        PCI:
+                          - ADDRESS: "0000:01:00:0"
+                            BUS: "01"
+                            CLASS: "0300"
+                            CLASS_NAME: "VGA compatible controller"
+                            DEVICE: "2782"
+                            DEVICE_NAME: "NVIDIA Corporation AD104 [GeForce RTX 4070 Ti]"
+                            DOMAIN: "0000"
+                            FUNCTION: "0"
+                            NUMA_NODE: "-"
+                            SHORT_ADDRESS: "01:00.0"
+                            SLOT: "00"
+                            TYPE: "10de:2782:0300"
+                            VENDOR: "10de"
+                            VENDOR_NAME: "NVIDIA Corporation"
+                            VMID: "0"
+                          - ADDRESS: "0000:01:00:1"
+                            BUS: "01"
+                            CLASS: "0403"
+                            CLASS_NAME: "Audio device"
+                            DEVICE: "22bc"
+                            DEVICE_NAME: "NVIDIA Corporation AD104 High Definition Audio Controller"
+                            DOMAIN: "0000"
+                            FUNCTION: "1"
+                            NUMA_NODE: "-"
+                            SHORT_ADDRESS: "01:00.1"
+                            SLOT: "00"
+                            TYPE: "10de:22bc:0403"
+                            VENDOR: "10de"
+                            VENDOR_NAME: "NVIDIA Corporation"
+                            VMID: "0"
+                      NUMA_NODES:
+                        NODE:
+                          CORE:
+                            - CPUS: "0:-1"
+                              DEDICATED: "NO"
+                              FREE: "1"
+                              ID: "0"
+                            - CPUS: "2:-1"
+                              DEDICATED: "NO"
+                              FREE: "1"
+                              ID: "4"
+                            # ... (共 16 cores，僅列代表性 2 筆)
+                          HUGEPAGE:
+                            - PAGES: "0"
+                              SIZE: "2048"
+                              USAGE: "0"
+                            - PAGES: "0"
+                              SIZE: "1048576"
+                              USAGE: "0"
+                          MEMORY:
+                            DISTANCE: "0"
+                            TOTAL: "65347080"
+                            USAGE: "0"
+                          NODE_ID: "0"
+                    TEMPLATE:
+                      ARCH: "x86_64"
+                      HOSTNAME: "nebula"
+                      HYPERVISOR: "kvm"
+                      MODELNAME: "13th Gen Intel(R) Core(TM) i7-13700K"
+                      PCI_FILTER: "10de"
+                      TOTALCPU: "2400"
+                      TOTALMEMORY: "65347080"
+                      VERSION: "7.0.1"
+                    MONITORING:
+                      TIMESTAMP: "1776317079"
+                      ID: "0"
+                      CAPACITY:
+                        FREE_CPU: "2400"
+                        FREE_CPU_FORECAST: "2357.6"
+                        FREE_MEMORY: "46475880"
+                        FREE_MEMORY_FORECAST: "4.65309e+07"
+                        USED_CPU: "0"
+                        USED_CPU_FORECAST: "42.4"
+                        USED_MEMORY: "18871200"
+                        USED_MEMORY_FORECAST: "1.88162e+07"
+                      SYSTEM:
+                        NETRX: "38312807659"
+                        NETRX_BW: "707.05"
+                        NETTX: "1097084597"
+                        NETTX_BW: "204.55"
+
+  /host/monitoring/{id}:
+    get:
+      tags: [host]
+      summary: 取得 Host 監控紀錄
+      operationId: host_monitoring
+      x-xmlrpc-method: host.monitoring
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  MONITORING_DATA:
+                    MONITORING:
+                      # ... truncated（實際回傳約 500 筆時序資料，此處僅列最後 2 筆）
+                      - TIMESTAMP: "1776316959"
+                        ID: "0"
+                        CAPACITY:
+                          FREE_CPU: "2400"
+                          FREE_CPU_FORECAST: "2356"
+                          FREE_MEMORY: "46530436"
+                          FREE_MEMORY_FORECAST: "4.6534e+07"
+                          USED_CPU: "0"
+                          USED_CPU_FORECAST: "44"
+                          USED_MEMORY: "18816644"
+                          USED_MEMORY_FORECAST: "1.88131e+07"
+                        SYSTEM:
+                          NETRX: "38312722106"
+                          NETRX_BW: "656.44"
+                          NETRX_BW_FORECAST: "6934.67"
+                          NETTX: "1097059846"
+                          NETTX_BW: "111.76"
+                          NETTX_BW_FORECAST: "135.27"
+                        NUMA_NODE:
+                          HUGEPAGE:
+                            - FREE: "0"
+                              SIZE: "2048"
+                            - FREE: "0"
+                              SIZE: "1048576"
+                          MEMORY:
+                            FREE: "19874296"
+                            USED: "45472784"
+                          NODE_ID: "0"
+                      - TIMESTAMP: "1776317079"
+                        ID: "0"
+                        CAPACITY:
+                          FREE_CPU: "2400"
+                          FREE_CPU_FORECAST: "2357.6"
+                          FREE_MEMORY: "46475880"
+                          FREE_MEMORY_FORECAST: "4.65309e+07"
+                          USED_CPU: "0"
+                          USED_CPU_FORECAST: "42.4"
+                          USED_MEMORY: "18871200"
+                          USED_MEMORY_FORECAST: "1.88162e+07"
+                        SYSTEM:
+                          NETRX: "38312807659"
+                          NETRX_BW: "707.05"
+                          NETRX_BW_FORECAST: "6943.31"
+                          NETTX: "1097084597"
+                          NETTX_BW: "204.55"
+                          NETTX_BW_FORECAST: "141.24"
+                        NUMA_NODE:
+                          HUGEPAGE:
+                            - FREE: "0"
+                              SIZE: "2048"
+                            - FREE: "0"
+                              SIZE: "1048576"
+                          MEMORY:
+                            FREE: "19830524"
+                            USED: "45516556"
+                          NODE_ID: "0"
+
+  /hostpool/info:
+    get:
+      tags: [host]
+      summary: 取得所有 Host 列表
+      operationId: hostpool_info
+      x-xmlrpc-method: hostpool.info
+      parameters:
+        - in: query
+          name: zone
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: 回傳 HOST_POOL 物件
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  HOST_POOL:
+                    HOST:
+                      ID: "0"
+                      NAME: "10.1.1.79"
+                      STATE: "2"
+                      PREV_STATE: "2"
+                      IM_MAD: "kvm"
+                      VM_MAD: "kvm"
+                      CLUSTER_ID: "0"
+                      CLUSTER: "default"
+                      HOST_SHARE:
+                        MEM_USAGE: "16777216"
+                        CPU_USAGE: "400"
+                        TOTAL_MEM: "65347080"
+                        TOTAL_CPU: "2400"
+                        MAX_MEM: "65347080"
+                        MAX_CPU: "2400"
+                        RUNNING_VMS: "1"
+                        PCI_DEVICES:
+                          PCI:
+                            - ADDRESS: "0000:01:00:0"
+                              CLASS: "0300"
+                              CLASS_NAME: "VGA compatible controller"
+                              DEVICE: "2782"
+                              DEVICE_NAME: "NVIDIA Corporation AD104 [GeForce RTX 4070 Ti]"
+                              SHORT_ADDRESS: "01:00.0"
+                              TYPE: "10de:2782:0300"
+                              VENDOR: "10de"
+                              VENDOR_NAME: "NVIDIA Corporation"
+                              VMID: "0"
+                            - ADDRESS: "0000:01:00:1"
+                              CLASS: "0403"
+                              CLASS_NAME: "Audio device"
+                              DEVICE: "22bc"
+                              DEVICE_NAME: "NVIDIA Corporation AD104 High Definition Audio Controller"
+                              SHORT_ADDRESS: "01:00.1"
+                              TYPE: "10de:22bc:0403"
+                              VENDOR: "10de"
+                              VENDOR_NAME: "NVIDIA Corporation"
+                              VMID: "0"
+
+  /hostpool/monitoring:
+    get:
+      tags: [host]
+      summary: 取得所有 Host 監控紀錄
+      operationId: hostpool_monitoring
+      x-xmlrpc-method: hostpool.monitoring
+      parameters:
+        - in: query
+          name: seconds
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  # ============================================================
+  # Template - VM 範本 (12 個端點)
+  # ============================================================
+  /template/allocate:
+    put:
+      tags: [template]
+      summary: 建立 VM Template
+      operationId: template_allocate
+      x-xmlrpc-method: template.allocate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /template/clone/{id}:
+    post:
+      tags: [template]
+      summary: 複製 VM Template
+      operationId: template_clone
+      x-xmlrpc-method: template.clone
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                image:
+                  type: boolean
+                  default: false
+                  description: 是否同時複製關聯的 Image
+      responses:
+        "200":
+          description: Successful response
+
+  /template/delete/{id}:
+    delete:
+      tags: [template]
+      summary: 刪除 VM Template
+      operationId: template_delete
+      x-xmlrpc-method: template.delete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: image
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /template/instantiate/{id}:
+    put:
+      tags: [template]
+      summary: 從 Template 建立 VM（GPU 算力平台主要入口）
+      operationId: template_instantiate
+      x-xmlrpc-method: template.instantiate
+      description: GPU 算力平台建立 VM 的主要方式。可透過 template 參數覆蓋 GPU/PCI 設定。
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: VM 名稱
+                hold:
+                  type: boolean
+                  default: false
+                  description: 是否以 HOLD 狀態建立
+                template:
+                  type: string
+                  description: 額外的 template 覆蓋（如 PCI、SCHED_REQUIREMENTS）
+                persistent:
+                  type: boolean
+                  default: false
+      responses:
+        "200":
+          description: 回傳新建 VM 的 ID
+
+  /template/update/{id}:
+    put:
+      tags: [template]
+      summary: 更新 VM Template 內容
+      operationId: template_update
+      x-xmlrpc-method: template.update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /template/chmod/{id}:
+    put:
+      tags: [template]
+      summary: 修改 VM Template 權限
+      operationId: template_chmod
+      x-xmlrpc-method: template.chmod
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/ChmodParams"
+                - type: object
+                  properties:
+                    image:
+                      type: boolean
+                      default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /template/chown/{id}:
+    put:
+      tags: [template]
+      summary: 修改 VM Template 擁有者
+      operationId: template_chown
+      x-xmlrpc-method: template.chown
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChownParams"
+      responses:
+        "200":
+          description: Successful response
+
+  /template/rename/{id}:
+    put:
+      tags: [template]
+      summary: 重命名 VM Template
+      operationId: template_rename
+      x-xmlrpc-method: template.rename
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /template/lock/{id}:
+    put:
+      tags: [template]
+      summary: 鎖定 VM Template
+      operationId: template_lock
+      x-xmlrpc-method: template.lock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: integer
+                  default: 4
+                test:
+                  type: boolean
+                  default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /template/unlock/{id}:
+    get:
+      tags: [template]
+      summary: 解鎖 VM Template
+      operationId: template_unlock
+      x-xmlrpc-method: template.unlock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /template/info/{id}:
+    get:
+      tags: [template]
+      summary: 取得 VM Template 詳細資訊
+      operationId: template_info
+      x-xmlrpc-method: template.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: extended
+          schema:
+            type: boolean
+            default: false
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  VMTEMPLATE:
+                    ID: "1"
+                    UID: "0"
+                    GID: "0"
+                    UNAME: "oneadmin"
+                    GNAME: "oneadmin"
+                    NAME: "Ubuntu 2404-GPU"
+                    REGTIME: "1774610078"
+                    TEMPLATE:
+                      CONTEXT:
+                        NETWORK: "YES"
+                        SSH_PUBLIC_KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFaGx4kgnkXBdsP+YX27VuXTw3LHmoY3b7O3heaHyJdn root@localhost.localdomain"
+                      CPU: "4"
+                      CPU_MODEL:
+                        MODEL: "host-passthrough"
+                      DISK:
+                        IMAGE: "Ubuntu 24.04"
+                        IMAGE_ID: "0"
+                        SIZE: "3584"
+                        TYPE: "FILE"
+                        DRIVER: "qcow2"
+                      FEATURES:
+                        ACPI: "yes"
+                        GUEST_AGENT: "yes"
+                      GRAPHICS:
+                        LISTEN: "0.0.0.0"
+                        TYPE: "VNC"
+                      HYPERVISOR: "kvm"
+                      MEMORY: "8192"
+                      OS:
+                        BOOT: "disk0"
+                        MACHINE: "q35"
+                      PCI:
+                        - CLASS: "0300"
+                          DEVICE: "2782"
+                          VENDOR: "10de"
+                        - CLASS: "0403"
+                          DEVICE: "22bc"
+                          VENDOR: "10de"
+                      SCHED_REQUIREMENTS: "HYPERVISOR=kvm"
+                      VCPU: "4"
+
+  /templatepool/info:
+    get:
+      tags: [template]
+      summary: 取得所有 VM Template 列表
+      operationId: templatepool_info
+      x-xmlrpc-method: templatepool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  # ============================================================
+  # Image - 映像管理 (18 個端點)
+  # ============================================================
+  /image/allocate:
+    post:
+      tags: [image]
+      summary: 建立映像
+      operationId: image_allocate
+      x-xmlrpc-method: image.allocate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                datastore:
+                  type: integer
+                  default: 0
+                capacity:
+                  type: boolean
+                  default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /image/clone/{id}:
+    post:
+      tags: [image]
+      summary: 複製映像
+      operationId: image_clone
+      x-xmlrpc-method: image.clone
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                datastore:
+                  type: integer
+                  default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /image/delete/{id}:
+    delete:
+      tags: [image]
+      summary: 刪除映像
+      operationId: image_delete
+      x-xmlrpc-method: image.delete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /image/enable/{id}:
+    put:
+      tags: [image]
+      summary: 啟用/停用映像
+      operationId: image_enable
+      x-xmlrpc-method: image.enable
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enable:
+                  type: boolean
+                  default: true
+      responses:
+        "200":
+          description: Successful response
+
+  /image/persistent/{id}:
+    put:
+      tags: [image]
+      summary: 設定映像為持久/非持久
+      operationId: image_persistent
+      x-xmlrpc-method: image.persistent
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                persistent:
+                  type: boolean
+                  default: true
+      responses:
+        "200":
+          description: Successful response
+
+  /image/chtype/{id}:
+    put:
+      tags: [image]
+      summary: 變更映像類型
+      operationId: image_chtype
+      x-xmlrpc-method: image.chtype
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /image/update/{id}:
+    put:
+      tags: [image]
+      summary: 更新映像 template
+      operationId: image_update
+      x-xmlrpc-method: image.update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /image/chmod/{id}:
+    put:
+      tags: [image]
+      summary: 修改映像權限
+      operationId: image_chmod
+      x-xmlrpc-method: image.chmod
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChmodParams"
+      responses:
+        "200":
+          description: Successful response
+
+  /image/chown/{id}:
+    put:
+      tags: [image]
+      summary: 修改映像擁有者
+      operationId: image_chown
+      x-xmlrpc-method: image.chown
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChownParams"
+      responses:
+        "200":
+          description: Successful response
+
+  /image/rename/{id}:
+    put:
+      tags: [image]
+      summary: 重命名映像
+      operationId: image_rename
+      x-xmlrpc-method: image.rename
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /image/snapshotdelete/{id}:
+    delete:
+      tags: [image]
+      summary: 刪除映像快照
+      operationId: image_snapshotdelete
+      x-xmlrpc-method: image.snapshotdelete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /image/snapshotrevert/{id}:
+    put:
+      tags: [image]
+      summary: 還原映像快照
+      operationId: image_snapshotrevert
+      x-xmlrpc-method: image.snapshotrevert
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                snapshot:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /image/snapshotflatten/{id}:
+    put:
+      tags: [image]
+      summary: 壓平映像快照
+      operationId: image_snapshotflatten
+      x-xmlrpc-method: image.snapshotflatten
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                snapshot:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /image/info/{id}:
+    get:
+      tags: [image]
+      summary: 取得映像詳細資訊
+      operationId: image_info
+      x-xmlrpc-method: image.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /image/lock/{id}:
+    put:
+      tags: [image]
+      summary: 鎖定映像
+      operationId: image_lock
+      x-xmlrpc-method: image.lock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lock:
+                  type: integer
+                  default: 4
+      responses:
+        "200":
+          description: Successful response
+
+  /image/unlock/{id}:
+    put:
+      tags: [image]
+      summary: 解鎖映像
+      operationId: image_unlock
+      x-xmlrpc-method: image.unlock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /image/restore/{id}:
+    post:
+      tags: [image]
+      summary: 還原備份映像
+      operationId: image_restore
+      x-xmlrpc-method: image.restore
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datastore:
+                  type: integer
+                  default: -1
+                options:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /imagepool/info:
+    get:
+      tags: [image]
+      summary: 取得映像列表
+      operationId: imagepool_info
+      x-xmlrpc-method: imagepool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  # ============================================================
+  # VN - 虛擬網路 (19 個端點)
+  # ============================================================
+  /vn/allocate:
+    post:
+      tags: [vn]
+      summary: 建立虛擬網路
+      operationId: vn_allocate
+      x-xmlrpc-method: vn.allocate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                cluster:
+                  type: integer
+                  default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/delete/{id}:
+    delete:
+      tags: [vn]
+      summary: 刪除虛擬網路
+      operationId: vn_delete
+      x-xmlrpc-method: vn.delete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/add_ar/{id}:
+    put:
+      tags: [vn]
+      summary: 新增位址範圍 (Address Range)
+      operationId: vn_add_ar
+      x-xmlrpc-method: vn.add_ar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/rm_ar/{id}:
+    put:
+      tags: [vn]
+      summary: 刪除位址範圍
+      operationId: vn_rm_ar
+      x-xmlrpc-method: vn.rm_ar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/update_ar/{id}:
+    put:
+      tags: [vn]
+      summary: 更新位址範圍屬性
+      operationId: vn_update_ar
+      x-xmlrpc-method: vn.update_ar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/reserve/{id}:
+    put:
+      tags: [vn]
+      summary: 預留網路位址
+      operationId: vn_reserve
+      x-xmlrpc-method: vn.reserve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                  description: 包含 SIZE/NAME/AR_ID/MAC/IP
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/free_ar/{id}:
+    put:
+      tags: [vn]
+      summary: 釋放預留位址範圍
+      operationId: vn_free_ar
+      x-xmlrpc-method: vn.free_ar
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                range:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/hold/{id}:
+    put:
+      tags: [vn]
+      summary: 佔用 IP Lease
+      operationId: vn_hold
+      x-xmlrpc-method: vn.hold
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/release/{id}:
+    put:
+      tags: [vn]
+      summary: 釋放 IP Lease
+      operationId: vn_release
+      x-xmlrpc-method: vn.release
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/update/{id}:
+    put:
+      tags: [vn]
+      summary: 更新虛擬網路 template
+      operationId: vn_update
+      x-xmlrpc-method: vn.update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/chmod/{id}:
+    put:
+      tags: [vn]
+      summary: 修改虛擬網路權限
+      operationId: vn_chmod
+      x-xmlrpc-method: vn.chmod
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChmodParams"
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/chown/{id}:
+    put:
+      tags: [vn]
+      summary: 修改虛擬網路擁有者
+      operationId: vn_chown
+      x-xmlrpc-method: vn.chown
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChownParams"
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/rename/{id}:
+    put:
+      tags: [vn]
+      summary: 重命名虛擬網路
+      operationId: vn_rename
+      x-xmlrpc-method: vn.rename
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/info/{id}:
+    get:
+      tags: [vn]
+      summary: 取得虛擬網路詳細資訊
+      operationId: vn_info
+      x-xmlrpc-method: vn.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/lock/{id}:
+    put:
+      tags: [vn]
+      summary: 鎖定虛擬網路
+      operationId: vn_lock
+      x-xmlrpc-method: vn.lock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: integer
+                  default: 4
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/unlock/{id}:
+    put:
+      tags: [vn]
+      summary: 解鎖虛擬網路
+      operationId: vn_unlock
+      x-xmlrpc-method: vn.unlock
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /vn/recover/{id}:
+    put:
+      tags: [vn]
+      summary: 復原卡住的虛擬網路
+      operationId: vn_recover
+      x-xmlrpc-method: vn.recover
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                operation:
+                  type: integer
+                  default: 1
+      responses:
+        "200":
+          description: Successful response
+
+  /vnpool/info:
+    get:
+      tags: [vn]
+      summary: 取得虛擬網路列表
+      operationId: vnpool_info
+      x-xmlrpc-method: vnpool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: zone
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: 回傳 VNET_POOL 物件
+
+  # ============================================================
+  # User - 使用者管理 (15 個端點)
+  # ============================================================
+  /user/allocate:
+    post:
+      tags: [user]
+      summary: 建立使用者
+      operationId: user_allocate
+      x-xmlrpc-method: user.allocate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                driver:
+                  type: string
+                group:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /user/delete/{id}:
+    delete:
+      tags: [user]
+      summary: 刪除使用者
+      operationId: user_delete
+      x-xmlrpc-method: user.delete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /user/passwd/{id}:
+    put:
+      tags: [user]
+      summary: 修改使用者密碼
+      operationId: user_passwd
+      x-xmlrpc-method: user.passwd
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /user/login:
+    post:
+      tags: [user]
+      summary: 使用者登入取得 token
+      operationId: user_login
+      x-xmlrpc-method: user.login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                token:
+                  type: string
+                expire:
+                  type: integer
+                  default: 0
+                gid:
+                  type: integer
+                  default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /user/update/{id}:
+    put:
+      tags: [user]
+      summary: 更新使用者 template
+      operationId: user_update
+      x-xmlrpc-method: user.update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /user/chauth:
+    put:
+      tags: [user]
+      summary: 變更使用者認證驅動
+      operationId: user_chauth
+      x-xmlrpc-method: user.chauth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                driver:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /user/quota/{id}:
+    put:
+      tags: [user]
+      summary: 設定使用者配額
+      operationId: user_quota
+      x-xmlrpc-method: user.quota
+      description: 可設定 VM 數量、CPU、記憶體、磁碟空間等配額
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                  description: 配額 template (XML)
+      responses:
+        "200":
+          description: Successful response
+
+  /user/chgrp/{id}:
+    put:
+      tags: [user]
+      summary: 變更使用者主要群組
+      operationId: user_chgrp
+      x-xmlrpc-method: user.chgrp
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /user/addgroup/{id}:
+    post:
+      tags: [user]
+      summary: 將使用者加入群組
+      operationId: user_addgroup
+      x-xmlrpc-method: user.addgroup
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /user/delgroup/{id}:
+    delete:
+      tags: [user]
+      summary: 將使用者移出群組
+      operationId: user_delgroup
+      x-xmlrpc-method: user.delgroup
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: group
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /user/enable/{id}:
+    put:
+      tags: [user]
+      summary: 啟用/停用使用者
+      operationId: user_enable
+      x-xmlrpc-method: user.enable
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enable:
+                  type: boolean
+                  default: true
+      responses:
+        "200":
+          description: Successful response
+
+  /user/info/{id}:
+    get:
+      tags: [user]
+      summary: 取得使用者詳細資訊
+      operationId: user_info
+      x-xmlrpc-method: user.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 200
+                message: "OK"
+                data:
+                  USER:
+                    ID: "0"
+                    GID: "0"
+                    GROUPS:
+                      ID: "0"
+                    GNAME: "oneadmin"
+                    NAME: "oneadmin"
+                    PASSWORD: "e7330cded8758d96bfa2445025f21768e2550fc71cd7f2814c0028aaad53812d"
+                    AUTH_DRIVER: "core"
+                    ENABLED: "1"
+                    TEMPLATE:
+                      LANG: "en"
+                      SCHEME: "dark"
+                      SSH_PUBLIC_KEY: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAB... oneadmin@localhost.localdomain"
+                      TOKEN_PASSWORD: "c8ea44e9d0ebb5171b03836bc35b0a7a286f05cef5b3d5760122152c64eb452d"
+                    DATASTORE_QUOTA: ""
+                    NETWORK_QUOTA: ""
+                    VM_QUOTA: ""
+                    IMAGE_QUOTA: ""
+                    DEFAULT_USER_QUOTAS:
+                      DATASTORE_QUOTA: ""
+                      NETWORK_QUOTA: ""
+                      VM_QUOTA: ""
+                      IMAGE_QUOTA: ""
+
+  /userpool/info:
+    get:
+      tags: [user]
+      summary: 取得所有使用者列表
+      operationId: userpool_info
+      x-xmlrpc-method: userpool.info
+      responses:
+        "200":
+          description: Successful response
+
+  /userquota/info:
+    get:
+      tags: [user]
+      summary: 取得預設使用者配額
+      operationId: userquota_info
+      x-xmlrpc-method: userquota.info
+      responses:
+        "200":
+          description: Successful response
+
+  /userquota/update:
+    put:
+      tags: [user]
+      summary: 更新預設使用者配額
+      operationId: userquota_update
+      x-xmlrpc-method: userquota.update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  # ============================================================
+  # Group - 群組管理 (10 個端點)
+  # ============================================================
+  /group/allocate:
+    post:
+      tags: [group]
+      summary: 建立群組
+      operationId: group_allocate
+      x-xmlrpc-method: group.allocate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /group/delete/{id}:
+    delete:
+      tags: [group]
+      summary: 刪除群組
+      operationId: group_delete
+      x-xmlrpc-method: group.delete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /group/info/{id}:
+    get:
+      tags: [group]
+      summary: 取得群組資訊
+      operationId: group_info
+      x-xmlrpc-method: group.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /group/update/{id}:
+    put:
+      tags: [group]
+      summary: 更新群組 template
+      operationId: group_update
+      x-xmlrpc-method: group.update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /group/addadmin/{id}:
+    post:
+      tags: [group]
+      summary: 新增群組管理員
+      operationId: group_addadmin
+      x-xmlrpc-method: group.addadmin
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /group/deladmin/{id}:
+    delete:
+      tags: [group]
+      summary: 移除群組管理員
+      operationId: group_deladmin
+      x-xmlrpc-method: group.deladmin
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /group/quota/{id}:
+    put:
+      tags: [group]
+      summary: 設定群組配額
+      operationId: group_quota
+      x-xmlrpc-method: group.quota
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /grouppool/info:
+    get:
+      tags: [group]
+      summary: 取得所有群組列表
+      operationId: grouppool_info
+      x-xmlrpc-method: grouppool.info
+      responses:
+        "200":
+          description: Successful response
+
+  /groupquota/info:
+    get:
+      tags: [group]
+      summary: 取得預設群組配額
+      operationId: groupquota_info
+      x-xmlrpc-method: groupquota.info
+      responses:
+        "200":
+          description: Successful response
+
+  /groupquota/update:
+    put:
+      tags: [group]
+      summary: 更新預設群組配額
+      operationId: groupquota_update
+      x-xmlrpc-method: groupquota.update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  # ============================================================
+  # System / Zone / ACL / VDC 等其餘資源（簡化格式）
+  # ============================================================
+  /system/version:
+    get:
+      tags: [system]
+      summary: 取得 OpenNebula 版本
+      operationId: system_version
+      x-xmlrpc-method: system.version
+      responses:
+        "200":
+          description: Successful response
+
+  /system/config:
+    get:
+      tags: [system]
+      summary: 取得 OpenNebula 系統設定 (oned.conf)
+      operationId: system_config
+      x-xmlrpc-method: system.config
+      responses:
+        "200":
+          description: Successful response
+
+  /acl/addrule:
+    post:
+      tags: [acl]
+      summary: 新增 ACL 規則
+      operationId: acl_addrule
+      x-xmlrpc-method: acl.addrule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                  default: "0x100000000"
+                resource:
+                  type: string
+                  default: "0x1000000000"
+                right:
+                  type: string
+                  default: "0x1"
+                zone:
+                  type: string
+                  default: "0x100000000"
+      responses:
+        "200":
+          description: Successful response
+
+  /acl/delrule/{id}:
+    delete:
+      tags: [acl]
+      summary: 刪除 ACL 規則
+      operationId: acl_delrule
+      x-xmlrpc-method: acl.delrule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /acl/info:
+    get:
+      tags: [acl]
+      summary: 取得所有 ACL 規則
+      operationId: acl_info
+      x-xmlrpc-method: acl.info
+      responses:
+        "200":
+          description: Successful response
+
+  /zone/info/{id}:
+    get:
+      tags: [zone]
+      summary: 取得 Zone 資訊
+      operationId: zone_info
+      x-xmlrpc-method: zone.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /zone/raftstatus:
+    get:
+      tags: [zone]
+      summary: 取得 Raft 狀態
+      operationId: zone_raftstatus
+      x-xmlrpc-method: zone.raftstatus
+      responses:
+        "200":
+          description: Successful response
+
+  /zonepool/info:
+    get:
+      tags: [zone]
+      summary: 取得所有 Zone 列表
+      operationId: zonepool_info
+      x-xmlrpc-method: zonepool.info
+      responses:
+        "200":
+          description: Successful response
+
+  # ============================================================
+  # Cluster (15), Datastore (9), SecGroup (10), VNTemplate (13)
+  # Document (11), Hook (9), Market (9), MarketApp (11)
+  # VMGroup (13), VRouter (14), BackupJob (17)
+  # ============================================================
+  /cluster/allocate:
+    put:
+      tags: [cluster]
+      summary: 建立叢集
+      operationId: cluster_allocate
+      x-xmlrpc-method: cluster.allocate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/delete/{id}:
+    delete:
+      tags: [cluster]
+      summary: 刪除叢集
+      operationId: cluster_delete
+      x-xmlrpc-method: cluster.delete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/update/{id}:
+    put:
+      tags: [cluster]
+      summary: 更新叢集 template
+      operationId: cluster_update
+      x-xmlrpc-method: cluster.update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  type: string
+                replace:
+                  type: integer
+                  default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/addhost/{id}:
+    post:
+      tags: [cluster]
+      summary: 將 Host 加入叢集
+      operationId: cluster_addhost
+      x-xmlrpc-method: cluster.addhost
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                host:
+                  type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/delhost/{id}:
+    delete:
+      tags: [cluster]
+      summary: 將 Host 移出叢集
+      operationId: cluster_delhost
+      x-xmlrpc-method: cluster.delhost
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/adddatastore/{id}:
+    put:
+      tags: [cluster]
+      summary: 將 Datastore 加入叢集
+      operationId: cluster_adddatastore
+      x-xmlrpc-method: cluster.adddatastore
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datastore:
+                  type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/deldatastore/{id}:
+    delete:
+      tags: [cluster]
+      summary: 將 Datastore 移出叢集
+      operationId: cluster_deldatastore
+      x-xmlrpc-method: cluster.deldatastore
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/addvnet/{id}:
+    put:
+      tags: [cluster]
+      summary: 將虛擬網路加入叢集
+      operationId: cluster_addvnet
+      x-xmlrpc-method: cluster.addvnet
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vnet:
+                  type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/delvnet/{id}:
+    delete:
+      tags: [cluster]
+      summary: 將虛擬網路移出叢集
+      operationId: cluster_delvnet
+      x-xmlrpc-method: cluster.delvnet
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/rename/{id}:
+    put:
+      tags: [cluster]
+      summary: 重命名叢集
+      operationId: cluster_rename
+      x-xmlrpc-method: cluster.rename
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/optimize/{id}:
+    get:
+      tags: [cluster]
+      summary: 取得叢集優化建議
+      operationId: cluster_optimize
+      x-xmlrpc-method: cluster.optimize
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/planexecute/{id}:
+    post:
+      tags: [cluster]
+      summary: 執行叢集優化計劃
+      operationId: cluster_planexecute
+      x-xmlrpc-method: cluster.planexecute
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/plandelete/{id}:
+    delete:
+      tags: [cluster]
+      summary: 刪除叢集優化計劃
+      operationId: cluster_plandelete
+      x-xmlrpc-method: cluster.plandelete
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /cluster/info/{id}:
+    get:
+      tags: [cluster]
+      summary: 取得叢集資訊
+      operationId: cluster_info
+      x-xmlrpc-method: cluster.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /clusterpool/info:
+    get:
+      tags: [cluster]
+      summary: 取得所有叢集列表
+      operationId: clusterpool_info
+      x-xmlrpc-method: clusterpool.info
+      parameters:
+        - in: query
+          name: zone
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /datastore/info/{id}:
+    get:
+      tags: [datastore]
+      summary: 取得 Datastore 資訊
+      operationId: datastore_info
+      x-xmlrpc-method: datastore.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /datastorepool/info:
+    get:
+      tags: [datastore]
+      summary: 取得所有 Datastore 列表
+      operationId: datastorepool_info
+      x-xmlrpc-method: datastorepool.info
+      parameters:
+        - in: query
+          name: zone
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Successful response
+
+  /secgroup/info/{id}:
+    get:
+      tags: [secgroup]
+      summary: 取得安全群組資訊
+      operationId: secgroup_info
+      x-xmlrpc-method: secgroup.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /secgrouppool/info:
+    get:
+      tags: [secgroup]
+      summary: 取得所有安全群組列表
+      operationId: secgrouppool_info
+      x-xmlrpc-method: secgrouppool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vntemplate/info/{id}:
+    get:
+      tags: [vntemplate]
+      summary: 取得虛擬網路範本資訊
+      operationId: vntemplate_info
+      x-xmlrpc-method: vntemplate.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /vntemplatepool/info:
+    get:
+      tags: [vntemplate]
+      summary: 取得所有虛擬網路範本列表
+      operationId: vntemplatepool_info
+      x-xmlrpc-method: vntemplatepool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /backupjob/info/{id}:
+    get:
+      tags: [backupjob]
+      summary: 取得備份作業資訊
+      operationId: backupjob_info
+      x-xmlrpc-method: backupjob.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /backupjobpool/info:
+    get:
+      tags: [backupjob]
+      summary: 取得所有備份作業列表
+      operationId: backupjobpool_info
+      x-xmlrpc-method: backupjobpool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vmgroup/info/{id}:
+    get:
+      tags: [vmgroup]
+      summary: 取得 VM Group 資訊
+      operationId: vmgroup_info
+      x-xmlrpc-method: vmgroup.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /vmgrouppool/info:
+    get:
+      tags: [vmgroup]
+      summary: 取得所有 VM Group 列表
+      operationId: vmgrouppool_info
+      x-xmlrpc-method: vmgrouppool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /vrouter/info/{id}:
+    get:
+      tags: [vrouter]
+      summary: 取得虛擬路由器資訊
+      operationId: vrouter_info
+      x-xmlrpc-method: vrouter.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /vrouterpool/info:
+    get:
+      tags: [vrouter]
+      summary: 取得所有虛擬路由器列表
+      operationId: vrouterpool_info
+      x-xmlrpc-method: vrouterpool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /document/info/{id}:
+    get:
+      tags: [document]
+      summary: 取得 Document 資訊
+      operationId: document_info
+      x-xmlrpc-method: document.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /documentpool/info:
+    get:
+      tags: [document]
+      summary: 取得所有 Document 列表
+      operationId: documentpool_info
+      x-xmlrpc-method: documentpool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: type
+          schema:
+            type: integer
+            default: 100
+      responses:
+        "200":
+          description: Successful response
+
+  /hook/info/{id}:
+    get:
+      tags: [hook]
+      summary: 取得 Hook 資訊
+      operationId: hook_info
+      x-xmlrpc-method: hook.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /hookpool/info:
+    get:
+      tags: [hook]
+      summary: 取得所有 Hook 列表
+      operationId: hookpool_info
+      x-xmlrpc-method: hookpool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response
+
+  /market/info/{id}:
+    get:
+      tags: [market]
+      summary: 取得 Marketplace 資訊
+      operationId: market_info
+      x-xmlrpc-method: market.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: decrypt
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Successful response
+
+  /marketpool/info:
+    get:
+      tags: [market]
+      summary: 取得所有 Marketplace 列表
+      operationId: marketpool_info
+      x-xmlrpc-method: marketpool.info
+      responses:
+        "200":
+          description: Successful response
+
+  /marketapp/info/{id}:
+    get:
+      tags: [marketapp]
+      summary: 取得 Marketplace App 資訊
+      operationId: marketapp_info
+      x-xmlrpc-method: marketapp.info
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful response
+
+  /marketapppool/info:
+    get:
+      tags: [marketapp]
+      summary: 取得所有 Marketplace App 列表
+      operationId: marketapppool_info
+      x-xmlrpc-method: marketapppool.info
+      parameters:
+        - in: query
+          name: filter
+          schema:
+            type: integer
+            default: -2
+        - in: query
+          name: start
+          schema:
+            type: integer
+            default: -1
+        - in: query
+          name: end
+          schema:
+            type: integer
+            default: -1
+      responses:
+        "200":
+          description: Successful response

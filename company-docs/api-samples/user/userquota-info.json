@@ -1,0 +1,12 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "DEFAULT_USER_QUOTAS": {
+      "DATASTORE_QUOTA": "",
+      "NETWORK_QUOTA": "",
+      "VM_QUOTA": "",
+      "IMAGE_QUOTA": ""
+    }
+  }
+}

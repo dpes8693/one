@@ -1,0 +1,289 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "AUTH_MAD": {
+      "AUTHN": "ssh,x509,ldap,server_cipher,server_x509",
+      "EXECUTABLE": "one_auth_mad"
+    },
+    "CONTEXT_ALLOW_ETH_UPDATES": "NO",
+    "DEFAULT_COST": {
+      "CPU_COST": "0",
+      "DISK_COST": "0",
+      "MEMORY_COST": "0"
+    },
+    "DRS_INTERVAL": "600",
+    "DS_MAD_CONF": [
+      {
+        "MARKETPLACE_ACTIONS": "export",
+        "NAME": "ceph",
+        "PERSISTENT_ONLY": "NO",
+        "REQUIRED_ATTRS": "DISK_TYPE,BRIDGE_LIST"
+      },
+      {
+        "NAME": "dev",
+        "PERSISTENT_ONLY": "YES",
+        "REQUIRED_ATTRS": "DISK_TYPE"
+      },
+      {
+        "NAME": "iscsi_libvirt",
+        "PERSISTENT_ONLY": "YES",
+        "REQUIRED_ATTRS": "DISK_TYPE,ISCSI_HOST"
+      },
+      {
+        "NAME": "dummy",
+        "PERSISTENT_ONLY": "NO",
+        "REQUIRED_ATTRS": ""
+      },
+      {
+        "MARKETPLACE_ACTIONS": "export",
+        "NAME": "fs",
+        "PERSISTENT_ONLY": "NO",
+        "REQUIRED_ATTRS": ""
+      },
+      {
+        "NAME": "lvm",
+        "PERSISTENT_ONLY": "NO",
+        "REQUIRED_ATTRS": "DISK_TYPE,BRIDGE_LIST"
+      },
+      {
+        "NAME": "restic",
+        "PERSISTENT_ONLY": "YES",
+        "REQUIRED_ATTRS": "RESTIC_PASSWORD"
+      },
+      {
+        "NAME": "rsync",
+        "PERSISTENT_ONLY": "YES",
+        "REQUIRED_ATTRS": "RSYNC_HOST,RSYNC_USER"
+      },
+      {
+        "MARKETPLACE_ACTIONS": "export",
+        "NAME": "netapp",
+        "PERSISTENT_ONLY": "NO",
+        "REQUIRED_ATTRS": "NETAPP_HOST,NETAPP_USER,NETAPP_PASS,NETAPP_AGGREGATES,NETAPP_SVM,NETAPP_IGROUP,NETAPP_TARGET"
+      },
+      {
+        "NAME": "shared",
+        "PERSISTENT_ONLY": "NO",
+        "REQUIRED_ATTRS": ""
+      },
+      {
+        "NAME": "ssh",
+        "PERSISTENT_ONLY": "NO",
+        "REQUIRED_ATTRS": ""
+      },
+      {
+        "NAME": "vmfs",
+        "PERSISTENT_ONLY": "NO",
+        "REQUIRED_ATTRS": "BRIDGE_LIST"
+      }
+    ],
+    "FEDERATION": {
+      "MASTER_ONED": "",
+      "MODE": "STANDALONE",
+      "SERVER_ID": "-1",
+      "ZONE_ID": "0"
+    },
+    "IMAGE_RESTRICTED_ATTR": "SOURCE",
+    "IM_MAD": {
+      "ARGUMENTS": "-c monitord.conf",
+      "EXECUTABLE": "onemonitord",
+      "NAME": "monitord",
+      "THREADS": "8"
+    },
+    "MARKET_MAD_CONF": [
+      {
+        "APP_ACTIONS": "monitor",
+        "NAME": "one",
+        "PUBLIC": "yes",
+        "REQUIRED_ATTRS": "",
+        "SUNSTONE_NAME": "OpenNebula.org Marketplace"
+      },
+      {
+        "APP_ACTIONS": "create, delete, monitor",
+        "NAME": "http",
+        "REQUIRED_ATTRS": "BASE_URL,PUBLIC_DIR",
+        "SUNSTONE_NAME": "HTTP server"
+      },
+      {
+        "APP_ACTIONS": "create, delete, monitor",
+        "NAME": "s3",
+        "REQUIRED_ATTRS": "ACCESS_KEY_ID,SECRET_ACCESS_KEY,REGION,BUCKET",
+        "SUNSTONE_NAME": "Amazon S3"
+      },
+      {
+        "APP_ACTIONS": "monitor",
+        "NAME": "linuxcontainers",
+        "PUBLIC": "yes",
+        "REQUIRED_ATTRS": "",
+        "SUNSTONE_NAME": "LinuxContainers.org"
+      }
+    ],
+    "VM_MAD": [
+      {
+        "ARGUMENTS": "-t 15 -r 0 kvm -p",
+        "DEFAULT": "vmm_exec/vmm_exec_kvm.conf",
+        "EXECUTABLE": "one_vmm_exec",
+        "KEEP_SNAPSHOTS": "yes",
+        "LIVE_RESIZE": "yes",
+        "NAME": "kvm",
+        "SUNSTONE_NAME": "KVM",
+        "SUPPORT_SHAREABLE": "yes",
+        "TYPE": "kvm"
+      },
+      {
+        "ARGUMENTS": "-t 15 -r 0 kvm",
+        "DEFAULT": "vmm_exec/vmm_exec_kvm.conf",
+        "EXECUTABLE": "one_vmm_exec",
+        "KEEP_SNAPSHOTS": "yes",
+        "LIVE_RESIZE": "yes",
+        "NAME": "qemu",
+        "SUNSTONE_NAME": "QEMU",
+        "SUPPORT_SHAREABLE": "yes",
+        "TYPE": "qemu"
+      },
+      {
+        "ARGUMENTS": "-t 15 -r 0 lxc",
+        "EXECUTABLE": "one_vmm_exec",
+        "KEEP_SNAPSHOTS": "no",
+        "NAME": "lxc",
+        "SUNSTONE_NAME": "LXC",
+        "TYPE": "xml"
+      }
+    ],
+    "VM_RESTRICTED_ATTR": [
+      "CONTEXT/FILES",
+      "NIC/MAC",
+      "NIC/VLAN_ID",
+      "NIC/BRIDGE",
+      "NIC/FILTER",
+      "NIC/FILTER_IP_SPOOFING",
+      "NIC/FILTER_MAC_SPOOFING",
+      "NIC/INBOUND_AVG_BW",
+      "NIC/INBOUND_PEAK_BW",
+      "NIC/INBOUND_PEAK_KB",
+      "NIC/OUTBOUND_AVG_BW",
+      "NIC/OUTBOUND_PEAK_BW",
+      "NIC/OUTBOUND_PEAK_KB",
+      "NIC/OPENNEBULA_MANAGED",
+      "NIC/EXTERNAL",
+      "NIC/VLAN_TAGGED_ID",
+      "NIC_ALIAS/MAC",
+      "NIC_ALIAS/VLAN_ID",
+      "NIC_ALIAS/BRIDGE",
+      "NIC_ALIAS/INBOUND_AVG_BW",
+      "NIC_ALIAS/INBOUND_PEAK_BW",
+      "NIC_ALIAS/INBOUND_PEAK_KB",
+      "NIC_ALIAS/OUTBOUND_AVG_BW",
+      "NIC_ALIAS/OUTBOUND_PEAK_BW",
+      "NIC_ALIAS/OUTBOUND_PEAK_KB",
+      "NIC_ALIAS/OPENNEBULA_MANAGED",
+      "NIC_DEFAULT/MAC",
+      "NIC_DEFAULT/VLAN_ID",
+      "NIC_DEFAULT/BRIDGE",
+      "NIC_DEFAULT/FILTER",
+      "NIC_DEFAULT/EXTERNAL",
+      "DISK/TOTAL_BYTES_SEC",
+      "DISK/TOTAL_BYTES_SEC_MAX_LENGTH",
+      "DISK/TOTAL_BYTES_SEC_MAX",
+      "DISK/READ_BYTES_SEC",
+      "DISK/READ_BYTES_SEC_MAX_LENGTH",
+      "DISK/READ_BYTES_SEC_MAX",
+      "DISK/WRITE_BYTES_SEC",
+      "DISK/WRITE_BYTES_SEC_MAX_LENGTH",
+      "DISK/WRITE_BYTES_SEC_MAX",
+      "DISK/TOTAL_IOPS_SEC",
+      "DISK/TOTAL_IOPS_SEC_MAX_LENGTH",
+      "DISK/TOTAL_IOPS_SEC_MAX",
+      "DISK/READ_IOPS_SEC",
+      "DISK/READ_IOPS_SEC_MAX_LENGTH",
+      "DISK/READ_IOPS_SEC_MAX",
+      "DISK/WRITE_IOPS_SEC",
+      "DISK/WRITE_IOPS_SEC_MAX_LENGTH",
+      "DISK/WRITE_IOPS_SEC_MAX",
+      "DISK/SIZE_IOPS_SEC",
+      "DISK/OPENNEBULA_MANAGED",
+      "DISK/ORIGINAL_SIZE",
+      "DISK/SIZE_PREV",
+      "DEPLOY_ID",
+      "CPU_COST",
+      "MEMORY_COST",
+      "DISK_COST",
+      "PCI",
+      "EMULATOR",
+      "RAW/DATA",
+      "USER_PRIORITY",
+      "USER_INPUTS/CPU",
+      "USER_INPUTS/MEMORY",
+      "USER_INPUTS/VCPU",
+      "TOPOLOGY/PIN_POLICY",
+      "TOPOLOGY/HUGEPAGE_SIZE"
+    ],
+    "VNC_PORTS": {
+      "RESERVED": "32768:65536",
+      "START": "5900"
+    },
+    "VNET_RESTRICTED_ATTR": [
+      "VN_MAD",
+      "PHYDEV",
+      "VLAN_ID",
+      "CVLANS",
+      "QINQ_TYPE",
+      "BRIDGE",
+      "CONF",
+      "BRIDGE_CONF",
+      "OVS_BRIDGE_CONF",
+      "IP_LINK_CONF",
+      "FILTER",
+      "FILTER_IP_SPOOFING",
+      "FILTER_MAC_SPOOFING",
+      "AR/VN_MAD",
+      "AR/PHYDEV",
+      "AR/VLAN_ID",
+      "AR/BRIDGE",
+      "AR/FILTER",
+      "AR/FILTER_IP_SPOOFING",
+      "AR/FILTER_MAC_SPOOFING",
+      "CLUSTER_IDS",
+      "EXTERNAL"
+    ],
+    "VN_MAD_CONF": [
+      {
+        "BRIDGE_TYPE": "linux",
+        "NAME": "dummy"
+      },
+      {
+        "BRIDGE_TYPE": "linux",
+        "NAME": "802.1Q"
+      },
+      {
+        "BRIDGE_TYPE": "linux",
+        "NAME": "fw"
+      },
+      {
+        "BRIDGE_TYPE": "openvswitch",
+        "NAME": "ovswitch"
+      },
+      {
+        "BRIDGE_TYPE": "linux",
+        "NAME": "vxlan"
+      },
+      {
+        "BRIDGE_TYPE": "openvswitch",
+        "NAME": "ovswitch_vxlan"
+      },
+      {
+        "BRIDGE_TYPE": "linux",
+        "NAME": "bridge"
+      },
+      {
+        "BRIDGE_TYPE": "linux",
+        "NAME": "elastic"
+      },
+      {
+        "BRIDGE_TYPE": "linux",
+        "NAME": "nodeport"
+      }
+    ]
+  }
+}

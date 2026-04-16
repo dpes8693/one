@@ -1,0 +1,58 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "GROUP_POOL": {
+      "GROUP": [
+        {
+          "ID": "1",
+          "NAME": "users",
+          "TEMPLATE": {
+            "SUNSTONE": {
+              "DEFAULT_VIEW": "cloud",
+              "GROUP_ADMIN_DEFAULT_VIEW": "groupadmin",
+              "GROUP_ADMIN_VIEWS": "groupadmin,cloud",
+              "VIEWS": "cloud"
+            }
+          },
+          "USERS": "",
+          "ADMINS": ""
+        },
+        {
+          "ID": "0",
+          "NAME": "oneadmin",
+          "TEMPLATE": "",
+          "USERS": {
+            "ID": [
+              "0",
+              "1"
+            ]
+          },
+          "ADMINS": ""
+        }
+      ],
+      "QUOTAS": [
+        {
+          "ID": "1",
+          "DATASTORE_QUOTA": "",
+          "NETWORK_QUOTA": "",
+          "VM_QUOTA": "",
+          "IMAGE_QUOTA": ""
+        },
+        {
+          "ID": "0",
+          "DATASTORE_QUOTA": "",
+          "NETWORK_QUOTA": "",
+          "VM_QUOTA": "",
+          "IMAGE_QUOTA": ""
+        }
+      ],
+      "DEFAULT_GROUP_QUOTAS": {
+        "DATASTORE_QUOTA": "",
+        "NETWORK_QUOTA": "",
+        "VM_QUOTA": "",
+        "IMAGE_QUOTA": ""
+      }
+    }
+  }
+}

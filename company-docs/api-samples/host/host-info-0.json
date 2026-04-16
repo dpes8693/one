@@ -1,0 +1,256 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "HOST": {
+      "ID": "0",
+      "NAME": "10.1.1.79",
+      "STATE": "2",
+      "PREV_STATE": "2",
+      "IM_MAD": "kvm",
+      "VM_MAD": "kvm",
+      "CLUSTER_ID": "0",
+      "CLUSTER": "default",
+      "HOST_SHARE": {
+        "MEM_USAGE": "16777216",
+        "CPU_USAGE": "400",
+        "TOTAL_MEM": "65347080",
+        "TOTAL_CPU": "2400",
+        "MAX_MEM": "65347080",
+        "MAX_CPU": "2400",
+        "RUNNING_VMS": "1",
+        "VMS_THREAD": "1",
+        "DATASTORES": {
+          "DISK_USAGE": "0",
+          "DS": {
+            "FREE_MB": "246448",
+            "ID": "0",
+            "TOTAL_MB": "282742",
+            "USED_MB": "36295"
+          },
+          "FREE_DISK": "246448",
+          "MAX_DISK": "282742",
+          "USED_DISK": "36295"
+        },
+        "PCI_DEVICES": {
+          "PCI": [
+            {
+              "ADDRESS": "0000:01:00:0",
+              "BUS": "01",
+              "CLASS": "0300",
+              "CLASS_NAME": "VGA compatible controller",
+              "DEVICE": "2782",
+              "DEVICE_NAME": "NVIDIA Corporation AD104 [GeForce RTX 4070 Ti]",
+              "DOMAIN": "0000",
+              "FUNCTION": "0",
+              "NUMA_NODE": "-",
+              "SHORT_ADDRESS": "01:00.0",
+              "SLOT": "00",
+              "TYPE": "10de:2782:0300",
+              "VENDOR": "10de",
+              "VENDOR_NAME": "NVIDIA Corporation",
+              "VMID": "0"
+            },
+            {
+              "ADDRESS": "0000:01:00:1",
+              "BUS": "01",
+              "CLASS": "0403",
+              "CLASS_NAME": "Audio device",
+              "DEVICE": "22bc",
+              "DEVICE_NAME": "NVIDIA Corporation AD104 High Definition Audio Controller",
+              "DOMAIN": "0000",
+              "FUNCTION": "1",
+              "NUMA_NODE": "-",
+              "SHORT_ADDRESS": "01:00.1",
+              "SLOT": "00",
+              "TYPE": "10de:22bc:0403",
+              "VENDOR": "10de",
+              "VENDOR_NAME": "NVIDIA Corporation",
+              "VMID": "0"
+            }
+          ]
+        },
+        "NUMA_NODES": {
+          "NODE": {
+            "CORE": [
+              {
+                "CPUS": "21:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "37"
+              },
+              {
+                "CPUS": "10:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "20"
+              },
+              {
+                "CPUS": "8:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "16"
+              },
+              {
+                "CPUS": "6:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "12"
+              },
+              {
+                "CPUS": "18:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "34"
+              },
+              {
+                "CPUS": "4:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "8"
+              },
+              {
+                "CPUS": "16:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "32"
+              },
+              {
+                "CPUS": "2:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "4"
+              },
+              {
+                "CPUS": "14:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "28"
+              },
+              {
+                "CPUS": "0:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "0"
+              },
+              {
+                "CPUS": "22:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "38"
+              },
+              {
+                "CPUS": "12:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "24"
+              },
+              {
+                "CPUS": "20:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "36"
+              },
+              {
+                "CPUS": "19:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "35"
+              },
+              {
+                "CPUS": "17:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "33"
+              },
+              {
+                "CPUS": "23:-1",
+                "DEDICATED": "NO",
+                "FREE": "1",
+                "ID": "39"
+              }
+            ],
+            "HUGEPAGE": [
+              {
+                "PAGES": "0",
+                "SIZE": "2048",
+                "USAGE": "0"
+              },
+              {
+                "PAGES": "0",
+                "SIZE": "1048576",
+                "USAGE": "0"
+              }
+            ],
+            "MEMORY": {
+              "DISTANCE": "0",
+              "TOTAL": "65347080",
+              "USAGE": "0"
+            },
+            "NODE_ID": "0"
+          }
+        }
+      },
+      "VMS": {
+        "ID": "0"
+      },
+      "TEMPLATE": {
+        "ARCH": "x86_64",
+        "CGROUPS_VERSION": "2",
+        "CPUSPEED": "0",
+        "HOSTNAME": "nebula",
+        "HYPERVISOR": "kvm",
+        "IM_MAD": "kvm",
+        "KVM_CPU_FEATURES": "3dnowprefetch,abm,acpi,adx,aes,apic,arat,arch-capabilities,arch-lbr,avx,avx-vnni,avx2,bmi1,bmi2,cldemote,clflush,clflushopt,clwb,cmov,core-capability,cx16,cx8,de,ds,ds_cpl,dtes64,erms,est,f16c,fbsdp-no,flush-l1d,fma,fpu,fsgsbase,fsrm,fsrs,fxsr,gds-no,gfni,ibrs-all,intel-pt,invpcid,invtsc,lahf_lm,lm,mca,mce,md-clear,mds-no,mmx,monitor,movbe,movdir64b,movdiri,msr,mtrr,nx,pae,pat,pbe,pcid,pclmuldq,pconfig,pdcm,pdpe1gb,pge,pks,pku,pni,popcnt,pschange-mc-no,psdp-no,pse,pse36,rdctl-no,rdpid,rdrand,rdseed,rdtscp,rfds-clear,sbdr-ssdp-no,sep,serialize,sha-ni,skip-l1dfl-vmentry,smap,smep,smx,spec-ctrl,split-lock-detect,ss,ssbd,sse,sse2,sse4.1,sse4.2,ssse3,stibp,syscall,tm,tm2,tsc,tsc-deadline,tsc_adjust,umip,vaes,vme,vmx,vpclmulqdq,waitpkg,x2apic,xgetbv1,xsave,xsavec,xsaveopt,xsaves,xtpr",
+        "KVM_CPU_MODEL": "Skylake-Client-v3",
+        "KVM_CPU_MODELS": "486 486-v1 Broadwell-noTSX Broadwell-noTSX-IBRS Broadwell-v2 Broadwell-v4 Conroe Conroe-v1 Denverton-v2 Denverton-v3 Haswell-noTSX Haswell-noTSX-IBRS Haswell-v2 Haswell-v4 IvyBridge IvyBridge-IBRS IvyBridge-v1 IvyBridge-v2 Nehalem Nehalem-IBRS Nehalem-v1 Nehalem-v2 Opteron_G1 Opteron_G1-v1 Opteron_G2 Opteron_G2-v1 Penryn Penryn-v1 SandyBridge SandyBridge-IBRS SandyBridge-v1 SandyBridge-v2 Skylake-Client-noTSX-IBRS Skylake-Client-v3 Skylake-Client-v4 Westmere Westmere-IBRS Westmere-v1 Westmere-v2 core2duo core2duo-v1 coreduo coreduo-v1 kvm32 kvm32-v1 kvm64 kvm64-v1 n270 n270-v1 pentium pentium-v1 pentium2 pentium2-v1 pentium3 pentium3-v1 qemu32 qemu32-v1 qemu64 qemu64-v1",
+        "KVM_MACHINES": "pc-i440fx-rhel7.6.0 pc pc-q35-rhel9.6.0 q35 pc-q35-rhel8.6.0 pc-q35-rhel9.4.0 pc-q35-rhel8.5.0 pc-q35-rhel8.3.0 pc-q35-rhel7.6.0 pc-q35-rhel8.4.0 pc-q35-rhel9.2.0 pc-q35-rhel8.2.0 pc-q35-rhel9.0.0 pc-q35-rhel8.0.0 pc-q35-rhel8.1.0",
+        "MODELNAME": "13th Gen Intel(R) Core(TM) i7-13700K",
+        "PCI_FILTER": "10de",
+        "TOTALCPU": "2400",
+        "TOTALMEMORY": "65347080",
+        "VERSION": "7.0.1",
+        "VM_MAD": "kvm"
+      },
+      "MONITORING": {
+        "TIMESTAMP": "1776317079",
+        "ID": "0",
+        "CAPACITY": {
+          "FREE_CPU": "2400",
+          "FREE_CPU_FORECAST": "2357.6",
+          "FREE_MEMORY": "46475880",
+          "FREE_MEMORY_FORECAST": "4.65309e+07",
+          "USED_CPU": "0",
+          "USED_CPU_FORECAST": "42.4",
+          "USED_MEMORY": "18871200",
+          "USED_MEMORY_FORECAST": "1.88162e+07"
+        },
+        "SYSTEM": {
+          "NETRX": "38312807659",
+          "NETRX_BW": "707.05",
+          "NETRX_BW_FORECAST": "6943.31",
+          "NETTX": "1097084597",
+          "NETTX_BW": "204.55",
+          "NETTX_BW_FORECAST": "141.24"
+        },
+        "NUMA_NODE": {
+          "HUGEPAGE": [
+            {
+              "FREE": "0",
+              "SIZE": "2048"
+            },
+            {
+              "FREE": "0",
+              "SIZE": "1048576"
+            }
+          ],
+          "MEMORY": {
+            "FREE": "19830524",
+            "USED": "45516556"
+          },
+          "NODE_ID": "0"
+        }
+      }
+    }
+  }
+}

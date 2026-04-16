@@ -1,0 +1,70 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "VM_POOL": {
+      "VM": {
+        "ID": "0",
+        "UID": "0",
+        "GID": "0",
+        "UNAME": "oneadmin",
+        "GNAME": "oneadmin",
+        "NAME": "Ubuntu 2404-GPU -0",
+        "LAST_POLL": "0",
+        "STATE": "3",
+        "LCM_STATE": "3",
+        "RESCHED": "0",
+        "STIME": "1774615796",
+        "ETIME": "0",
+        "DEPLOY_ID": "3e23434b-4b09-449a-bbc3-32c005fa7963",
+        "TEMPLATE": {
+          "CPU": "4",
+          "MEMORY": "16384",
+          "VCPU": "4",
+          "DISK": {
+            "DISK_ID": "0",
+            "DATASTORE": "default",
+            "DATASTORE_ID": "1",
+            "IMAGE": "Ubuntu 24.04",
+            "IMAGE_ID": "0",
+            "SIZE": "61440",
+            "TYPE": "FILE",
+            "CLONE": "YES",
+            "CLONE_TARGET": "SYSTEM",
+            "LN_TARGET": "SYSTEM",
+            "DISK_SNAPSHOT_TOTAL_SIZE": "0"
+          },
+          "NIC": {
+            "MAC": "02:00:80:7d:95:da",
+            "NETWORK": "lan-dhcp-onebr3",
+            "NETWORK_ID": "5",
+            "NIC_ID": "0",
+            "SECURITY_GROUPS": "0"
+          },
+          "GRAPHICS": {
+            "LISTEN": "0.0.0.0",
+            "PORT": "5900",
+            "TYPE": "VNC"
+          }
+        },
+        "MONITORING": "",
+        "USER_TEMPLATE": {
+          "SCHED_REQUIREMENTS": "HYPERVISOR=kvm"
+        },
+        "HISTORY_RECORDS": {
+          "HISTORY": {
+            "OID": "0",
+            "SEQ": "29",
+            "HOSTNAME": "10.1.1.79",
+            "HID": "0",
+            "CID": "0",
+            "DS_ID": "0",
+            "VM_MAD": "kvm",
+            "TM_MAD": "local",
+            "ACTION": "0"
+          }
+        }
+      }
+    }
+  }
+}

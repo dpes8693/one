@@ -1,0 +1,58 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "ACL_POOL": {
+      "ACL": [
+        {
+          "ID": "0",
+          "USER": "200000001",
+          "RESOURCE": "121429400000000",
+          "RIGHTS": "8",
+          "ZONE": "400000000",
+          "STRING": "@1 VM+IMAGE+TEMPLATE+DOCUMENT+SECGROUP+VMGROUP+BACKUPJOB/* CREATE *"
+        },
+        {
+          "ID": "3",
+          "USER": "200000001",
+          "RESOURCE": "2400000000",
+          "RIGHTS": "2",
+          "ZONE": "100000000",
+          "STRING": "@1 HOST/* MANAGE #0"
+        },
+        {
+          "ID": "4",
+          "USER": "200000001",
+          "RESOURCE": "4400000000",
+          "RIGHTS": "1",
+          "ZONE": "100000000",
+          "STRING": "@1 NET/* USE #0"
+        },
+        {
+          "ID": "5",
+          "USER": "200000001",
+          "RESOURCE": "100400000000",
+          "RIGHTS": "1",
+          "ZONE": "100000000",
+          "STRING": "@1 DATASTORE/* USE #0"
+        },
+        {
+          "ID": "1",
+          "USER": "400000000",
+          "RESOURCE": "800400000000",
+          "RIGHTS": "1",
+          "ZONE": "400000000",
+          "STRING": "* ZONE/* USE *"
+        },
+        {
+          "ID": "2",
+          "USER": "400000000",
+          "RESOURCE": "18000400000000",
+          "RIGHTS": "1",
+          "ZONE": "400000000",
+          "STRING": "* MARKETPLACE+MARKETPLACEAPP/* USE *"
+        }
+      ]
+    }
+  }
+}

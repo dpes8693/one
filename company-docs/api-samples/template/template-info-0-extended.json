@@ -1,0 +1,71 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "VMTEMPLATE": {
+      "ID": "0",
+      "UID": "0",
+      "GID": "0",
+      "UNAME": "oneadmin",
+      "GNAME": "oneadmin",
+      "NAME": "Ubuntu 24.04",
+      "PERMISSIONS": {
+        "OWNER_U": "1",
+        "OWNER_M": "1",
+        "OWNER_A": "0",
+        "GROUP_U": "0",
+        "GROUP_M": "0",
+        "GROUP_A": "0",
+        "OTHER_U": "0",
+        "OTHER_M": "0",
+        "OTHER_A": "0"
+      },
+      "REGTIME": "1774604821",
+      "TEMPLATE": {
+        "CONTEXT": {
+          "NETWORK": "YES",
+          "SSH_PUBLIC_KEY": "$USER[SSH_PUBLIC_KEY]"
+        },
+        "CPU": "1",
+        "DISK": {
+          "ALLOW_ORPHANS": "FORMAT",
+          "CLONE": "YES",
+          "CLONE_TARGET": "SYSTEM",
+          "CLUSTER_ID": "0",
+          "DATASTORE": "default",
+          "DATASTORE_ID": "1",
+          "DEV_PREFIX": "vd",
+          "DISK_ID": "0",
+          "DISK_SNAPSHOT_TOTAL_SIZE": "0",
+          "DISK_TYPE": "FILE",
+          "DRIVER": "qcow2",
+          "FORMAT": "qcow2",
+          "IMAGE": "Ubuntu 24.04",
+          "IMAGE_ID": "0",
+          "IMAGE_STATE": "2",
+          "LN_TARGET": "SYSTEM",
+          "ORIGINAL_SIZE": "3584",
+          "PERSISTENT_SNAPSHOTS": "YES",
+          "READONLY": "NO",
+          "SAVE": "NO",
+          "SIZE": "3584",
+          "SOURCE": "/var/lib/one//datastores/1/9acd145b6442da97c1798661afa5e89e",
+          "TM_MAD": "local",
+          "TYPE": "FILE"
+        },
+        "GRAPHICS": {
+          "LISTEN": "0.0.0.0",
+          "TYPE": "vnc"
+        },
+        "HYPERVISOR": "kvm",
+        "LOGO": "images/logos/ubuntu.png",
+        "LXD_SECURITY_PRIVILEGED": "true",
+        "MEMORY": "768",
+        "OS": {
+          "ARCH": "x86_64"
+        },
+        "SCHED_REQUIREMENTS": "HYPERVISOR=kvm"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "ZONE": {
+      "ID": "0",
+      "NAME": "OpenNebula",
+      "STATE": "0",
+      "TEMPLATE": {
+        "ENDPOINT": "http://localhost:2633/RPC2"
+      },
+      "SERVER_POOL": ""
+    }
+  }
+}

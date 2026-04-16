@@ -1,0 +1,32 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "CLUSTER_POOL": {
+      "CLUSTER": {
+        "ID": "0",
+        "NAME": "default",
+        "HOSTS": {
+          "ID": "0"
+        },
+        "DATASTORES": {
+          "ID": [
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        "VNETS": {
+          "ID": [
+            "4",
+            "5"
+          ]
+        },
+        "TEMPLATE": {
+          "RESERVED_CPU": "",
+          "RESERVED_MEM": ""
+        }
+      }
+    }
+  }
+}

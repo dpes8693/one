@@ -1,0 +1,49 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "DATASTORE": {
+      "ID": "0",
+      "UID": "0",
+      "GID": "0",
+      "UNAME": "oneadmin",
+      "GNAME": "oneadmin",
+      "NAME": "system",
+      "PERMISSIONS": {
+        "OWNER_U": "1",
+        "OWNER_M": "1",
+        "OWNER_A": "0",
+        "GROUP_U": "1",
+        "GROUP_M": "0",
+        "GROUP_A": "0",
+        "OTHER_U": "0",
+        "OTHER_M": "0",
+        "OTHER_A": "0"
+      },
+      "DS_MAD": "-",
+      "TM_MAD": "local",
+      "BASE_PATH": "/var/lib/one//datastores/0",
+      "TYPE": "1",
+      "DISK_TYPE": "0",
+      "STATE": "0",
+      "CLUSTERS": {
+        "ID": "0"
+      },
+      "TOTAL_MB": "0",
+      "FREE_MB": "0",
+      "USED_MB": "0",
+      "IMAGES": "",
+      "TEMPLATE": {
+        "ALLOW_ORPHANS": "FORMAT",
+        "DISK_TYPE": "FILE",
+        "DS_MIGRATE": "YES",
+        "PERSISTENT_SNAPSHOTS": "YES",
+        "RESTRICTED_DIRS": "/",
+        "SAFE_DIRS": "/var/tmp",
+        "SHARED": "NO",
+        "TM_MAD": "local",
+        "TYPE": "SYSTEM_DS"
+      }
+    }
+  }
+}

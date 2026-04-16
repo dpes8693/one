@@ -1,0 +1,28 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "GROUP": {
+      "ID": "0",
+      "NAME": "oneadmin",
+      "TEMPLATE": "",
+      "USERS": {
+        "ID": [
+          "0",
+          "1"
+        ]
+      },
+      "ADMINS": "",
+      "DATASTORE_QUOTA": "",
+      "NETWORK_QUOTA": "",
+      "VM_QUOTA": "",
+      "IMAGE_QUOTA": "",
+      "DEFAULT_GROUP_QUOTAS": {
+        "DATASTORE_QUOTA": "",
+        "NETWORK_QUOTA": "",
+        "VM_QUOTA": "",
+        "IMAGE_QUOTA": ""
+      }
+    }
+  }
+}

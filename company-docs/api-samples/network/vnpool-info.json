@@ -1,0 +1,130 @@
+{
+  "id": 200,
+  "message": "OK",
+  "data": {
+    "VNET_POOL": {
+      "VNET": [
+        {
+          "ID": "5",
+          "UID": "0",
+          "GID": "0",
+          "UNAME": "oneadmin",
+          "GNAME": "oneadmin",
+          "NAME": "lan-dhcp-onebr3",
+          "PERMISSIONS": {
+            "OWNER_U": "1",
+            "OWNER_M": "1",
+            "OWNER_A": "0",
+            "GROUP_U": "0",
+            "GROUP_M": "0",
+            "GROUP_A": "0",
+            "OTHER_U": "0",
+            "OTHER_M": "0",
+            "OTHER_A": "0"
+          },
+          "CLUSTERS": {
+            "ID": "0"
+          },
+          "BRIDGE": "onebr3",
+          "BRIDGE_TYPE": "linux",
+          "STATE": "1",
+          "PREV_STATE": "1",
+          "PARENT_NETWORK_ID": "",
+          "VN_MAD": "bridge",
+          "PHYDEV": "enp4s0",
+          "VLAN_ID": "",
+          "OUTER_VLAN_ID": "",
+          "VLAN_ID_AUTOMATIC": "0",
+          "OUTER_VLAN_ID_AUTOMATIC": "0",
+          "USED_LEASES": "1",
+          "VROUTERS": "",
+          "UPDATED_VMS": {
+            "ID": "0"
+          },
+          "OUTDATED_VMS": "",
+          "UPDATING_VMS": "",
+          "ERROR_VMS": "",
+          "TEMPLATE": {
+            "BRIDGE": "onebr3",
+            "BRIDGE_TYPE": "linux",
+            "OUTER_VLAN_ID": "",
+            "PHYDEV": "enp4s0",
+            "SECURITY_GROUPS": "0",
+            "VLAN_ID": "",
+            "VN_MAD": "bridge"
+          },
+          "AR_POOL": {
+            "AR": {
+              "ALLOCATED": " 0 68719476736",
+              "AR_ID": "0",
+              "MAC": "02:00:80:7d:95:da",
+              "NAME": "AR0",
+              "SIZE": "10",
+              "TYPE": "ETHER"
+            }
+          }
+        },
+        {
+          "ID": "4",
+          "UID": "0",
+          "GID": "0",
+          "UNAME": "oneadmin",
+          "GNAME": "oneadmin",
+          "NAME": "vxlan-private",
+          "PERMISSIONS": {
+            "OWNER_U": "1",
+            "OWNER_M": "1",
+            "OWNER_A": "0",
+            "GROUP_U": "0",
+            "GROUP_M": "0",
+            "GROUP_A": "0",
+            "OTHER_U": "0",
+            "OTHER_M": "0",
+            "OTHER_A": "0"
+          },
+          "CLUSTERS": {
+            "ID": "0"
+          },
+          "BRIDGE": "onebr4",
+          "BRIDGE_TYPE": "linux",
+          "STATE": "1",
+          "PREV_STATE": "1",
+          "PARENT_NETWORK_ID": "",
+          "VN_MAD": "vxlan",
+          "PHYDEV": "onebr3",
+          "VLAN_ID": "6",
+          "OUTER_VLAN_ID": "",
+          "VLAN_ID_AUTOMATIC": "1",
+          "OUTER_VLAN_ID_AUTOMATIC": "0",
+          "USED_LEASES": "0",
+          "VROUTERS": "",
+          "UPDATED_VMS": "",
+          "OUTDATED_VMS": "",
+          "UPDATING_VMS": "",
+          "ERROR_VMS": "",
+          "TEMPLATE": {
+            "BRIDGE": "onebr4",
+            "BRIDGE_TYPE": "linux",
+            "FILTER_IP_SPOOFING": "NO",
+            "FILTER_MAC_SPOOFING": "NO",
+            "OUTER_VLAN_ID": "",
+            "PHYDEV": "onebr3",
+            "SECURITY_GROUPS": "0",
+            "VN_MAD": "vxlan"
+          },
+          "AR_POOL": {
+            "AR": {
+              "ALLOCATED": "",
+              "AR_ID": "0",
+              "IP": "172.16.10.1",
+              "MAC": "02:00:ac:10:0a:01",
+              "NAME": "AR0",
+              "SIZE": "100",
+              "TYPE": "IP4"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
