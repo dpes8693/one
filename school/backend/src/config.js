@@ -26,6 +26,7 @@ export default {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
     from: process.env.SMTP_FROM,
+    secure: String(process.env.SMTP_SECURE || '').toLowerCase() === 'true',
   },
   frontendUrl: process.env.VITE_BACKEND_URL || 'http://localhost:3000',
 }

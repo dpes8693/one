@@ -1,0 +1,81 @@
+# GPU 算力平台 - Production docker-compose
+# 啟動：docker-compose -f docker-compose.prod.yml up -d --build
+#
+# 注意：與 docker-compose.yml（dev 版）分開，dev 版只跑 PostgreSQL 給 host 使用
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gpu-platform-db-prod
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-gpu_platform}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-gpu_platform}
+    volumes:
+      - postgres-data-prod:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    # 不對外暴露 ports，只走 internal network
+    networks:
+      - gpu-platform-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gpu_platform}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: gpu-platform-backend:latest
+    container_name: gpu-platform-backend-prod
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      # Container 內覆寫：DB 走 service name，不是 localhost
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      BACKEND_PORT: 4000
+      NODE_ENV: production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - gpu-platform-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: gpu-platform-frontend:latest
+    container_name: gpu-platform-frontend-prod
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - gpu-platform-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+networks:
+  gpu-platform-net:
+    driver: bridge
+
+volumes:
+  postgres-data-prod:
+    driver: local

@@ -84,3 +84,4 @@ src/oneprometheus/vendor/prometheus.arm64/
 src/oneprometheus/vendor/prometheus/
 src/form/vendor/terraform
 src/form/vendor/terraform.arm64
+.playwright-cli/

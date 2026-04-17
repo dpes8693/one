@@ -1,0 +1,36 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Build 產物（image 內會重新 build）
+dist
+build
+
+# 環境變數
+.env
+.env.*
+!.env.example
+
+# 測試
+tests
+e2e
+test-results
+playwright-report
+playwright.config.js
+coverage
+
+# 開發/工具檔
+.git
+.gitignore
+.vscode
+.idea
+*.log
+.DS_Store
+
+# Docker 自身
+Dockerfile
+.dockerignore
+
+# 文件
+README.md
+*.md

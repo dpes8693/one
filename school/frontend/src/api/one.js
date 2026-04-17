@@ -8,6 +8,14 @@ export async function getVMList() {
   return res.data
 }
 
+// 學生 Dashboard 用：filter=-2 取得目前使用者可見的所有 VM（含完整 extended 內容）
+// 回傳完整 axios response（保留 res.data.data 結構），讓前端做防禦解析
+export async function getMyVMsPaginated() {
+  return client.get('/one/vmpool/info/paginated', {
+    params: { extended: 1, filter: -2, pageSize: 200 },
+  })
+}
+
 // VM 詳情
 export async function getVMInfo(id) {
   const res = await client.get(`/one/vm/info/${id}`)

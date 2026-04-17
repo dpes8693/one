@@ -17,7 +17,7 @@ export default function Login() {
       const data = await login(form.user, form.password)
       localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data.user))
-      navigate('/vms')
+      navigate('/student/dashboard')
     } catch (err) {
       setError(err.response?.data?.message || '帳號或密碼錯誤')
     } finally {

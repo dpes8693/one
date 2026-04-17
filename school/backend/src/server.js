@@ -8,6 +8,7 @@ import vipRoutes from './routes/vip.js'
 import schedulesRoutes from './routes/schedules.js'
 import auditRoutes from './routes/audit.js'
 import sshKeyRoutes from './routes/sshKey.js'
+import usersRoutes from './routes/users.js'
 import alertsRoutes from './routes/alerts.js'
 import { requireAuth } from './middleware/auth.js'
 
@@ -49,6 +50,7 @@ app.use('/api/vip', requireAuth, vipRoutes)
 app.use('/api/schedules', requireAuth, schedulesRoutes)
 app.use('/api/audit', requireAuth, auditRoutes)
 app.use('/api/users/me', requireAuth, sshKeyRoutes)
+app.use('/api/users', requireAuth, usersRoutes)
 app.use('/api/alerts', requireAuth, alertsRoutes)
 app.use('/api/one', ...proxyRoutes)
 

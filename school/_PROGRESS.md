@@ -156,6 +156,37 @@ frontend/
 
 ---
 
+## Sprint 4 進度
+最後更新：2026-04-17
+
+| Task | Agent | 狀態 | 測試結果 |
+|------|-------|------|---------|
+| #3 SMTP 真實接通（mailer.js 雙模式） | Backend | 完成 | mailer 6/6 + notifier 4/4 通過；其餘 sprint 4 前測試套件無退化 |
+| #5 Production 部署設定（Docker 化） | DevOps | 完成 | backend image build 成功（262MB）；frontend image build 成功（92.6MB）；nginx config syntax OK；docker-compose.prod.yml config OK |
+
+### Task #5 變更摘要
+- 新增 `backend/Dockerfile`（multi-stage, node:22-alpine, 非 root user, tini, healthcheck）
+- 新增 `backend/.dockerignore`（排除 node_modules / tests / .env）
+- 新增 `frontend/Dockerfile`（builder: vite build；runtime: nginx:alpine）
+- 新增 `frontend/.dockerignore`（排除 node_modules / dist / e2e / .env）
+- 新增 `frontend/nginx.conf`（SPA fallback + /api 反向代理 → backend:4000 + gzip + 安全標頭）
+- 新增 `docker-compose.prod.yml`（postgres 不對外、backend、frontend 80:80、共用 bridge network、healthcheck）
+- 新增 `.env.production.example`（部署者複製為 `.env.production` 後填值）
+- 新增 `docs/DEPLOYMENT.md`（中文部署指南：架構、環境變數、常見問題、備份還原、安全 checklist）
+- 不動 OpenNebula upstream（`src/fireedge/`），不動 dev `docker-compose.yml`
+
+### Task #3 變更摘要
+- 新增 `backend/src/services/mailer.js`（對外 API alias，re-export notifier 的函式，向後相容）
+- 重寫 `backend/src/services/notifier.js`：
+  - 有 `SMTP_HOST` → `nodemailer.createTransport`（含 `secure`、條件式 `auth`）真寄信
+  - 沒設 → console fallback；**fallback 也寫 `email_notifications`（status=sent）**
+  - 寄信失敗：寫 DB `status=failed` + `error_message`
+- `backend/src/config.js`：新增 `smtp.secure`（讀 `SMTP_SECURE` 字串轉 bool）
+- `.env.example`：補 `SMTP_SECURE`、密碼用 placeholder `changeme`、加註釋
+- TDD：先寫 `backend/tests/unit/mailer.test.js`（6 案例）讓它紅 → 實作 → 全綠
+
+---
+
 ## E2E Coverage Sprint
 最後更新：2026-04-16
 
@@ -213,3 +244,74 @@ frontend/
 
 ## 環境變數
 見 .env.example
+
+---
+
+## Sprint 4 進度
+最後更新：2026-04-17
+
+| Task | 內容 | 狀態 |
+|------|------|------|
+| #1 | 學生 Dashboard `/student/dashboard`（VM 卡片 + SSH 區塊） | 完成 |
+| #2 | Backend Users API `/api/users/*`（admin only） | 完成 |
+| #3 | Backend SMTP 雙模式 mailer（真寄信 / console fallback 都寫 DB） | 完成 |
+| #4 | Frontend Users 管理頁 `/admin/users`（admin only） | 完成 |
+| #5 | Production Dockerfile + docker-compose.prod.yml + DEPLOYMENT.md | 完成 |
+| #6 | 學校 Template 修復文件 | 完成 |
+| #7 | QA 全測試 + 瀏覽器驗證 | 完成 |
+
+### 測試結果（2026-04-17 14:00）
+
+| 項目 | 結果 |
+|------|------|
+| Backend Vitest | 11 檔案 / **83 tests 全綠** |
+| Frontend Vitest | 10 檔案 / **67 tests 全綠** |
+| Backend Smoke (`smoke-backend.sh`) | **49/49 通過** |
+| 瀏覽器驗證（playwright-cli） | 4 項中 3 項通過、1 項小 bug |
+
+### 瀏覽器驗證細節
+
+1. **登入後預設導向**：實測導到 `/vms`（**bug**，預期是 `/student/dashboard`）
+   - 位置：`school/frontend/src/pages/Login.jsx:20` `navigate('/vms')`
+   - Sidebar 與所有頁面本身正常，僅登入後跳轉路徑沒對齊 Task #1
+2. **Sidebar**：所有人看到「我的 GPU」+ admin 看到「使用者管理」 — **OK**
+3. **`/admin/users`**：列出 oneadmin / serveradmin，含配額（VMS/CPU/MEM/DISK）+ 停用 / 改配額 / 重設密碼按鈕 — **OK**
+4. **`/student/dashboard`**：顯示 VM 卡片（Ubuntu 2404-GPU -0、執行中）+ SSH 區塊（IP `—`、Port 22、帳號 root，提示「尚未取得 IP」）— **OK**
+
+### Sprint 4 新增/異動檔案重點
+
+**Backend**
+- `backend/src/routes/users.js` — Users API（list / disable / quota / reset password）
+- `backend/src/services/mailer.js` — 對外 alias，re-export notifier
+- `backend/src/services/notifier.js` — 雙模式（SMTP 真寄信 / console fallback），都寫 `email_notifications`
+- `backend/src/config.js` — 新增 `smtp.secure`
+- `backend/tests/unit/mailer.test.js` — 6 案例
+- `backend/tests/unit/users.test.js` — Users API 測試
+
+**Frontend**
+- `frontend/src/pages/StudentDashboard.jsx` — Task #1 學生 Dashboard
+- `frontend/src/pages/AdminUsers.jsx` — Task #4 使用者管理
+- `frontend/src/components/Layout.jsx` — sidebar 加「我的 GPU」+「使用者管理」
+- `frontend/src/App.jsx` — 路由 `/student/dashboard`、`/admin/users`，根路徑 redirect 到 `/student/dashboard`
+- `frontend/tests/unit/StudentDashboard.test.jsx`、`AdminUsers.test.jsx`
+
+**Production / Deployment**
+- `school/backend/Dockerfile`、`backend/.dockerignore`
+- `school/frontend/Dockerfile`、`frontend/nginx.conf`、`frontend/.dockerignore`
+- `school/docker-compose.prod.yml`
+- `school/.env.production.example`
+- `school/docs/DEPLOYMENT.md`
+
+**文件**
+- `school/docs/SCHOOL_TEMPLATE_FIX.md`（Task #6）
+- `school/_PROGRESS.md` 本段
+
+### 已知小 bug（Sprint 4 收尾）
+
+- `frontend/src/pages/Login.jsx:20` 登入成功後 `navigate('/vms')` 應改成 `navigate('/student/dashboard')` 才符合 Task #1 規格。
+  - 影響低：sidebar 第一個項目就是「我的 GPU」，使用者點一下就到。但對齊規格建議修正。
+
+### Backend 重啟紀錄
+
+- 舊 backend (PID 78265) 還跑沒有 `/api/users` 路由的版本，本次驗證已 `kill` 後用 `nohup npm start &` 重啟（新 PID 59050），健康檢查 OK、`/api/users` 401（需 token，路由有掛上）、admin token 拉到正常用戶清單。
+

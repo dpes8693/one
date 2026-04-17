@@ -1,0 +1,30 @@
+# Dependencies（image 內會重新 npm ci）
+node_modules
+npm-debug.log*
+
+# 環境變數（透過 docker-compose env_file 注入，絕不打進 image）
+.env
+.env.*
+!.env.example
+
+# 測試
+tests
+vitest.config.js
+coverage
+.nyc_output
+
+# 開發/工具檔
+.git
+.gitignore
+.vscode
+.idea
+*.log
+.DS_Store
+
+# Docker 自身
+Dockerfile
+.dockerignore
+
+# 文件
+README.md
+*.md

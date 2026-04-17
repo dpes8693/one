@@ -1,24 +1,54 @@
+// services/notifier.js
+// Sprint 4 Task #3: SMTP 真實接通
+// 雙模式：
+//   - SMTP_HOST 有設 → 用 nodemailer 真寄信
+//   - SMTP_HOST 沒設 → console fallback（保留 dev / 測試行為）
+// 兩種模式都會寫 email_notifications DB（status=sent / failed）
 import nodemailer from 'nodemailer'
 import config from '../config.js'
 import pool from '../db.js'
 
 /**
  * 建立 nodemailer transporter（若有 SMTP 設定）
+ * 沒設 SMTP_HOST → 回傳 null，由呼叫端走 console fallback
  */
 function createTransporter() {
   if (!config.smtp.host) return null
-  return nodemailer.createTransport({
+
+  const opts = {
     host: config.smtp.host,
     port: config.smtp.port,
-    auth: {
+    secure: !!config.smtp.secure,
+  }
+  if (config.smtp.user || config.smtp.pass) {
+    opts.auth = {
       user: config.smtp.user,
       pass: config.smtp.pass,
-    },
-  })
+    }
+  }
+  return nodemailer.createTransport(opts)
+}
+
+/**
+ * 寫一筆 email_notifications 紀錄
+ */
+async function recordNotification({ to, subject, templateType, relatedId, status, errorMessage }) {
+  try {
+    await pool.query(
+      `INSERT INTO email_notifications
+         (recipient_email, subject, template_type, related_id, status, error_message)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [to, subject, templateType, relatedId || null, status, errorMessage]
+    )
+  } catch (dbErr) {
+    console.error('[Email] 寫入 DB 失敗:', dbErr.message)
+  }
 }
 
 /**
  * 內部發信並寫 DB 紀錄
+ * - 有 transporter（SMTP_HOST 已設）→ 真寄信
+ * - 無 transporter → console fallback（仍寫 DB status=sent）
  */
 async function sendEmail({ to, subject, text, templateType, relatedId }) {
   const transporter = createTransporter()
@@ -39,25 +69,14 @@ async function sendEmail({ to, subject, text, templateType, relatedId }) {
       console.error('[Email] 發送失敗:', err.message)
     }
   } else {
-    // Fallback: console.log
-    console.log('[Email] 模擬發信（未設定 SMTP）:')
+    // Fallback: console.log（學校尚未提供 SMTP；dev/測試也走這條）
+    console.log('[Email] 模擬發信（未設定 SMTP_HOST）:')
     console.log(`  收件者: ${to}`)
     console.log(`  主旨: ${subject}`)
     console.log(`  內容: ${text}`)
   }
 
-  // 寫 email_notifications 紀錄
-  try {
-    await pool.query(
-      `INSERT INTO email_notifications
-         (recipient_email, subject, template_type, related_id, status, error_message)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
-      [to, subject, templateType, relatedId || null, status, errorMessage]
-    )
-  } catch (dbErr) {
-    console.error('[Email] 寫入 DB 失敗:', dbErr.message)
-  }
-
+  await recordNotification({ to, subject, templateType, relatedId, status, errorMessage })
   return { status, errorMessage }
 }
 
