@@ -71,10 +71,17 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="mt-4 text-center">
-          <Link to="/apply" className="text-sm text-blue-600 hover:underline">
-            申請 GPU 使用權限
-          </Link>
+        <div className="mt-4 text-center space-y-2">
+          <div>
+            <Link to="/register" className="text-sm text-blue-600 hover:underline">
+              還沒帳號？立即註冊
+            </Link>
+          </div>
+          <div>
+            <Link to="/apply" className="text-sm text-blue-600 hover:underline">
+              申請 GPU 使用權限
+            </Link>
+          </div>
         </div>
       </div>
     </div>

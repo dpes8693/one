@@ -52,23 +52,22 @@ export default function Layout() {
         <nav className="flex-1 p-2 overflow-y-auto">
           {/* 主要功能 */}
           <SidebarLink to="/student/dashboard">我的 GPU</SidebarLink>
+          <SidebarLink to="/apply">申請新預約</SidebarLink>
           <SidebarLink to="/vms">我的虛擬機</SidebarLink>
-
-          {/* 設定群組（所有人可見） */}
-          <SectionLabel>設定</SectionLabel>
-          <SidebarLink to="/settings/ssh-key">SSH 金鑰</SidebarLink>
 
           {/* 管理群組（admin only） */}
           {isAdmin && (
             <>
               <SectionLabel>管理</SectionLabel>
               <SidebarLink to="/admin/dashboard">GPU 資源總覽</SidebarLink>
+              <SidebarLink to="/admin/registrations">註冊審核</SidebarLink>
               <SidebarLink to="/admin/applications">申請審核</SidebarLink>
               <SidebarLink to="/admin/users">使用者管理</SidebarLink>
               <SidebarLink to="/admin/vip">VIP 管理</SidebarLink>
               <SidebarLink to="/admin/schedules">排程行事曆</SidebarLink>
               <SidebarLink to="/admin/audit">審計日誌</SidebarLink>
               <SidebarLink to="/admin/alerts">GPU 告警</SidebarLink>
+              <SidebarLink to="/admin/settings">系統設定</SidebarLink>
             </>
           )}
         </nav>

@@ -75,6 +75,50 @@ describe('notifier — 無 SMTP 設定時（fallback）', () => {
   })
 })
 
+describe('notifier — Sprint 5 Task #16 VM 通知函式', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    config.smtp.host = null
+    nodemailer.createTransport.mockReturnValue(null)
+  })
+
+  it('sendVmReadyEmail: 寄信給學生 + 寫 DB (template_type=vm_ready)', async () => {
+    const { sendVmReadyEmail } = await import('../../src/services/notifier.js')
+    await sendVmReadyEmail('s@example.com', 'app-1-2', '10.1.1.10', 22, 'root')
+    expect(pool.query).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO email_notifications'),
+      expect.arrayContaining(['s@example.com', 'vm_ready', null, 'sent'])
+    )
+  })
+
+  it('sendVmFailureNotification: 寄給 admin + template_type=vm_failure_admin', async () => {
+    const { sendVmFailureNotification } = await import('../../src/services/notifier.js')
+    await sendVmFailureNotification('admin@example.com', 'app-1-2', 'OpenNebula 423')
+    expect(pool.query).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO email_notifications'),
+      expect.arrayContaining(['admin@example.com', 'vm_failure_admin', null, 'sent'])
+    )
+  })
+
+  it('sendVmFailureToStudent: 寄給學生 + template_type=vm_failure_student', async () => {
+    const { sendVmFailureToStudent } = await import('../../src/services/notifier.js')
+    await sendVmFailureToStudent('s@example.com')
+    expect(pool.query).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO email_notifications'),
+      expect.arrayContaining(['s@example.com', 'vm_failure_student', null, 'sent'])
+    )
+  })
+
+  it('sendVmEndedEmail: 寄給學生 + template_type=vm_ended', async () => {
+    const { sendVmEndedEmail } = await import('../../src/services/notifier.js')
+    await sendVmEndedEmail('s@example.com', 'app-1-2')
+    expect(pool.query).toHaveBeenCalledWith(
+      expect.stringContaining('INSERT INTO email_notifications'),
+      expect.arrayContaining(['s@example.com', 'vm_ended', null, 'sent'])
+    )
+  })
+})
+
 describe('notifier — 有 SMTP 設定時', () => {
   let sendMailMock
 

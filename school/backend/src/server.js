@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import pool from './db.js'
 import authRoutes from './routes/auth.js'
-import applicationsRoutes from './routes/applications.js'
+import applicationsRoutes, { templatesHandler } from './routes/applications.js'
 import proxyRoutes from './routes/proxy.js'
 import vipRoutes from './routes/vip.js'
 import schedulesRoutes from './routes/schedules.js'
@@ -10,6 +10,9 @@ import auditRoutes from './routes/audit.js'
 import sshKeyRoutes from './routes/sshKey.js'
 import usersRoutes from './routes/users.js'
 import alertsRoutes from './routes/alerts.js'
+import settingsRoutes from './routes/settings.js'
+import registerRoutes from './routes/register.js'
+import registrationsAdminRoutes from './routes/registrationsAdmin.js'
 import { requireAuth } from './middleware/auth.js'
 
 const app = express()
@@ -46,12 +49,16 @@ app.get('/health', async (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes)
 app.use('/api/applications', applicationsRoutes)
+app.get('/api/templates', requireAuth, templatesHandler)
 app.use('/api/vip', requireAuth, vipRoutes)
 app.use('/api/schedules', requireAuth, schedulesRoutes)
 app.use('/api/audit', requireAuth, auditRoutes)
 app.use('/api/users/me', requireAuth, sshKeyRoutes)
 app.use('/api/users', requireAuth, usersRoutes)
 app.use('/api/alerts', requireAuth, alertsRoutes)
+app.use('/api/admin/settings', requireAuth, settingsRoutes)
+app.use('/api/register', registerRoutes)
+app.use('/api/admin/registrations', registrationsAdminRoutes)
 app.use('/api/one', ...proxyRoutes)
 
 // 404

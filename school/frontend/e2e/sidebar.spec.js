@@ -32,7 +32,9 @@ test.describe('F. Sidebar 結構', () => {
     await page.screenshot({ path: `${screenshotDir}/F2-sidebar-vms-link.png`, fullPage: true })
   })
 
-  test('F3 - Sidebar 有「設定」群組 + SSH 金鑰', async ({ page }) => {
+  // F3 已停用：SPEC v2 移除 SSH Key 機制（2026-04-17），改用 SSH 帳密
+  // sidebar 不再有「設定」群組與「SSH 金鑰」連結
+  test.skip('F3 - Sidebar 有「設定」群組 + SSH 金鑰 (deprecated)', async ({ page }) => {
     await loginAsAdmin(page)
     const sidebar = page.locator('aside')
     const sidebarText = await sidebar.innerText()

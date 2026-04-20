@@ -1,3 +1,5 @@
+// @deprecated SPEC v2 已移除 SSH Key 機制（2026-04-17 會議決議），改用 SSH 帳密
+// 此檔案保留避免測試/import 失敗，不再從 sidebar / 路由連入
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { getSshKey, updateSshKey } from '../../api/sshKey.js'

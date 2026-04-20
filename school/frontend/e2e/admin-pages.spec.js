@@ -51,7 +51,9 @@ test.describe('E. 各管理頁面渲染', () => {
     await page.screenshot({ path: `${screenshotDir}/E3-alerts.png`, fullPage: true })
   })
 
-  test('E4 - /settings/ssh-key 顯示 SSH Key 表單', async ({ page }) => {
+  // E4 已停用：SPEC v2 移除 SSH Key 機制（2026-04-17），改用 SSH 帳密
+  // /settings/ssh-key 路由已移除
+  test.skip('E4 - /settings/ssh-key 顯示 SSH Key 表單 (deprecated)', async ({ page }) => {
     await loginAsAdmin(page)
     await page.goto('/settings/ssh-key')
     await page.waitForLoadState('networkidle')

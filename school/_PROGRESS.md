@@ -315,3 +315,159 @@ frontend/
 
 - 舊 backend (PID 78265) 還跑沒有 `/api/users` 路由的版本，本次驗證已 `kill` 後用 `nohup npm start &` 重啟（新 PID 59050），健康檢查 OK、`/api/users` 401（需 token，路由有掛上）、admin token 拉到正常用戶清單。
 
+---
+
+## Sprint 5 進度
+最後更新：2026-04-17
+
+| Task | 內容 | 狀態 |
+|------|------|------|
+| #8  | DB schema migration（applications 重建 + schedule_slots / gpu_allocations / system_settings 等） | 完成 |
+| #13 | Backend 資源庫存服務（`services/resourceInventory.js`） | 完成 |
+
+### Task #13 變更摘要
+
+**新增檔案**
+- `backend/src/services/resourceInventory.js` — 5 個對外函式：
+  - `getAvailableResources(startAt, endAt)` — 回該時段 cpu/ram_gb/disk_gb/gpu 的 total/used/available + GPU used_indices/available_indices
+  - `getAvailabilityByHour(fromDate, toDate)` — 逐小時切，給前端行事曆 30 天用
+  - `checkResourceAvailable(slots, request)` — 對多個 slot 檢查 request 是否都夠，回 `{ ok, violations }`
+  - `allocateGpus(scheduleSlotId, gpuCount)` — first-fit 從最低編號取 N 張，transaction 包 INSERT；EXCLUDE constraint 兜底 race
+  - `releaseSlot(scheduleSlotId)` — DELETE FROM gpu_allocations
+- `backend/tests/unit/resourceInventory.test.js` — 14 案例（mock pg pool）
+- `backend/tests/integration/resourceInventory.test.js` — 10 案例（真 DB）
+
+**設計重點**
+- 同時段「重疊」用 PostgreSQL `tstzrange && tstzrange`
+- 加總 status IN `('approved', 'pending')`（規格 R7：已通過 + 待審 + 進行中）
+- GPU available_indices 從 `1..max_total_gpu` 中扣除已用編號（distinct）
+- `system_settings` 4 個總量上限（max_total_cpu / ram_gb / disk_gb / gpu）以 string 存，service 層 parseInt
+- 純 service 層，不暴露 HTTP endpoint，給其他 routes 呼叫
+
+### 測試結果（2026-04-17）
+
+| 項目 | 結果 |
+|------|------|
+| Backend Vitest（全套） | 15 檔案 / **162 tests 全綠**（+ 6 skipped） |
+| 新增 unit | 14/14 通過 |
+| 新增 integration | 10/10 通過 |
+| 既有測試退化 | 無 |
+
+---
+
+## Sprint 5 收尾驗收（Task #21 QA）
+最後更新：2026-04-17
+
+### 13 個 Sprint 5 任務最終狀態
+
+| Task | 內容 | 狀態 |
+|------|------|------|
+| #8  | DB schema：13 表 + EXCLUDE constraint + 12 system_settings | 完成 |
+| #9  | 註冊 API：`POST /api/register/{,verify,resend}` | 完成 |
+| #10 | 註冊審核 API：admin only + 建 ONE user + 寄帳密 | 完成 |
+| #11 | 註冊三頁前端：`/register`、`/register/verify`、`/register/pending` | 完成 |
+| #12 | admin 註冊審核頁：`/admin/registrations` | 完成 |
+| #13 | 資源庫存服務：`services/resourceInventory.js` | 完成 |
+| #14 | 預約 API：`POST /api/applications` + `GET /availability` + `GET /api/templates` + `DELETE` | 完成 |
+| #15 | 預約審核 API：approve/reject + 4 種資源檢查 + GPU first-fit 分配 | 完成 |
+| #16 | Scheduler：tickStart/tickEnd + Row-level lock + 自動 instantiate/terminate | 完成 |
+| #17 | `/apply` 重寫：行事曆 30 天 × 24 cell + 4 欄位 + 即時餘量警告 | 完成 |
+| #18 | 設定頁：`/admin/settings` + `GET/PUT /api/admin/settings` | 完成 |
+| #19 | 申請審核警告 banner | 完成 |
+| #20 | SSH Key deprecate（sidebar 移除「SSH 金鑰」） | 完成 |
+| #21 | QA 全測試 + 瀏覽器驗證 + 更新進度 | 完成 |
+
+### 測試結果（2026-04-17 09:42）
+
+| 項目 | 結果 | 說明 |
+|------|------|------|
+| Backend Vitest（全套） | 20 檔案 / **251 tests 全綠** | 0 失敗、0 退化 |
+| Frontend Vitest（全套） | 17 檔案 / **138 tests 全綠** | 0 失敗、0 退化 |
+| Backend Smoke (`smoke-backend.sh`) | 42 PASS / 9 FAIL | **失敗皆為 schema 變更，非 bug**（見下） |
+| Playwright E2E (`auth.spec.js`) | 4 PASS / 2 FAIL | 失敗為 Sprint 4 已知 redirect 改變（`/vms` → `/student/dashboard`），舊 spec 未更新 |
+
+#### Smoke 9 個失敗的根因（**不是 bug**）
+
+Sprint 5 #14 故意將 `POST /api/applications` 改成需 JWT（規格要求），且回傳結構從 `{applications:[]}` 改成 `{data:[]}`。舊 smoke test 還在測舊規格 → 失敗合理。新規格的 e2e 已涵蓋。
+
+### 瀏覽器驗證流程（playwright-cli）
+
+| 流程 | 結果 | 細節 |
+|------|------|------|
+| a. `/register` 表單送出 | OK | 跳到 `/register/verify?email=...`，無 console error |
+| a. `/register/verify` | OK | 顯示 email + 6 位數字 input + 「驗證」「重寄驗證碼」按鈕 |
+| a. `/register/pending` | OK | 顯示「註冊已送出」+ 後續說明 |
+| b. admin 登入 + sidebar | OK | 學生區（我的 GPU / 申請新預約 / 我的虛擬機）+ 管理區 9 連結；**「SSH 金鑰」已不見**（#20 確認） |
+| c. 6 個新頁面渲染 | OK | 全部 200，無錯誤 |
+| d. `/apply` 行事曆 | OK | 30 天 tabs（4/20–5/19）+ 24 個 1 小時 cell + 每 cell「可用 8 GPU」+ Template 下拉有「Ubuntu 2404-GPU」+ 4 欄位（CPU 4 / RAM 8 / Disk 50 / GPU 1）+ 選 cell 後摘要即時更新 |
+| e. `/admin/registrations` | OK | 4 tab（待審核 / 已通過 / 已拒絕 / 全部）切換正常；空狀態顯示「沒有註冊申請」 |
+| f. `/admin/settings` | OK | 12 個 settings 分 4 組（預約規則 3 / 資源上限 4 / 驗證碼 4 / Template 1）；改 max_active_reservations=5 → 儲存 → toast「已儲存 max_active_reservations」→ 改回 3 OK |
+
+### Backend 重啟紀錄
+
+- 舊 PID 59071（沒有 register/registrationsAdmin/settings/新 applications 路由）已 `kill -9`
+- 新 PID 97497 啟動成功，log 顯示：
+  ```
+  [Server] GPU 算力平台後端啟動，監聽 port 4000
+  [Scheduler] 排程服務已啟動（含舊 schedules + 新 schedule_slots）
+  ```
+- 新 routes 全數驗通：
+  - `POST /api/register` → 400 「email 格式錯誤」（不是 404）
+  - `POST /api/register/verify` → 400 「請提供 email 與驗證碼」
+  - `GET /api/templates` → 401（需 token，路由有掛上）
+  - `GET /api/applications/availability` → 401
+  - `GET /api/admin/registrations` → 401
+  - `GET /api/admin/settings` → 401
+
+### Sidebar 結構變動（最終）
+
+```
+學生區：
+  - 我的 GPU              /student/dashboard
+  - 申請新預約            /apply           ← Sprint 5 重寫
+  - 我的虛擬機            /vms
+
+管理區（admin only）：
+  - GPU 資源總覽          /admin/dashboard
+  - 註冊審核              /admin/registrations  ← Sprint 5 新增
+  - 申請審核              /admin/applications
+  - 使用者管理            /admin/users
+  - VIP 管理              /admin/vip
+  - 排程行事曆            /admin/schedules
+  - 審計日誌              /admin/audit
+  - GPU 告警              /admin/alerts
+  - 系統設定              /admin/settings        ← Sprint 5 新增
+  
+（移除：SSH 金鑰 → #20 deprecate）
+```
+
+### Sprint 5 新增關鍵檔案
+
+**Backend**
+- `backend/src/routes/register.js` — 註冊 + verify + resend
+- `backend/src/routes/registrationsAdmin.js` — admin 審核
+- `backend/src/routes/settings.js` — 12 system_settings GET/PUT
+- `backend/src/routes/applications.js` — 重寫（availability、templates、approve 含資源檢查 + GPU 分配）
+- `backend/src/services/resourceInventory.js` — 5 個對外函式（庫存、可用、檢查、分配、釋放）
+- `backend/src/services/scheduler.js` — 新增 tickStart / tickEnd cron（Row-level lock）
+- `db/init/03_sprint5_schema.sql` — 13 表 + EXCLUDE constraint + 12 settings seed
+
+**Frontend**
+- `frontend/src/pages/Register.jsx`、`RegisterVerify.jsx`、`RegisterPending.jsx`
+- `frontend/src/pages/AdminRegistrations.jsx`
+- `frontend/src/pages/AdminSettings.jsx`
+- `frontend/src/pages/Apply.jsx` — 重寫（行事曆 30 天 + 24 cell + Template）
+- `frontend/src/components/Layout.jsx` — sidebar 新增「註冊審核」、「系統設定」；移除「SSH 金鑰」
+
+### 已知限制（不是 bug）
+
+1. **SMTP 未接學校環境**：學校 SMTP 沒設，註冊驗證碼會 fallback 到 backend console（mailer 雙模式仍會寫 `email_notifications` table）
+2. **建 ONE user 需 admin token**：`/admin/registrations` approve 真正建 OpenNebula User 需要 oneadmin 權限與正確 admin token；本機/學校環境若沒 oneadmin 權限會在這步失敗
+3. **Cron 已啟動但需真實資料**：`tickStart` / `tickEnd` 已每分鐘跑，但目前 DB 沒有等待中的 application + schedule_slot，cron tick 是 no-op
+4. **舊 smoke test 9 個 fail**：`POST /api/applications` 已改需 JWT + 回傳 `{data}`，舊 smoke 還在測舊規格；建議下 sprint 更新 `smoke-backend.sh`
+5. **舊 e2e auth.spec.js 2 個 fail**：等 `/vms` 但 Sprint 4 已改成 `/student/dashboard`；屬 Sprint 4 已知問題
+
+### Bug 列表
+
+**未發現新 bug**。所有 6 個瀏覽器流程通過、所有新 routes 掛載成功、無 console error、無 500。
+

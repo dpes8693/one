@@ -17,7 +17,7 @@ test.describe('A. 認證流程', () => {
     await page.screenshot({ path: `${screenshotDir}/A1-login-page.png`, fullPage: true })
   })
 
-  test('A2 - 錯誤帳密 → 後端回 401，頁面不跳轉到 /vms', async ({ page }) => {
+  test('A2 - 錯誤帳密 → 後端回 401，頁面不跳轉到 /student/dashboard', async ({ page }) => {
     // 監聽 API 回應
     const loginResponsePromise = page.waitForResponse(
       (resp) => resp.url().includes('/api/auth/login'),
@@ -33,19 +33,19 @@ test.describe('A. 認證流程', () => {
     const loginResponse = await loginResponsePromise
     expect(loginResponse.status()).toBe(401)
 
-    // 確認頁面沒有跳轉到 /vms（登入失敗）
+    // 確認頁面沒有跳轉（登入失敗，留在 /login）
     await page.waitForTimeout(2000)
     expect(page.url()).toContain('/login')
 
     await page.screenshot({ path: `${screenshotDir}/A2-login-error.png`, fullPage: true })
   })
 
-  test('A3 - 正確帳密 → 跳轉 /vms，sidebar 顯示 oneadmin', async ({ page }) => {
+  test('A3 - 正確帳密 → 跳轉 /student/dashboard，sidebar 顯示 oneadmin', async ({ page }) => {
     await page.goto('/login')
     await page.fill('input[type="text"]', ADMIN_USER)
     await page.fill('input[type="password"]', ADMIN_PASS)
     await page.click('button[type="submit"]')
-    await page.waitForURL('**/vms', { timeout: 15000 })
+    await page.waitForURL('**/student/dashboard', { timeout: 15000 })
     await page.waitForLoadState('networkidle')
     // sidebar 顯示使用者名稱
     const sidebar = page.locator('aside')
@@ -59,7 +59,7 @@ test.describe('A. 認證流程', () => {
     await page.fill('input[type="text"]', ADMIN_USER)
     await page.fill('input[type="password"]', ADMIN_PASS)
     await page.click('button[type="submit"]')
-    await page.waitForURL('**/vms', { timeout: 15000 })
+    await page.waitForURL('**/student/dashboard', { timeout: 15000 })
     // 點登出按鈕
     await page.locator('button', { hasText: '登出' }).click()
     await page.waitForURL('**/login', { timeout: 10000 })

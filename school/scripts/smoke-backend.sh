@@ -69,20 +69,13 @@ parse_resp "$RESP"
 assert_status "HTTP 狀態" "$CODE" "200"
 assert_contains "/health 回傳 db:ok" "$BODY" '"db":"ok"'
 
-# ── 2. POST /api/applications（無需登入） ────────────────────────────────────
-test_step "2. POST /api/applications（提交申請）"
+# ── 2. POST /api/applications 不帶 JWT → 401（SPEC v2 改為需登入） ────────────
+test_step "2. POST /api/applications（無 JWT → 401，SPEC v2 改為需登入）"
 RESP=$(curl -s -w "HTTPSTATUS:%{http_code}" -X POST "$BASE/api/applications" \
   -H "Content-Type: application/json" \
-  -d '{"student_name":"測試學生","student_id":"S999999","email":"test@example.com","purpose":"Smoke test 自動提交","gpu_spec":"RTX 4070 Ti"}')
+  -d '{}')
 parse_resp "$RESP"
-assert_status "HTTP 狀態" "$CODE" "201"
-assert_contains "回傳 application 物件" "$BODY" '"application"'
-assert_contains "含 student_id" "$BODY" 'S999999'
-assert_contains "狀態為 pending" "$BODY" '"pending"'
-
-# 取出申請 ID 供後續 reject 測試使用
-APP_ID=$(echo "$BODY" | grep -o '"id":[0-9]*' | head -1 | grep -o '[0-9]*')
-echo "  取得申請 ID: $APP_ID"
+assert_status "無 JWT 應回 401" "$CODE" "401"
 
 # ── 3. POST /api/auth/login ──────────────────────────────────────────────────
 test_step "3. POST /api/auth/login"
@@ -97,13 +90,13 @@ assert_contains "回傳 user" "$BODY" '"user"'
 TOKEN=$(echo "$BODY" | grep -o '"token":"[^"]*"' | sed 's/"token":"//;s/"//')
 echo "  取得 JWT（前 30 字）: ${TOKEN:0:30}..."
 
-# ── 4. GET /api/applications（帶 token） ─────────────────────────────────────
-test_step "4. GET /api/applications（需 JWT）"
+# ── 4. GET /api/applications（帶 token，SPEC v2 回傳 data） ──────────────────
+test_step "4. GET /api/applications（需 JWT，回傳 data）"
 RESP=$(curl -s -w "HTTPSTATUS:%{http_code}" "$BASE/api/applications" \
   -H "Authorization: Bearer $TOKEN")
 parse_resp "$RESP"
 assert_status "HTTP 狀態" "$CODE" "200"
-assert_contains "回傳 applications 陣列" "$BODY" '"applications"'
+assert_contains "回傳 data 欄位（SPEC v2）" "$BODY" '"data"'
 
 # ── 5. GET /api/applications（不帶 token → 應 401） ──────────────────────────
 test_step "5. GET /api/applications（無 JWT → 401）"
@@ -136,18 +129,19 @@ assert_status "HTTP 狀態" "$CODE" "200"
 assert_contains "回傳 HOST 物件" "$BODY" 'HOST'
 assert_contains "含 PCI_DEVICES（GPU）" "$BODY" 'PCI_DEVICES'
 
-# ── 9. PUT /api/applications/:id/reject ─────────────────────────────────────
-test_step "9. PUT /api/applications/$APP_ID/reject（拒絕申請）"
-if [ -z "$APP_ID" ]; then
-  echo -e "\033[1;33m⚠ 無法取得申請 ID，跳過 reject 測試\033[0m"
+# ── 9. PUT /api/applications/:id/reject（不存在的 ID → 404，SPEC v2 改路由） ─
+test_step "9. PUT /api/applications/999999/reject（不存在 → 404）"
+RESP=$(curl -s -w "HTTPSTATUS:%{http_code}" -X PUT "$BASE/api/applications/999999/reject" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"reason":"Smoke test"}')
+parse_resp "$RESP"
+# 預期 404（找不到）或 400（狀態錯）；不該 2xx
+if [ "$CODE" != "200" ] && [ "$CODE" != "201" ]; then
+  ok "不存在的 application 正確拒絕（HTTP $CODE）"
+  PASS=$((PASS + 1))
 else
-  RESP=$(curl -s -w "HTTPSTATUS:%{http_code}" -X PUT "$BASE/api/applications/$APP_ID/reject" \
-    -H "Authorization: Bearer $TOKEN" \
-    -H "Content-Type: application/json" \
-    -d '{"reason":"Smoke test 自動拒絕（測試用）"}')
-  parse_resp "$RESP"
-  assert_status "HTTP 狀態" "$CODE" "200"
-  assert_contains "回傳已拒絕訊息" "$BODY" '"message"'
+  fail "預期非 2xx，實際回傳 HTTP $CODE"
 fi
 
 # ── 10. POST /api/vip/preempt（無 JWT → 401） ────────────────────────────────

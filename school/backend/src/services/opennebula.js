@@ -59,6 +59,37 @@ export async function createUser(adminToken, username, password) {
 }
 
 /**
+ * Sprint 5 Task #16：實例化 Template 為 VM
+ *  - POST /template/instantiate/:id
+ *  - body: { templateId, vmName, instantiateOptions: { template: [...] } }
+ *  - 回傳 OpenNebula 的 VM 物件（FireEdge 不同版本格式不同，scheduler 端自行容忍）
+ */
+export async function instantiateTemplate(token, templateId, vmName, instantiateOptions) {
+  const body = {
+    templateId,
+    vmName,
+    instantiateOptions: instantiateOptions || {},
+  }
+  return callFireEdge('POST', `/template/instantiate/${templateId}`, body, token)
+}
+
+/**
+ * Sprint 5 Task #16：取 VM 的 NIC[0].IP（DHCP 可能為空）
+ */
+export async function getVmIp(token, vmId) {
+  const info = await callFireEdge('GET', `/vm/info/${vmId}`, null, token)
+  const vm = info?.data?.VM || info?.VM || {}
+  const tpl = vm.TEMPLATE || {}
+  let nics = tpl.NIC
+  if (!nics) return ''
+  if (!Array.isArray(nics)) nics = [nics]
+  for (const n of nics) {
+    if (n?.IP) return String(n.IP)
+  }
+  return ''
+}
+
+/**
  * 設定使用者配額
  */
 export async function setUserQuota(adminToken, userId, quota) {
