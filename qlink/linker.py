@@ -143,15 +143,21 @@ class NodeIndex:
 
     # ------------------------------------------------------------------
     def _propagate(self, candidates: dict[str, _Candidate]) -> None:
-        """自底向上：父節點分數 = 自身 + 最強子節點 * parent_decay * (1 - own/max_own)。
+        """自底向上傳播：兩段式策略。
 
-        與舊版 max() 做法相比，此版本是「加法」傳播：父節點有高自身分數時只獲得
-        少量加成（不需要），低自身分數的父節點則可從子節點獲得更多提升。
+        若父節點自身分數 >= min_score（有足夠自身相關性）：
+            final = own + max(child_finals) * parent_decay * (1 - own/max_own)
+            （加法傳播：高分父節點獲得少量加成，低分父節點獲得更多）
+
+        若父節點自身分數 < min_score（自身相關性低）：
+            final = max(own, max(child_finals) * parent_decay)
+            （舊版 max 傳播：不主動「拉起」低相關性節點，保持其 final 不超過子節點貢獻）
         """
         # 先求語料庫中的最高自身分數，作為正規化基準。
         max_own = max((c.own for c in candidates.values()), default=1.0)
         if max_own <= 0:
             max_own = 1.0
+        min_score = self.config.min_score
 
         def resolve(node_id: str) -> float:
             cand = candidates[node_id]
@@ -170,13 +176,22 @@ class NodeIndex:
                     best_child = child.node_id
 
             if best_child is not None:
-                # 加法傳播：自身分數越高，從子節點獲得的加成越少。
-                boost = (
-                    best_child_score
-                    * self.config.parent_decay
-                    * (1.0 - cand.own / max_own)
-                )
-                cand.final = cand.own + boost
+                if cand.own >= min_score:
+                    # 加法傳播：自身有足夠相關性時，從子節點獲得額外加成。
+                    boost = (
+                        best_child_score
+                        * self.config.parent_decay
+                        * (1.0 - cand.own / max_own)
+                    )
+                    cand.final = cand.own + boost
+                else:
+                    # 舊版 max 傳播：自身相關性低，不強行拉起。
+                    propagated = best_child_score * self.config.parent_decay
+                    if propagated > cand.own:
+                        cand.final = propagated
+                    else:
+                        cand.final = cand.own
+                        best_child = None  # own 分數贏，不記錄 best_child
                 cand.best_child = best_child
             else:
                 cand.final = cand.own
@@ -199,6 +214,7 @@ class NodeIndex:
         - N.own > 0.6，M.own > 0.3
         - N 與 M 的 doc_id 不同
         - M 的文字中至少有 2 個查詢 token 與 N 的文字重疊
+        - 其中至少 1 個共享 token 長度 >= 3（確保是實質性詞彙，非常見單字）
         加分：M.own += 0.1（但 M.final 需在 _propagate 之後重算，
         此方法在 _propagate 之前呼叫，直接調整 own）。
         """
@@ -224,7 +240,11 @@ class NodeIndex:
                     continue  # 自身分數太低不值得加成
                 # 檢查 cand 文字與錨節點查詢重疊詞的交集。
                 shared = node_tokens[cand.node.node_id] & anchor_query_overlap
-                if len(shared) >= 2:
+                # 要求至少 2 個共享詞，且其中至少 1 個長度 >= 3 且為純字母
+                # （藥名、術語等英文詞彙，排除數字、測量單位等非實質性詞彙）。
+                if len(shared) >= 2 and any(
+                    len(t) >= 3 and t.isalpha() for t in shared
+                ):
                     cand.own = min(1.0, cand.own + 0.1)
 
     # ------------------------------------------------------------------
@@ -242,7 +262,7 @@ class NodeIndex:
         effective_min = cfg.min_score
         if len(ranked) >= 2:
             second_score = ranked[1].final
-            if best_score < 0.55 and (best_score - second_score) < 0.15:
+            if best_score < 0.50 and (best_score - second_score) < 0.15:
                 effective_min = 0.6
 
         if best_score < effective_min:
@@ -251,20 +271,21 @@ class NodeIndex:
         floor = max(effective_min, best_score * cfg.relative_ratio)
 
         links: list[Link] = []
-        # covered 收集「已選中」的節點。
-        # 與舊版不同：現在只有在父節點的自身分數 < 最終分數的 30%（即傳播貢獻
-        # 超過 70%）時，才跳過父節點，讓有足夠自身分數的父節點也能入選。
+        # covered 收集「已選中」或「因傳播鏈而跳過」的節點。
+        # 跳過邏輯：若父節點的基礎分（不含 tag_bonus）低於最終分的 78%，
+        # 說明其分數主要來自子節點傳播，跳過以避免重複選擇。
+        # tag_bonus 可能讓父章節人為拉高 own，用 base_own 更準確反映內容相關性。
         covered: set[str] = set()
         for cand in ranked:
             if len(links) >= cfg.top_k:
                 break
             if cand.final < floor:
                 break
-            # 只有當分數幾乎完全來自子節點傳播（own < 30% of final）時才跳過。
+            base_own = cand.own - cand.details.get("tag_bonus", 0.0)
             if (
                 cand.best_child is not None
                 and cand.best_child in covered
-                and cand.own < cand.final * 0.3
+                and base_own < cand.final * 0.78
             ):
                 covered.add(cand.node.node_id)
                 continue
