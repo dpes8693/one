@@ -1,0 +1,395 @@
+{
+  "doc_name": "multi_subject_nursing.pdf",
+  "structure": [
+    {
+      "title": "【護理藥理學】",
+      "node_id": "P001",
+      "start_index": 1,
+      "end_index": 150,
+      "summary": "護理藥理學涵蓋各類臨床常用藥物的藥理機轉、適應症、禁忌症與護理重點，包含抗生素、止痛藥與抗凝血劑等。",
+      "text": "護理藥理學是護理師國考的核心科目，要求學生掌握藥物的藥效學（pharmacodynamics）與藥動學（pharmacokinetics）基礎，並能針對不同病人族群（老年人、孕婦、腎功能不全者）調整給藥策略。本冊涵蓋三大主題：抗生素類藥物、止痛與消炎藥物、以及抗凝血劑。",
+      "nodes": [
+        {
+          "title": "第一章 抗生素類藥物",
+          "node_id": "P002",
+          "start_index": 2,
+          "end_index": 55,
+          "summary": "抗生素的分類、殺菌機轉、常見副作用與護理監測重點，重點藥物包括青黴素、頭孢菌素及大環內酯類。",
+          "text": "抗生素（Antibiotics）依其作用機轉可分為：干擾細菌細胞壁合成（Beta-lactam 類）、抑制蛋白質合成（Macrolides、Aminoglycosides）、抑制核酸合成（Fluoroquinolones）等。使用前須詢問過敏史，並注意抗藥性問題。",
+          "nodes": [
+            {
+              "title": "1.1 青黴素類（Penicillins）",
+              "node_id": "P003",
+              "start_index": 3,
+              "end_index": 18,
+              "summary": "青黴素類（Penicillin G、Amoxicillin）藉由抑制細菌細胞壁肽聚醣合成發揮殺菌作用；最嚴重副作用為過敏性休克（Anaphylaxis），給藥前須進行皮膚過敏試驗。",
+              "text": "青黴素（Penicillin）是第一個臨床使用的抗生素，屬 Beta-lactam 類，與細菌的青黴素結合蛋白（PBP）結合，抑制細胞壁肽聚醣（peptidoglycan）的交聯合成，導致細菌細胞壁破裂死亡。常見藥物：Penicillin G（注射）、Amoxicillin（口服）、Ampicillin（口服/注射）。護理重點：①給藥前詢問並記錄過敏史；②皮膚試驗陽性者禁用；③過敏性休克（Anaphylaxis）為最嚴重副作用，發生時立即給予 Epinephrine（1:1000）0.3～0.5 mg 肌肉注射；④與食物同服可減少胃腸不適（Amoxicillin）。",
+              "nodes": [
+                {
+                  "title": "1.1.1 過敏反應處理",
+                  "node_id": "P004",
+                  "start_index": 14,
+                  "end_index": 18,
+                  "summary": "青黴素過敏反應分為即發型（IgE 媒介）與延遲型；即發型最危險，可在給藥後數分鐘內發生過敏性休克，須備妥 Epinephrine 急救。",
+                  "text": "青黴素過敏反應類型：（1）即發型過敏反應（IgE 媒介，給藥後 1 小時內）：蕁麻疹、支氣管痙攣、過敏性休克；（2）加速型（1～72 小時）：蕁麻疹；（3）延遲型（>72 小時）：接觸性皮膚炎、血清病樣反應。過敏性休克處置：立即停藥、保持呼吸道通暢、給予 Epinephrine 肌注、補充靜脈輸液、必要時給予 Antihistamine 與 Corticosteroid。約 10% 對青黴素過敏者對第一代頭孢菌素有交叉過敏性。"
+                }
+              ]
+            },
+            {
+              "title": "1.2 頭孢菌素類（Cephalosporins）",
+              "node_id": "P005",
+              "start_index": 19,
+              "end_index": 35,
+              "summary": "頭孢菌素分為五代，抗菌譜隨代次增加而擴展；第三代（Ceftriaxone）常用於嚴重感染，第四、五代可對抗部分 MRSA。副作用包括腸胃不適、過敏及偽膜性腸炎。",
+              "text": "頭孢菌素（Cephalosporins）屬 Beta-lactam 類抗生素，依代次分類：①第一代（Cephalexin、Cefazolin）：主要針對革蘭氏陽性菌，常用於手術預防感染；②第二代（Cefuroxime）：擴展部分革蘭氏陰性菌覆蓋；③第三代（Ceftriaxone、Cefotaxime）：廣效，可穿透血腦屏障治療細菌性腦膜炎；④第四代（Cefepime）：可對抗 Pseudomonas；⑤第五代（Ceftaroline）：可對抗 MRSA。重要護理注意事項：①與青黴素有約 1～10% 交叉過敏性；②Ceftriaxone 不可與含鈣溶液（如乳酸林格液）混合，會產生沉澱；③注意 Clostridioides difficile 引起的偽膜性腸炎（偽膜性結腸炎）；④腎功能不全時需調整劑量。",
+              "nodes": [
+                {
+                  "title": "1.2.1 Ceftriaxone 臨床使用要點",
+                  "node_id": "P006",
+                  "start_index": 30,
+                  "end_index": 35,
+                  "summary": "Ceftriaxone 為第三代頭孢菌素，半衰期長（約 8 小時）可每日一次給藥；用於肺炎、腦膜炎、淋病等。需注意膽汁淤積與新生兒核黃疸風險。",
+                  "text": "Ceftriaxone（菌必治）：第三代頭孢菌素，廣泛用於社區性肺炎（CAP）、細菌性腦膜炎、淋球菌感染（淋病）、複雜性尿路感染。優點：半衰期長（6～9 小時），每日一次靜脈注射。禁忌：①新生兒（尤其早產兒或黃疸新生兒）：與鈣鹽結合形成沉澱，可能導致肺與腎沉積；②高膽紅素血症新生兒（競爭白蛋白結合，加重核黃疸）。護理監測：肝功能（偶見膽汁淤積）、腸胃反應、假性腸炎症狀。"
+                }
+              ]
+            },
+            {
+              "title": "1.3 大環內酯類（Macrolides）",
+              "node_id": "P007",
+              "start_index": 36,
+              "end_index": 55,
+              "summary": "Erythromycin、Azithromycin（Z-pack）、Clarithromycin 藉由與細菌 50S 核糖體結合抑制蛋白質合成；常用於非典型肺炎、社區性肺炎及青黴素過敏者。主要副作用為腸胃不適與 QT 間期延長。",
+              "text": "大環內酯類（Macrolides）：與細菌 50S 核糖體次單元結合，抑制肽基轉移（translocation），產生抑菌作用（高濃度時可殺菌）。覆蓋革蘭氏陽性菌、部分革蘭氏陰性菌及非典型病原體（Mycoplasma、Chlamydia、Legionella）。常用藥物：①Erythromycin：最早使用，胃腸刺激強，為 CYP3A4 強效抑制劑（多種藥物交互作用）；②Azithromycin（日舒）：組織半衰期達 68 小時，3 天或 5 天療程（Z-pack），心臟毒性（QT 延長）風險較低，仍須注意；③Clarithromycin：用於幽門螺旋桿菌三合一療法（Triple therapy）。護理重點：①空腹服用（Azithromycin 可與食物同服）；②監測心電圖 QT 間期（尤其合用其他 QT 延長藥物）；③老年人或有心律不整史者慎用；④孕婦：Azithromycin 相對安全（FDA 舊分類 B），Clarithromycin 禁用（C 類）。"
+            }
+          ]
+        },
+        {
+          "title": "第二章 止痛與消炎藥物",
+          "node_id": "P008",
+          "start_index": 56,
+          "end_index": 105,
+          "summary": "止痛藥分為非鴉片類（NSAIDs、Acetaminophen）與鴉片類（嗎啡、Meperidine、Fentanyl）；護理師需了解各類藥物的機轉、副作用與成癮風險。",
+          "text": "疼痛管理是護理實務的核心，世界衛生組織（WHO）三階梯止痛原則：第一階（輕度疼痛）非鴉片類、第二階（中度）弱鴉片類、第三階（重度）強效鴉片類。本章重點討論 NSAIDs 與嗎啡類藥物的臨床護理應用。",
+          "nodes": [
+            {
+              "title": "2.1 非類固醇消炎藥（NSAIDs）",
+              "node_id": "P009",
+              "start_index": 57,
+              "end_index": 75,
+              "summary": "NSAIDs（Ibuprofen、Naproxen、Ketorolac）藉由抑制 COX-1 與 COX-2 酵素減少前列腺素合成，達到消炎、止痛、退熱效果；主要副作用為消化道潰瘍與腎毒性，阿斯匹靈（Aspirin）尚有抗血小板作用。",
+              "text": "非類固醇消炎藥（Nonsteroidal Anti-inflammatory Drugs, NSAIDs）：抑制 Cyclooxygenase（COX）酵素，減少前列腺素（Prostaglandin）與血栓素（Thromboxane A2）合成，發揮鎮痛、消炎、退熱作用。分類：①非選擇性 COX 抑制劑：Aspirin（阿斯匹靈）、Ibuprofen（布洛芬）、Naproxen、Ketorolac（注射用）；②選擇性 COX-2 抑制劑：Celecoxib（希樂葆），胃腸副作用較低但心血管風險較高。主要副作用：①消化道出血/潰瘍（COX-1 抑制導致胃黏膜保護前列腺素減少）；②腎毒性（前列腺素維持腎臟血流）；③心血管風險（COX-2 抑制劑）；④Aspirin 在兒童發燒使用可能引發 Reye 症候群；⑤Aspirin 不可逆抑制 COX-1，永久性抑制血小板聚集（持效 7～10 天）。護理重點：飯後服用、監測大便潛血、腎功能與血壓；腎功能不全、消化道潰瘍、孕婦晚期禁用。",
+              "nodes": [
+                {
+                  "title": "2.1.1 Aspirin 的抗血小板作用",
+                  "node_id": "P010",
+                  "start_index": 70,
+                  "end_index": 75,
+                  "summary": "低劑量 Aspirin（75～100 mg/day）不可逆抑制血小板 COX-1，用於冠心病與腦中風的一級及二級預防；手術前 5～7 天須停藥以恢復血小板功能。",
+                  "text": "Aspirin 低劑量抗血小板療法：作用機轉為不可逆共價乙醯化血小板 COX-1，使血栓素 A2（TXA2）合成受阻，抑制血小板聚集。臨床適應症：急性心肌梗塞（立即嚼服 300 mg）、冠狀動脈疾病二級預防、缺血性腦中風預防（75～100 mg/day 長期服用）。禁忌：消化道潰瘍活動期、出血性腦中風、懷孕三個月內及晚期、兒童病毒感染性發燒（Reye 症候群風險）。手術前需停藥 5～7 天（等待新血小板生成）。與 Clopidogrel 合用（雙重抗血小板）可增加出血風險，需密切監測。"
+                }
+              ]
+            },
+            {
+              "title": "2.2 嗎啡類止痛藥（Opioids）",
+              "node_id": "P011",
+              "start_index": 76,
+              "end_index": 105,
+              "summary": "嗎啡（Morphine）、Meperidine（Pethidine）、Fentanyl 等鴉片類藥物作用於 μ（mu）受體，是重度疼痛的主要治療藥物；最危險副作用為呼吸抑制，解毒劑為 Naloxone（Narcan）。",
+              "text": "鴉片類止痛藥（Opioid Analgesics）：與中樞神經系統及周邊神經的 μ（mu）、κ（kappa）、δ（delta）類鴉片受體結合，調節疼痛傳導。主要藥物：①Morphine（嗎啡）：標準強效鴉片，靜脈/肌注/口服，腎功能不全者活性代謝物（M-6-G）蓄積；②Meperidine（Demerol/Pethidine）：代謝物 Normeperidine 蓄積可引起癲癇，不建議長期使用；③Fentanyl：效力約嗎啡 100 倍，透皮貼片（Duragesic）用於慢性疼痛；④Codeine：前驅藥，需經 CYP2D6 代謝為嗎啡，超快代謝者風險高（尤其哺乳婦）。共同副作用：呼吸抑制（最危險）、鎮靜、噁心嘔吐、便秘、尿滯留、瞳孔縮小（針點瞳孔）。解毒劑：Naloxone（Narcan）0.4～2 mg 靜脈注射，每 2～3 分鐘可重複，半衰期短（30～90 分鐘），需監測再次麻醉。護理重點：①給藥前評估呼吸頻率（<12 次/分鐘應暫停給藥）；②床邊備妥 Naloxone；③評估疼痛數字評分（NRS 0～10）；④不可突然停藥（戒斷症狀）；⑤使用電子病患自控式止痛（PCA）時衛教病人自行按壓。",
+              "nodes": [
+                {
+                  "title": "2.2.1 Naloxone（Narcan）的使用",
+                  "node_id": "P012",
+                  "start_index": 100,
+                  "end_index": 105,
+                  "summary": "Naloxone 為純鴉片拮抗劑（Antagonist），用於逆轉鴉片類過量引起的呼吸抑制；起效快（2 分鐘靜脈注射）但半衰期短（30～90 分鐘），需持續監測再麻醉現象。",
+                  "text": "Naloxone（Narcan）：純 μ 受體拮抗劑，競爭性取代受體上的鴉片類藥物，快速逆轉呼吸抑制、鎮靜與縮瞳。使用時機：鴉片類藥物過量（呼吸頻率 <10 次/分、嚴重嗜睡、針點瞳孔）。給藥方式：0.4～2 mg 靜脈注射（緊急）；鴉片依賴者使用小劑量（0.1 mg）以避免急性戒斷（嚴重躁動、疼痛、高血壓）。注意：Naloxone 半衰期（30～90 分鐘）遠短於多數鴉片類藥物（Morphine 2～4 小時、Fentanyl 貼片更長），逆轉後需密切監測再鎮靜（re-sedation），可能需重複給藥或持續靜脈滴注。"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "第三章 抗凝血劑",
+          "node_id": "P013",
+          "start_index": 106,
+          "end_index": 150,
+          "summary": "抗凝血劑包括注射用 Heparin（普通肝素與低分子量肝素）與口服 Warfarin；臨床用於靜脈血栓、肺栓塞與心房顫動的預防與治療，使用時需嚴密監測出血風險。",
+          "text": "抗凝血藥物（Anticoagulants）：阻止血液凝固以預防血栓形成。臨床上分為注射用（Heparin、LMWH、Fondaparinux、直接凝血酶抑制劑）與口服（Warfarin、新型口服抗凝血劑 NOACs）。本章重點討論 Heparin 與 Warfarin 的護理應用。",
+          "nodes": [
+            {
+              "title": "3.1 Heparin（普通肝素）",
+              "node_id": "P014",
+              "start_index": 107,
+              "end_index": 125,
+              "summary": "Heparin 增強 Antithrombin III 活性，抑制 Thrombin 與 Xa 因子；靜脈注射給藥，監測 aPTT（目標 60～100 秒或正常值 1.5～2.5 倍）；解毒劑為 Protamine Sulfate。嚴重副作用包括 HIT（Heparin 誘導血小板減少症）。",
+              "text": "普通肝素（Unfractionated Heparin, UFH）：帶強負電荷的黏多醣，與 Antithrombin III（ATIII）結合，使其對 Thrombin（IIa）與 Xa 因子的抑制速度加快 1000 倍。藥動學：靜脈注射立即起效；口服無效（分子量大，腸道不吸收）；半衰期 1～2 小時；不通過胎盤（孕婦可使用）。監測指標：活化部分凝血活酶時間（aPTT），目標值 60～100 秒（正常 25～35 秒，約 1.5～2.5 倍）。解毒劑：Protamine Sulfate（硫酸魚精蛋白），1 mg 中和 100 單位 Heparin，靜脈緩慢注射（過快引起低血壓、心搏過緩）。嚴重副作用：Heparin 誘導血小板減少症（HIT）：免疫媒介（HIT Type II），血小板抗體活化血小板造成矛盾性血栓，發生時立即停用 Heparin，改用非 Heparin 抗凝血劑（Argatroban、Lepirudin）。護理重點：①使用輸液幫浦嚴格控制速率；②監測 aPTT、血小板計數與出血跡象；③每 48 小時或遵醫囑調整劑量；④Heparin 只可靜脈或皮下注射，勿肌肉注射（血腫）。",
+              "nodes": [
+                {
+                  "title": "3.1.1 低分子量肝素（LMWH）",
+                  "node_id": "P015",
+                  "start_index": 120,
+                  "end_index": 125,
+                  "summary": "Enoxaparin（Lovenox）、Dalteparin 等低分子量肝素主要抑制 Xa 因子，皮下注射給藥，生物利用率高；不需常規監測 aPTT，但腎功能不全者需調整劑量或改用 UFH。",
+                  "text": "低分子量肝素（Low Molecular Weight Heparin, LMWH）：從普通肝素解聚而成，分子量較小（4000～6000 Da vs UFH 的 5000～30000 Da），主要選擇性抑制 Xa 因子（對 Thrombin 抑制較弱）。代表藥物：Enoxaparin（Lovenox，樂芃）、Dalteparin（Fragmin）、Nadroparin（Fraxiparine）。優點：①皮下注射，生物利用率高（>90%）；②半衰期較長（3～5 小時），每日一至兩次；③aPTT 不受顯著影響，不需常規監測（可監測 anti-Xa 活性）；④HIT 發生率較低。限制：腎功能不全者（CrCl <30 mL/min）會蓄積，應減量或改用 UFH；解毒劑 Protamine Sulfate 只能部分（約 60%）中和。護理注意：皮下注射於腹部（肚臍周圍 2 公分外），不可按摩；抽藥後不排氣泡（確保劑量準確）。"
+                }
+              ]
+            },
+            {
+              "title": "3.2 Warfarin（可邁丁）",
+              "node_id": "P016",
+              "start_index": 126,
+              "end_index": 150,
+              "summary": "Warfarin 拮抗維生素 K，抑制凝血因子 II、VII、IX、X 的合成；口服給藥，監測 PT/INR（目標值依適應症，一般為 2.0～3.0）；解毒劑為 Vitamin K；受飲食（綠色蔬菜）與多種藥物交互影響。",
+              "text": "Warfarin（Coumadin，可邁丁）：維生素 K 拮抗劑（VKA），抑制肝臟維生素 K 環氧化還原酶，阻止維生素 K 再生，導致維生素 K 依賴性凝血因子（II、VII、IX、X）及抗凝蛋白（Protein C、S）合成減少。藥動學：口服吸收良好，起效慢（需 2～5 天達治療效果，因已合成因子需消耗後才有效）；半衰期長（36～42 小時）；穿過胎盤（孕婦禁用，尤其妊娠前三個月）。監測指標：凝血酶原時間（PT）與國際標準化比值（INR）；目標 INR：心房顫動（AF）、靜脈血栓（DVT/PE）預防 2.0～3.0；機械性心臟瓣膜置換 2.5～3.5。解毒劑：Vitamin K₁（Phytonadione）：口服 2.5～10 mg 或靜脈注射（嚴重出血）；效果需 6～24 小時；緊急大量出血可輸新鮮冷凍血漿（FFP）或凝血酶原複合物（PCC）。交互作用：①增強抗凝效果（使 INR 升高）：Aspirin、NSAIDs、廣效抗生素（減少腸道維生素 K 合成）、Amiodarone、Fluconazole；②減弱抗凝效果（使 INR 下降）：維生素 K 豐富食物（深綠葉蔬菜如菠菜、羽衣甘藍）、Rifampin、Carbamazepine。護理重點：①固定飲食中維生素 K 攝取量（不需嚴格限制，但保持穩定）；②避免含維生素 K 的補充劑；③告知醫師所有藥物（含中草藥）；④定期監測 INR，並按醫囑調整劑量；⑤衛教出血跡象：異常瘀青、牙齦出血、血尿、黑便、咳血；⑥隨身攜帶藥物識別卡。",
+              "nodes": [
+                {
+                  "title": "3.2.1 Warfarin 劑量調整與 INR 過高的處理",
+                  "node_id": "P017",
+                  "start_index": 144,
+                  "end_index": 150,
+                  "summary": "INR 超出治療範圍的處理原則：INR 3.0～5.0 無出血→減量或停藥一劑；INR 5.0～9.0 無出血→停藥並考慮低劑量 Vitamin K；INR >9.0 或有出血→立即給予 Vitamin K 靜注並視情況輸 FFP 或 PCC。",
+                  "text": "Warfarin INR 超治療範圍的處理（無活動性出血）：①INR 3.0～4.5：減少下次劑量 10～20%，加強監測；②INR 4.5～10：暫停 1～2 劑，監測 INR；若出血風險高者，口服 Vitamin K 1～2.5 mg；③INR >10：停藥，口服 Vitamin K 2.5～5 mg，24 小時後重測 INR。有危及生命的出血：無論 INR 為何，立即給予 Vitamin K 5～10 mg 靜脈緩注（30 分鐘以上），同時輸 FFP（4 個單位）或四因子 PCC（Kcentra）。注意：靜脈快速注射 Vitamin K 可能引發類過敏反應（Anaphylactoid reaction），應緩慢注射。Vitamin K 使 Warfarin 再次起效時需 1～2 週（若後續需繼續抗凝，考慮橋接 Heparin）。"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "【內外科護理學】",
+      "node_id": "M001",
+      "start_index": 151,
+      "end_index": 310,
+      "summary": "內外科護理學涵蓋心臟衰竭、糖尿病及腎衰竭三大系統性疾病的護理評估、醫療處置與護理措施，是護理師國考的重要考科。",
+      "text": "內外科護理學（Medical-Surgical Nursing）融合病理生理學與臨床護理實務，強調護理過程（Nursing Process）：評估（Assessment）、診斷（Diagnosis）、計畫（Planning）、執行（Implementation）與評值（Evaluation）的應用。本冊以心臟衰竭、糖尿病與腎衰竭為核心內容。",
+      "nodes": [
+        {
+          "title": "第四章 心臟衰竭護理",
+          "node_id": "M002",
+          "start_index": 152,
+          "end_index": 210,
+          "summary": "心臟衰竭（Heart Failure）分為收縮性（HFrEF）與舒張性（HFpEF）；症狀包括呼吸困難、端坐呼吸、下肢水腫；治療包括利尿劑、ACEI/ARB、β 阻斷劑與 Digoxin，護理重點為液體管理與每日體重監測。",
+          "text": "心臟衰竭（Heart Failure, HF）：心臟無法泵出足夠血液以滿足身體代謝需求的臨床症候群。分類：①依射出分數（EF）：HFrEF（EF <40%，收縮性心衰竭）、HFpEF（EF ≥50%，舒張性心衰竭）；②依病程：急性 vs 慢性；③依部位：左心衰竭（肺水腫、呼吸困難）vs 右心衰竭（全身靜脈鬱血、肝腫大、頸靜脈怒張、踝部水腫）。NYHA 功能分級：I（無症狀）→ IV（休息時有症狀）。",
+          "nodes": [
+            {
+              "title": "4.1 心臟衰竭的症狀與評估",
+              "node_id": "M003",
+              "start_index": 153,
+              "end_index": 170,
+              "summary": "左心衰竭症狀：勞動性呼吸困難（DOE）、端坐呼吸（Orthopnea）、夜間陣發性呼吸困難（PND）、咳嗽粉紅色泡沫痰；右心衰竭症狀：頸靜脈怒張（JVD）、肝頸靜脈逆流、腹水、下肢凹陷性水腫。",
+              "text": "心臟衰竭臨床評估重點：左心衰竭（Left-sided HF）→ 肺靜脈鬱血：①勞動性呼吸困難（Dyspnea on exertion, DOE）；②端坐呼吸（Orthopnea）：平躺時呼吸困難加重，需墊高枕頭（問枕頭數）；③夜間陣發性呼吸困難（Paroxysmal Nocturnal Dyspnea, PND）：夜間突然喘醒；④肺囉音（Crackles/Rales）、粉紅色泡沫痰（急性肺水腫）；⑤心搏過速、S3 奔馬律。右心衰竭（Right-sided HF）→ 全身靜脈鬱血：①頸靜脈怒張（JVD）；②肝頸靜脈逆流（Hepatojugular reflex）；③肝腫大（肝頸靜脈反流，右上腹壓痛）；④腹水（Ascites）；⑤雙側凹陷性水腫（Pitting edema），從腳踝延伸至小腿甚至全身；⑥食慾不振（腸道水腫）。護理評估：每日同一時間（晨起排尿後進食前）測體重，體重增加 >1 kg/天或 >2 kg/三天為液體滯留警訊，需通報醫師。"
+            },
+            {
+              "title": "4.2 心臟衰竭的藥物治療",
+              "node_id": "M004",
+              "start_index": 171,
+              "end_index": 195,
+              "summary": "HFrEF 的基本治療：ACEI/ARB（降低後負荷）、Beta-blockers（Carvedilol、Metoprolol，降低心率與心肌耗氧）、利尿劑（Furosemide，減少前負荷）；Digoxin 用於症狀控制，需監測毒性。",
+              "text": "心臟衰竭的藥物治療（HFrEF 為主）：（一）降低死亡率的治療：①ACEI（Enalapril、Captopril）或 ARB（Losartan，ACEI 乾咳時替代）：抑制 RAAS，降低後負荷（Afterload）與前負荷（Preload），改善心室重塑；②Beta-blockers（Carvedilol、Metoprolol succinate、Bisoprolol）：降低心率、減少心肌耗氧量、抗心律不整，長期使用降低死亡率（起始劑量低，漸增）；③Aldosterone 拮抗劑（Spironolactone、Eplerenone）：利尿保鉀，減少心臟纖維化。（二）症狀控制：④利尿劑（Furosemide/Loop diuretic）：最快速緩解呼吸困難，需監測低血鉀、低血壓；⑤Digoxin：增加心肌收縮力（正性肌力）、減慢心率（負性變時），改善症狀但不延長壽命，治療指數窄（監測血中濃度 0.5～0.9 ng/mL，低血鉀加重毒性）。護理重點：評估血壓（ACEI 低血壓）、血鉀（Spironolactone 高血鉀、Furosemide 低血鉀）、心率（Beta-blocker <50 次/分暫停）、體重與尿量。",
+              "nodes": [
+                {
+                  "title": "4.2.1 Digoxin 在心衰竭中的使用與毒性監測",
+                  "node_id": "M005",
+                  "start_index": 188,
+                  "end_index": 195,
+                  "summary": "Digoxin 為毛地黃類強心苷，藉由抑制 Na+/K+-ATPase 增加細胞內鈣離子而增強心肌收縮；中毒症狀包括噁心、嘔吐、視覺異常（黃綠視）與各類心律不整；低血鉀、低血鎂、高血鈣均可加重毒性。",
+                  "text": "Digoxin（毛地黃）在心臟衰竭中的護理要點：適應症：（1）HFrEF 症狀控制（NYHA III-IV）；（2）心房顫動（AF）合併心衰竭時，用於控制心室率。機轉：抑制 Na+/K+-ATPase → 細胞內 Na+ 增加 → Na+/Ca2+ 交換器反向 → 細胞內 Ca2+ 增加 → 心肌收縮力增強（正性肌力）。監測血中濃度：目標 0.5～0.9 ng/mL（心衰竭）；>2.0 ng/mL 毒性風險高。毒性症狀（Digoxin Toxicity）：（消化）噁心、嘔吐、食慾不振；（神經）頭痛、混亂；（視覺）黃綠視（xanthopsia）、光暈；（心臟）各類心律不整（最嚴重）：AV Block、VT、VF。毒性危險因子：低血鉀（低血鉀使 Digoxin 與 Na+/K+-ATPase 競爭結合增加）、低血鎂、高血鈣、腎功能不全（Digoxin 腎排泄）、老年人。護理措施：給藥前監測心尖脈 60 秒（<60 次/分或節律異常暫停給藥，通報醫師）；定期監測血清鉀（目標 3.5～5.0 mEq/L）、鎂、腎功能與 Digoxin 血中濃度；中毒處理：停藥、矯正電解質、心臟監護，嚴重心律不整可使用 Digoxin 特異性抗體片段（Digibind/DigiFab）。"
+                }
+              ]
+            },
+            {
+              "title": "4.3 急性心臟衰竭（急性肺水腫）的護理",
+              "node_id": "M006",
+              "start_index": 196,
+              "end_index": 210,
+              "summary": "急性肺水腫為醫療緊急狀況，護理優先措施：高坐位（端坐）、高流量氧氣、靜脈 Furosemide、嗎啡（Morphine）或 Nitroglycerine 靜脈滴注，密切監測血氧飽和度與尿量。",
+              "text": "急性心臟衰竭（急性肺水腫）護理：緊急評估：呼吸急促（RR >30 次/分）、嚴重低氧血症（SpO₂ <90%）、粉紅色泡沫痰、大汗、極度焦慮。緊急護理措施（LMNOP 記憶法）：L – Lasix（Furosemide，靜脈快速利尿）：40～80 mg IV push；M – Morphine（嗎啡）：緩解焦慮與呼吸困難、擴張靜脈降低前負荷（2～4 mg IVP，需監測血壓與呼吸）；N – Nitroglycerin（硝酸甘油）：靜脈滴注擴張血管，降低前後負荷（血壓 <90 mmHg 禁用）；O – Oxygen（高流量氧氣）：面罩 8～10 L/min；P – Position（體位）：高坐位或端坐位（Fowler's position 90°），雙腿下垂以減少靜脈回流；必要時雙腿輪流紮止血帶。進階治療：無創正壓通氣（CPAP/BiPAP）、必要時插管機械通氣。護理監測：每 15 分鐘測生命徵象、尿量（目標 >30 mL/hr）、血氧飽和度、意識狀態。"
+            }
+          ]
+        },
+        {
+          "title": "第五章 糖尿病護理",
+          "node_id": "M007",
+          "start_index": 211,
+          "end_index": 265,
+          "summary": "糖尿病（DM）分為第一型（胰島素依賴）與第二型（胰島素抵抗）；護理重點包括血糖監測、胰島素注射技術、口服降血糖藥的使用及急慢性併發症的預防。",
+          "text": "糖尿病（Diabetes Mellitus, DM）：以慢性高血糖為特徵的代謝異常。診斷標準（ADA）：空腹血糖 ≥126 mg/dL；口服葡萄糖耐量試驗（OGTT）2 小時血糖 ≥200 mg/dL；HbA1c ≥6.5%；或隨機血糖 ≥200 mg/dL 合併症狀。治療目標：HbA1c <7%（一般成人），同時避免低血糖。",
+          "nodes": [
+            {
+              "title": "5.1 胰島素治療",
+              "node_id": "M008",
+              "start_index": 212,
+              "end_index": 235,
+              "summary": "胰島素依作用時間分類：超短效（Lispro、Aspart，餐前 15 分）、短效（Regular，餐前 30 分）、中效（NPH）、長效（Glargine、Detemir）；注射部位輪換與注射技術是護理教育的重點。",
+              "text": "胰島素（Insulin）分類與臨床應用：（一）超短效胰島素（Rapid-acting）：Insulin Lispro（Humalog）、Insulin Aspart（NovoRapid）、Insulin Glulisine（Apidra）；起效 10～15 分鐘，峰值 1～2 小時，持效 3～5 小時；餐前 15 分鐘注射，若病人食慾不佳可餐後立即注射。（二）短效胰島素（Short-acting, Regular）：起效 30～60 分鐘，峰值 2～4 小時，持效 6～8 小時；餐前 30 分鐘注射；靜脈給藥限 Regular insulin。（三）中效胰島素（NPH, Neutral Protamine Hagedorn）：起效 2～4 小時，峰值 4～10 小時，持效 12～18 小時；外觀混濁（搖晃混勻），常與短效混合。（四）長效胰島素（Long-acting Basal）：Insulin Glargine（Lantus）：清澈，不得與其他胰島素混合，每日一次皮下注射，無明顯峰值（24 小時平穩覆蓋）；Insulin Detemir（Levemir）：每日一至兩次。注射技術護理教育：①注射部位：腹部（吸收最快）> 上臂外側 > 大腿外側 > 臀部外上方（最慢）；②每次注射需輪換部位（同區域間距 2.5 cm，避免脂肪萎縮或增生）；③皮下注射（45°～90° 視皮下脂肪厚度）；④Glargine 不可混合其他胰島素；⑤開封後常溫保存（28 天）；未開封冷藏（2～8°C，不可冷凍）。",
+              "nodes": [
+                {
+                  "title": "5.1.1 胰島素引起低血糖的處理",
+                  "node_id": "M009",
+                  "start_index": 230,
+                  "end_index": 235,
+                  "summary": "低血糖（血糖 <70 mg/dL）症狀：心悸、顫抖、冒冷汗、飢餓感（自律神經症狀）；重度時出現意識混亂、癲癇甚至昏迷；意識清醒者給予 15g 速效碳水化合物（15 分鐘法則），意識不清者靜脈注射 50% 葡萄糖或 Glucagon 肌注。",
+                  "text": "胰島素引起低血糖（Hypoglycemia）的護理處理：定義：血糖 <70 mg/dL（輕度）；<50 mg/dL（重度）。自律神經症狀（血糖快速下降時）：心悸、顫抖、出汗、蒼白、飢餓感。神經性症狀（血糖持續低落）：頭痛、注意力不集中、視力模糊、意識混亂、癲癇、昏迷。15 克法則（意識清醒者）：立即給予含 15 g 碳水化合物的食物（如 150 mL 果汁、3～4 片糖片、1 大匙蜂蜜），15 分鐘後再測血糖；若血糖仍 <70 mg/dL，重複處置；若正常但距下餐 >1 小時，補充含蛋白質的點心。意識不清或無法吞嚥者：靜脈注射 50% 葡萄糖溶液（50 mL，即 25 g 葡萄糖）；院外：Glucagon 1 mg 肌肉注射（家屬需受訓）；效果後病人可能嘔吐，需側臥防誤吸。長效胰島素（如 Glargine）引起低血糖時，因持效長，在解決低血糖後需持續監測數小時。"
+                }
+              ]
+            },
+            {
+              "title": "5.2 口服降血糖藥",
+              "node_id": "M010",
+              "start_index": 236,
+              "end_index": 265,
+              "summary": "第二型糖尿病口服藥物包括 Metformin（第一線）、磺醯脲素（SU）、DPP-4 抑制劑、SGLT-2 抑制劑等；各類藥物機轉不同，護理重點為低血糖預防、腎功能監測與病人衛教。",
+              "text": "第二型糖尿病口服降血糖藥物分類：（一）雙胍類（Biguanides）：Metformin（第一線用藥）：抑制肝糖新生、增加周邊組織胰島素敏感性；不引起低血糖、可輕微降低體重；副作用：胃腸不適（餐中服用減少）、乳酸性酸中毒（罕見，腎功能不全 eGFR <45 mL/min 禁用）；顯影劑使用前 48 小時及使用後 48 小時暫停（腎毒性風險）；含碘顯影劑前後暫停 Metformin。（二）磺醯脲素類（Sulfonylureas, SU）：Glibenclamide（Glyburide）、Glipizide、Glimepiride；促進胰島 β 細胞分泌胰島素；易引起低血糖（尤其老年人）與體重增加；腎/肝功能不全慎用。（三）DPP-4 抑制劑（Gliptin 類）：Sitagliptin（捷諾維）、Saxagliptin；增加 GLP-1 活性，促進胰島素分泌（血糖依賴性）；低血糖風險低；可能輕微增加心衰竭住院風險（Saxagliptin）。（四）SGLT-2 抑制劑：Empagliflozin（Jardiance）、Dapagliflozin（Farxiga）；抑制腎臟葡萄糖再吸收，增加尿糖排出；可降低心血管風險（HFrEF）與腎保護；副作用：生殖器真菌感染、泌尿道感染、酮酸中毒（正常血糖型）；腎功能不全者效果減弱。（五）GLP-1 受體促效劑（注射）：Exenatide（Byetta）、Liraglutide（Victoza）；促進胰島素分泌、抑制升糖素、延緩胃排空、降低體重；副作用：噁心嘔吐（初期）、急性胰臟炎風險。護理重點：磺醯脲素類需教導低血糖識別；SGLT-2 抑制劑需教導外陰衛生；Metformin 需追蹤腎功能。",
+              "nodes": [
+                {
+                  "title": "5.2.1 Metformin 的特殊注意事項",
+                  "node_id": "M011",
+                  "start_index": 258,
+                  "end_index": 265,
+                  "summary": "Metformin 的護理重點：使用含碘顯影劑（如 CT 增強）前後 48 小時需暫停以防止乳酸性酸中毒；eGFR <45 mL/min 禁用；乳酸性酸中毒雖罕見但致命，需教導病人回報相關症狀（肌肉疼痛、氣促、腹痛、嚴重乏力）。",
+                  "text": "Metformin（二甲雙胍）特殊護理注意事項：（1）顯影劑相關風險：碘化顯影劑可能引起腎毒性，若腎功能損害則 Metformin 排泄減少，乳酸蓄積 → 乳酸性酸中毒（lactic acidosis）。原則：eGFR 45～60 mL/min：謹慎使用，顯影劑前後暫停；eGFR <45 mL/min：禁用 Metformin；護理：手術前/影像學檢查前確認 Metformin 已暫停，且在腎功能確認正常後 48 小時方可恢復。（2）乳酸性酸中毒：風險因子為腎功能不全、肝功能不全、心衰竭、大量飲酒；症狀：肌肉疼痛（myalgia）、氣促（hyperventilation）、腹痛、極度乏力、嗜睡；實驗室：血清乳酸 >5 mmol/L，動脈血 pH <7.35。（3）維生素 B12 缺乏：長期使用 Metformin 可能干擾迴腸末端 B12 吸收，建議每 2～3 年監測 B12 濃度，必要時補充。"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "第六章 腎衰竭與透析護理",
+          "node_id": "M012",
+          "start_index": 266,
+          "end_index": 310,
+          "summary": "腎衰竭分為急性（AKI）與慢性（CKD）；末期腎臟病（ESRD）需腎臟替代療法，包括血液透析（HD）與腹膜透析（CAPD）；護理重點為電解質監測、透析通路護理與飲食衛教。",
+          "text": "腎衰竭（Renal Failure）分類：（一）急性腎損傷（AKI）：腎功能在數小時至數天內急速惡化，原因包括腎前性（脫水、心衰竭）、腎性（急性腎小管壞死、腎炎）、腎後性（梗阻）；KDIGO 標準：48 小時內血清肌酸酐升高 ≥0.3 mg/dL，或 7 天內升高至基礎值 ≥1.5 倍，或尿量 <0.5 mL/kg/hr 超過 6 小時。（二）慢性腎臟病（CKD）：腎功能持續 >3 個月損害，eGFR <60 mL/min/1.73m²（G3～G5 期），最終可進展至末期腎臟病（ESRD, Stage 5, eGFR <15）。",
+          "nodes": [
+            {
+              "title": "6.1 血液透析（Hemodialysis, HD）護理",
+              "node_id": "M013",
+              "start_index": 267,
+              "end_index": 285,
+              "summary": "血液透析透過半透膜清除毒素與多餘水分；動靜脈廔管（AV Fistula）是首選血管通路；護理重點包括廔管評估（震顫音與搏動感）、透析中低血壓（最常見併發症）的預防與處理、以及飲食限制（低鉀、低磷、限液）。",
+              "text": "血液透析（Hemodialysis, HD）護理：原理：利用濃度梯度（擴散）、滲透壓（滲透）與靜水壓（超過濾）通過半透膜清除溶質與水分。每週三次，每次 3～4 小時（一般維持性 HD）。血管通路：①動靜脈廔管（AV Fistula, AVF）：自體血管首選，成熟需 4～6 週至數個月，使用壽命最長；②AV 移植管（AV Graft, AVG）：人工血管，2 週可使用；③中央靜脈導管（CVC）：暫時通路，感染風險最高，避免長期使用。AV 廔管護理（最高頻考點）：每日（至少每班）評估：①觸診感受震顫音（Thrill，連續震動感）；②聽診確認血管雜音（Bruit）；③消失或減弱 → 可能血栓，立即通報醫師；禁忌：廔管側肢體勿量血壓、抽血、靜脈注射；避免壓迫（緊身衣物、睡覺姿勢）。透析中常見問題：①低血壓（最常見）：脫水過快；處理：減慢超過濾速率、平躺、補充生理食鹽水；②肌肉痙攣：低血鈉、過度脫水；③失衡症候群（Disequilibrium syndrome）：首次或快速透析，滲透壓快速下降導致腦水腫；症狀：頭痛、噁心、癲癇。透析飲食限制：低鉀（<2 g/day）、低磷（<800 mg/day）、限液（每日尿量 + 500 mL）、適量蛋白質（1.2 g/kg/day，維持透析者高蛋白以補償透析丟失）。",
+              "nodes": [
+                {
+                  "title": "6.1.1 透析中低血壓的處理",
+                  "node_id": "M014",
+                  "start_index": 280,
+                  "end_index": 285,
+                  "summary": "透析中低血壓（收縮壓 <90 mmHg 或下降 >20 mmHg）最常見原因為超過濾速率過快或透析前容積不足；處理：停止或降低超過濾、頭低腳高位、給予生理食鹽水或 5% 白蛋白，必要時減少透析時間。",
+                  "text": "透析中低血壓（Intradialytic Hypotension, IDH）：最常見透析急性合併症（發生率 20～30%）。定義：透析中收縮壓 <90 mmHg 或較基礎值下降 >20 mmHg。原因：①超過濾速率超過血管再充盈速率；②透析前血壓藥物（特別是 β 阻斷劑、ACEI/ARB）；③心臟功能差；④大餐後透析（消化道血流增加）；⑤自律神經功能障礙（糖尿病病人）。緊急處理步驟：①立即暫停或降低超過濾率（Ultrafiltration rate）；②頭低腳高位（Trendelenburg position）；③快速靜脈輸注 0.9% NS 100～250 mL；④若無改善：高張鹽水（23.4% NaCl）或 5% 白蛋白；⑤嚴重者提前結束透析。預防措施：①透析前 1 小時不服用降壓藥；②適當控制透析間期體重增加（<1 kg/天）；③延長透析時間（4 小時以上）；④冷透析液（35°C）。"
+                }
+              ]
+            },
+            {
+              "title": "6.2 腹膜透析（CAPD）護理",
+              "node_id": "M015",
+              "start_index": 286,
+              "end_index": 310,
+              "summary": "持續可動式腹膜透析（CAPD）利用腹膜為半透膜，透過注入透析液進行溶質清除；最嚴重的合併症為腹膜炎；護理重點包括無菌換液技術、出口部位護理與透析液混濁的識別。",
+              "text": "腹膜透析（Peritoneal Dialysis, PD）：利用腹膜作為天然半透膜，透過腹腔注入透析液（Dialysate）進行溶質擴散與水分超過濾。CAPD（持續可動式腹膜透析）：每日 3～5 次換液，每次留置 4～6 小時，白天病人活動自如。CCPD（持續循環腹膜透析）：夜間機器自動換液，白天一次長時間留置。透析液：葡萄糖濃度 1.5%（低滲透）、2.5%、4.25%（高滲透，脫水效果最強）；高濃度長期使用損傷腹膜，增加感染風險。最嚴重合併症：腹膜炎（Peritonitis）：最常見感染為 Staphylococcus epidermidis（皮膚菌群）。診斷：透析廢液混濁（最早徵象）、腹痛、發燒；白血球計數 >100/μL（中性球 >50%）。治療：抗生素腹腔內給藥（Cefazolin + Ceftazidime 第一線）；若感染持續 5 天以上未改善，需拔除導管。換液護理操作（無菌技術）：①操作前洗手（20 秒，六步洗手法）並戴口罩；②確認透析液（種類、濃度、有效期）；③連接前使用消毒棉片消毒接頭；④排液 20～30 分鐘，觀察顏色（正常：淡黃色清澈；混濁→腹膜炎；粉紅色→腹腔出血；棕色→腸穿孔）；⑤記錄輸入量與輸出量（負超過濾：輸出量 < 輸入量，需換高滲透析液）。出口部位（Exit site）護理：每日清潔，觀察紅腫熱痛與分泌物；使用 0.9% NS 或消毒棉片清潔後覆蓋無菌敷料。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "【基本護理學】",
+      "node_id": "F001",
+      "start_index": 311,
+      "end_index": 420,
+      "summary": "基本護理學涵蓋護理實務的基礎技能，包括生命徵象測量、給藥原則、傷口護理與無菌技術，是護理師執行各類臨床操作的理論基礎。",
+      "text": "基本護理學（Fundamentals of Nursing）是護理教育的核心學科，強調安全、有效且具人道關懷的護理照護。本冊涵蓋四大主題：生命徵象測量、給藥安全原則、傷口護理與無菌技術。",
+      "nodes": [
+        {
+          "title": "第七章 生命徵象測量",
+          "node_id": "F002",
+          "start_index": 312,
+          "end_index": 345,
+          "summary": "生命徵象（Vital Signs）包括體溫、脈搏、呼吸和血壓，是反映生理功能最基本的客觀指標；正常範圍：體溫 36～37.5°C、脈搏 60～100 次/分、呼吸 12～20 次/分、血壓 <120/80 mmHg。",
+          "text": "生命徵象（Vital Signs, VS）：是評估生理狀態最基本的客觀指標，包括體溫（Temperature, T）、脈搏（Pulse, P）、呼吸（Respiration, R）、血壓（Blood Pressure, BP），部分資料也將血氧飽和度（SpO₂）與疼痛（Pain）列為第五、六生命徵象。生命徵象測量頻率依病情穩定程度而定：術後、危重病人每 15～30 分鐘；穩定病人每 4～8 小時；門診病人每次就診測量。",
+          "nodes": [
+            {
+              "title": "7.1 體溫測量",
+              "node_id": "F003",
+              "start_index": 313,
+              "end_index": 325,
+              "summary": "體溫測量部位與正常值：口溫 36～37°C（±0.5°C）、腋溫比口溫低 0.5°C、肛溫比口溫高 0.5°C；發燒定義為體溫 >38°C；低體溫為 <35°C。電子體溫計、耳溫槍為常用工具。",
+              "text": "體溫測量（Temperature Measurement）：正常體溫因部位而異：①口溫（Oral）：36.0～37.0°C，測量時間 3 分鐘（電子式30秒）；禁用於：嬰幼兒、意識不清、口腔手術後、呼吸急促者；②腋溫（Axillary）：35.5～36.5°C，比口溫低約 0.5°C；測量時間 10 分鐘（電子式30秒）；③肛溫（Rectal）：36.5～37.5°C，比口溫高約 0.5°C；最準確，禁用於：腸道手術後、腹瀉、低血小板/凝血異常、嬰兒（腸穿孔風險）；④耳溫（Tympanic）：適合急症快速評估，使用前拉直耳道（成人向後上、嬰幼兒向後下）。發燒分類：低度發燒 38～38.9°C；中度發燒 39～40°C；高度發燒 40～41°C；過高體溫（Hyperthermia）>41°C（如熱中暑）；低體溫（Hypothermia）<35°C。護理注意：①進食、飲熱/冷飲、抽菸後 15～30 分鐘才可測口溫；②坐浴或運動後 30 分鐘才可測腋溫；③記錄時標注測量部位（如 T: 37.2°C（腋））。"
+            },
+            {
+              "title": "7.2 脈搏與血壓測量",
+              "node_id": "F004",
+              "start_index": 326,
+              "end_index": 345,
+              "summary": "脈搏正常值 60～100 次/分，橈動脈為最常用部位，心律不整者需測心尖脈 60 秒；血壓正常值 <120/80 mmHg，測量前需休息 5 分鐘，血壓計袖帶寬度應為上臂圍的 40%。",
+              "text": "脈搏測量（Pulse Assessment）：正常值 60～100 次/分；<60 次/分為心搏過緩（Bradycardia）；>100 次/分為心搏過速（Tachycardia）。常用測量部位：橈動脈（最常用）、頸動脈（緊急評估）、股動脈、心尖（聽診器）。測量原則：①用 2～3 根手指輕壓（勿用拇指，拇指有自身脈搏）；②穩定脈搏測 15 秒 ×4；③不規則脈搏需測 1 分鐘（心房顫動）；④兩側同時測量比較（血管病變時兩側脈搏強弱差異）。特殊情況：心律不整病人（如 AF）需一人測心尖脈同時另一人測橈動脈，計算脈搏短絀（Pulse deficit = 心尖脈 - 橈脈）。血壓測量（Blood Pressure Measurement）：正常值：<120/80 mmHg；高血壓：≥130/80 mmHg（AHA 2017 標準）。測量前準備：①休息至少 5 分鐘；②膀胱排空；③無抽菸、運動、咖啡因攝取 30 分鐘內；④採坐姿，手臂與心臟同高，腳平放地板。袖帶選擇：寬度約為上臂圍 40%（過窄 → 讀數偏高；過寬 → 讀數偏低）。柯氏音（Korotkoff sounds）第一音（收縮壓）至第五音消失（舒張壓）。姿勢性低血壓：站起後 3 分鐘內收縮壓下降 ≥20 mmHg 或舒張壓下降 ≥10 mmHg（老年人、長期臥床者常見）。"
+            }
+          ]
+        },
+        {
+          "title": "第八章 給藥原則",
+          "node_id": "F005",
+          "start_index": 346,
+          "end_index": 385,
+          "summary": "安全給藥的核心為「三讀五對」原則，護理師需在取藥、備藥、給藥三個時機核對藥物的五對（正確病人、藥物、劑量、途徑、時間），以及近年強調的九大正確（加入給藥原因、記錄等）。",
+          "text": "安全給藥（Medication Safety）是護理實務中最重要的安全議題，用藥錯誤（Medication Error）是護理最常見的不良事件之一。三讀五對原則是臺灣護理給藥的核心安全機制。",
+          "nodes": [
+            {
+              "title": "8.1 三讀五對原則",
+              "node_id": "F006",
+              "start_index": 347,
+              "end_index": 365,
+              "summary": "三讀：取藥時讀、備藥時讀、給藥時讀（或取藥後再讀）；五對：正確的病人（Patient）、藥物（Drug）、劑量（Dose）、途徑（Route）、時間（Time）；近代延伸為九對，加入藥物原因、反應（評估）、病人受教育程度與記錄。",
+              "text": "三讀五對（Three Checks, Five Rights）原則：【三讀】：（1）取藥時：對照藥單核對藥物標籤；（2）備藥時：打開包裝/抽藥時再次核對；（3）給藥前：給病人前最後確認。【五對】：（1）正確的病人（Right Patient）：至少以兩種識別方式確認（姓名 + 病歷號，或姓名 + 出生年月日）；不可只以床號識別；（2）正確的藥物（Right Drug）：核對藥名（商品名 vs 學名）；注意相似藥名（LASA: Look-alike Sound-alike）；（3）正確的劑量（Right Dose）：確認單位（mg vs mcg vs mEq）；液體需計算換算；（4）正確的途徑（Right Route）：口服（PO）、靜脈（IV）、肌肉（IM）、皮下（SC）、舌下（SL）等；腸道外給藥的藥物不可口服（如 Insulin、Heparin）；（5）正確的時間（Right Time）：按醫囑時間給藥；了解 AC（飯前）、PC（飯後）、QD（每日）、BID（每日兩次）、PRN（需要時）等縮寫。【延伸九對】：加入（6）正確的原因（Right Reason）；（7）正確的記錄（Right Documentation）：給藥後立即記錄；（8）正確的評估（Right Assessment）：給藥前評估是否適合（如止痛藥前評估疼痛分數）；（9）正確的告知（Right Education/Informed Consent）：告知病人藥物名稱、用途與注意事項。特殊注意：高警訊藥物（High-alert Medications）如 10% KCl、Insulin、Heparin、高濃度鎂劑、化療藥物需雙人核對（Double-check）。"
+            },
+            {
+              "title": "8.2 各類給藥途徑",
+              "node_id": "F007",
+              "start_index": 366,
+              "end_index": 385,
+              "summary": "常用給藥途徑：口服（最方便、最安全）、靜脈注射（最快速、最危險）、肌肉注射（三角肌上外側、股外側肌）、皮下注射（胰島素、Heparin）、舌下（Nitroglycerin，避免吞服）；各途徑有不同操作技術與護理注意事項。",
+              "text": "給藥途徑（Routes of Administration）：（一）口服（Oral, PO）：最常用、最安全、費用最低；缺點：起效慢、胃腸刺激、首渡效應（First-pass effect）；意識不清、吞嚥困難者禁用。（二）舌下（Sublingual, SL）：藥物置於舌下溶解，直接進入血液循環（避開首渡效應），起效快（2～5 分鐘）；如 Nitroglycerin（硝酸甘油，心絞痛急救）；注意：給藥後讓病人保持坐姿，勿吞服，勿飲水；藥物有灼燒感表示有效。（三）肌肉注射（Intramuscular, IM）：常用部位：①腹臀肌（Ventrogluteal site）：成人首選，避開大血管神經，注射 90°；②股外側肌（Vastus lateralis）：嬰幼兒首選（>7 個月後三角肌）；③三角肌（Deltoid）：成人疫苗接種，劑量 ≤1 mL；④背臀肌（Dorsogluteal）：因傷及坐骨神經風險已不建議為首選部位；注射技術：抽吸活塞確認無血液回流（Z 字型技術不需回抽），注射後勿按摩（避免刺激組織）。（四）皮下注射（Subcutaneous, SC）：注射部位：腹部（最常用）、上臂外側、大腿外側；角度：45°（組織少）或 90°（肥胖者）；如 Insulin、Heparin（LMWH）；肝素注射注意：不按摩、不排氣泡。（五）靜脈注射（Intravenous, IV）：起效最快，風險最高；藥物錯誤後最難以補救；注意空氣栓塞、外滲（Extravasation）、靜脈炎（Phlebitis）。（六）透皮（Transdermal）：慢性疼痛的 Fentanyl 貼片（每 72 小時更換）、Nitroglycerin 貼片（每日更換，夜間移除以避免耐藥）；注意輪換部位，勿貼於受傷皮膚。"
+            }
+          ]
+        },
+        {
+          "title": "第九章 傷口護理",
+          "node_id": "F008",
+          "start_index": 386,
+          "end_index": 405,
+          "summary": "傷口癒合分為第一期（一次性癒合）、第二期（肉芽組織填充）、第三期（延遲縫合）；傷口評估要素包括大小、深度、邊緣、滲出液、感染跡象；護理原則為保持濕潤環境並避免感染。",
+          "text": "傷口護理（Wound Care）：傷口癒合類型：①一期癒合（First intention）：乾淨傷口立即縫合，癒合快、瘢痕少（如手術切口）；②二期癒合（Second intention）：傷口無法縫合，藉由肉芽組織（Granulation tissue）由底部慢慢填充（如壓瘡、糖尿病足潰瘍）；③三期癒合（Third intention）：延遲縫合，先清創再縫合（感染傷口清潔後）。傷口癒合階段：（1）止血期（Hemostasis）：受傷後立即，血小板聚集、纖維蛋白形成血栓；（2）發炎期（Inflammation）：2～5 天，白血球清除細菌與壞死組織（紅腫熱痛為正常反應）；（3）增生期（Proliferation）：5 天～3 週，纖維母細胞合成膠原蛋白、血管新生（肉芽組織）、上皮化；（4）重塑期（Maturation/Remodeling）：3 週～2 年，膠原纖維重新排列，瘢痕漸成熟。",
+          "nodes": [
+            {
+              "title": "9.1 傷口評估與換藥",
+              "node_id": "F009",
+              "start_index": 387,
+              "end_index": 405,
+              "summary": "傷口評估 MEASURE 工具：M（大小量測）、E（滲出液）、A（外觀/顏色）、S（受苦/感覺）、U（底部組織）、R（邊緣）、E（再評估）；換藥採清潔技術或無菌技術（依傷口類型），現代觀念以濕性癒合環境（Moist wound healing）為主。",
+              "text": "傷口評估（MEASURE 工具）：M（Measurement）：長 × 寬 × 深（cm），必要時使用無菌棉棒探查竇道；E（Exudate）：滲出液量（少/中/大量）、性質（清澈、漿液、血清性、膿性）、氣味；A（Appearance）：傷口底部組織顏色：粉紅/紅色（肉芽組織，健康）、黃色（腐肉，Slough）、黑色（壞死焦痂，Eschar）；S（Suffering）：疼痛評估（NRS 0～10）；U（Undermining/Tunneling）：潛行（傷口邊緣下方空洞）、竇道探查；R（Re-evaluate）：定期重新評估。換藥技術：傷口類型→技術：（1）外科清潔傷口（術後縫合）：清潔技術（Clean technique）；（2）慢性傷口（壓瘡、糖尿病潰瘍）：清潔技術；（3）免疫功能低下、暴露體腔的傷口：無菌技術（Sterile technique）。濕性癒合原則：保持傷口濕潤可加速癒合 50%（Winter 1962 年研究）；常用敷料：水膠體（Hydrocolloid）、水凝膠（Hydrogel）、泡棉（Foam）、藻酸鹽（Alginate，大量滲出）、銀離子敷料（感染/高感染風險）。換藥頻率：依滲出量決定（高滲出：每日或隔日；低滲出：可3～7天一次）；過度頻繁換藥破壞肉芽組織。NPWT（負壓傷口治療）：適用於深部傷口、術後傷口開裂；負壓促進血流、減少水腫、加速肉芽生長。"
+            }
+          ]
+        },
+        {
+          "title": "第十章 無菌技術",
+          "node_id": "F010",
+          "start_index": 406,
+          "end_index": 420,
+          "summary": "無菌技術（Sterile Technique/Aseptic Technique）的核心原則：無菌物品只能接觸無菌物品；疑有污染即視為污染；操作中保持無菌野視線可及；無菌手套為防止交叉感染的關鍵屏障。",
+          "text": "無菌技術（Sterile Aseptic Technique）：適用時機：侵入性操作（插尿管、靜脈穿刺、傷口處置、換藥於免疫低下病人）、手術操作。無菌技術原則（核心法則）：①無菌物品只可接觸無菌物品（任何接觸破壞無菌性即視為污染）；②無菌野（Sterile field）：腰部以上為無菌區，腰部以下視為非無菌；③背部視為非無菌（眼不見即視為污染）；④無菌物品邊緣 1 英寸（2.54 cm）視為非無菌；⑤潮濕即污染（濕透敷料等視為污染）；⑥空氣流通過無菌野視為污染（避免咳嗽、打噴嚏、說話朝向無菌野）。",
+          "nodes": [
+            {
+              "title": "10.1 外科洗手與戴無菌手套",
+              "node_id": "F011",
+              "start_index": 407,
+              "end_index": 420,
+              "summary": "外科洗手（刷手）去除暫時菌叢（Transient flora）與部分常在菌叢；戴無菌手套採開口式技術（開口朝向自己）；手套破損需立即更換；無菌手術衣穿著後只有前胸腰帶以上視為無菌區。",
+              "text": "外科洗手（Surgical Hand Scrub）與無菌手套穿戴：外科洗手目的：去除皮膚暫時菌叢（Transient flora）及大部分常在菌叢（Resident flora），使菌落計數降至最低。方法：①計時刷洗法（3～5 分鐘）；②計數刷洗法（指定刷洗次數）；③酒精性手部消毒劑（ABHR）刷手（若手部無可見污染可替代傳統刷洗）；刷洗順序：指尖→指縫→手掌→手背→手腕→前臂（由遠端至近端）；刷洗後雙手高舉（高於肘部）以防污水回流污染手部。無菌手套穿戴（Open Gloving Technique）：①打開外包裝，確認無菌性；②抓住反折部分（非無菌面）戴第一隻手套；③已戴手套的手只可接觸手套外面（無菌面），套入第二隻手套；④調整位置（不可接觸非無菌面）；⑤手套破損立即更換（任何可疑破損即視為污染）。無菌手術衣（Sterile Gown）穿著後無菌區域：前胸肩膀以下、腰帶以上（前方）；腋下、背部及腰帶以下視為非無菌（護理師不可讓手或器械移至這些區域）。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

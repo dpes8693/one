@@ -1,0 +1,562 @@
+[
+  {
+    "question_id": "q0101",
+    "stem": "護理師在給予病人青黴素（Penicillin G）注射前，最優先應執行的護理措施為何？",
+    "options": {
+      "A": "測量病人的基礎血壓與脈搏",
+      "B": "詢問並確認病人過去是否有青黴素或其他抗生素的過敏史",
+      "C": "告知病人注射後可能出現輕微疼痛",
+      "D": "確認靜脈注射的滴注速度"
+    },
+    "answer": "B",
+    "explanation": "青黴素類抗生素最嚴重的副作用為過敏性休克（Anaphylaxis），在給藥前必須詢問並記錄過敏史，若有過敏史需進行皮膚試驗。皮膚試驗陽性或有明確過敏史者禁用，以預防危及生命的過敏反應。",
+    "tags": ["抗生素", "青黴素", "過敏", "給藥安全"],
+    "_expected_nodes": ["nursing_pharm:P003"]
+  },
+  {
+    "question_id": "q0102",
+    "stem": "病人使用 Warfarin 抗凝血治療，護理師衛教病人有關飲食的注意事項，下列何者最正確？",
+    "options": {
+      "A": "完全禁止食用菠菜、花椰菜等深綠色蔬菜",
+      "B": "每日維生素 K 的攝取量須固定，避免大幅波動",
+      "C": "可大量食用高麗菜，因其不影響 Warfarin 的效果",
+      "D": "飲食中完全不含維生素 K 才能使 INR 保持穩定"
+    },
+    "answer": "B",
+    "explanation": "Warfarin 是維生素 K 拮抗劑，飲食中維生素 K 的攝取量會影響其抗凝效果。護理師應衛教病人保持穩定的維生素 K 攝取，而非完全禁止，以維持 INR 在穩定的治療範圍內。高麗菜等深綠色蔬菜富含維生素 K，大量攝取會降低 Warfarin 效果。",
+    "tags": ["抗凝血劑", "Warfarin", "飲食衛教", "INR"],
+    "_expected_nodes": ["nursing_pharm:P016"]
+  },
+  {
+    "question_id": "q0103",
+    "stem": "護理師正在照護一位使用普通肝素（Unfractionated Heparin）靜脈滴注的病人。下列哪一個監測指標最能反映 Heparin 的抗凝效果？",
+    "options": {
+      "A": "凝血酶原時間（Prothrombin Time, PT）",
+      "B": "活化部分凝血活酶時間（aPTT）",
+      "C": "血小板計數（Platelet count）",
+      "D": "國際標準化比值（INR）"
+    },
+    "answer": "B",
+    "explanation": "aPTT 是監測普通肝素（UFH）抗凝效果的標準指標，目標值為 60～100 秒（或正常值的 1.5～2.5 倍）。PT/INR 主要用於監測 Warfarin 的效果，而非 Heparin。血小板計數則用於監測 HIT（Heparin 誘導血小板減少症）。",
+    "tags": ["抗凝血劑", "Heparin", "aPTT", "監測"],
+    "_expected_nodes": ["nursing_pharm:P014"]
+  },
+  {
+    "question_id": "q0104",
+    "stem": "病人服用 Azithromycin（Z-pack）治療非典型肺炎，護理師衛教時應特別提醒此藥可能影響：",
+    "options": {
+      "A": "血糖，需定期監測空腹血糖",
+      "B": "心電圖 QT 間期延長，有心律不整風險",
+      "C": "腎功能，需避免與 NSAIDs 合用",
+      "D": "凝血功能，需監測 INR"
+    },
+    "answer": "B",
+    "explanation": "Azithromycin 屬大環內酯類（Macrolides）抗生素，可能延長心電圖的 QT 間期，增加致命性心律不整（Torsades de pointes）的風險。尤其合用其他 QT 延長藥物、有心臟病史或老年人更需注意。",
+    "tags": ["抗生素", "大環內酯類", "Azithromycin", "QT延長"],
+    "_expected_nodes": ["nursing_pharm:P007"]
+  },
+  {
+    "question_id": "q0105",
+    "stem": "護理師給予病人靜脈注射 Morphine（嗎啡）止痛後 30 分鐘，發現病人呼吸頻率為 8 次/分，且意識出現嗜睡，瞳孔呈針點狀。護理師應立即執行的措施為何？",
+    "options": {
+      "A": "給予 Atropine 靜脈注射以增加心跳速率",
+      "B": "給予 Naloxone（Narcan）靜脈注射以逆轉鴉片類毒性",
+      "C": "繼續觀察，此為嗎啡的正常反應，無需立即處置",
+      "D": "立即執行心肺復甦術（CPR）"
+    },
+    "answer": "B",
+    "explanation": "呼吸頻率 8 次/分、嗜睡及針點瞳孔是鴉片類藥物（Opioids）過量的典型三聯症（Respiratory depression, Sedation, Miosis）。立即給予解毒劑 Naloxone（Narcan）0.4～2 mg 靜脈注射，以競爭性拮抗 μ 受體，逆轉呼吸抑制。",
+    "tags": ["鴉片類", "Morphine", "Naloxone", "呼吸抑制", "解毒"],
+    "_expected_nodes": ["nursing_pharm:P011", "nursing_pharm:P012"]
+  },
+  {
+    "question_id": "q0106",
+    "stem": "護理師正在為病人注射低分子量肝素（Enoxaparin/Lovenox），下列注射技術何者正確？",
+    "options": {
+      "A": "注射前排除針管內的氣泡，確保劑量準確",
+      "B": "注射後立即按壓注射部位 1 分鐘以減少血腫",
+      "C": "注射後不按摩注射部位，且預先充填的注射器不需排氣泡",
+      "D": "應注射於腹股溝區域以獲得最佳吸收效果"
+    },
+    "answer": "C",
+    "explanation": "低分子量肝素（LMWH）的預先充填注射器（Pre-filled syringe）含有計算好的劑量（包含少量空氣氣泡以確保完整給藥），不應排氣泡。注射後不按摩，以免促進藥物散布引起組織刺激或血腫。正確部位為腹部肚臍周圍 2 公分外。",
+    "tags": ["抗凝血劑", "LMWH", "Enoxaparin", "皮下注射技術"],
+    "_expected_nodes": ["nursing_pharm:P015"]
+  },
+  {
+    "question_id": "q0107",
+    "stem": "慢性心臟衰竭病人（HFrEF）服用 Digoxin，護理師給藥前最應優先確認的護理評估為何？",
+    "options": {
+      "A": "量測病人的血壓，確認收縮壓 >100 mmHg",
+      "B": "評估心尖脈搏 60 秒，若脈搏 <60 次/分或有不整，應暫停給藥並通報醫師",
+      "C": "確認病人最近一餐的進食情況",
+      "D": "監測病人的體溫，確認無發燒"
+    },
+    "answer": "B",
+    "explanation": "Digoxin 具有負性變時（降低心率）的作用，給藥前必須評估心尖脈 60 秒。若脈搏 <60 次/分或有節律異常，應暫停給藥並立即通報醫師，以防 Digoxin 中毒或心臟傳導異常加重。這是 Digoxin 給藥最重要的護理評估。",
+    "tags": ["Digoxin", "心臟衰竭", "心尖脈", "給藥安全"],
+    "_expected_nodes": ["nursing_pharm:P007", "clinical_ms:M005"]
+  },
+  {
+    "question_id": "q0108",
+    "stem": "病人接受 Ceftriaxone（第三代頭孢菌素）靜脈注射治療社區性肺炎，護理師在備藥時發現醫囑開立的靜脈輸液為乳酸林格液（Lactated Ringer's Solution），應如何處理？",
+    "options": {
+      "A": "將 Ceftriaxone 混入乳酸林格液中一起輸注，可節省時間",
+      "B": "告知醫師，Ceftriaxone 不可與含鈣溶液混合，需更換輸液",
+      "C": "先確認病人的腎功能再決定",
+      "D": "若輸注速度慢（>60 分鐘）則可以混合"
+    },
+    "answer": "B",
+    "explanation": "Ceftriaxone 不可與含鈣溶液（如乳酸林格液、Ringer's solution 或含鈣的 TPN）混合，因會產生不溶性沉澱，尤其在嬰幼兒體內可能沉積於肺部與腎臟，成人也應避免。護理師應立即告知醫師並建議更換為 0.9% 生理食鹽水或 5% 葡萄糖水。",
+    "tags": ["抗生素", "Ceftriaxone", "頭孢菌素", "藥物不相容"],
+    "_expected_nodes": ["nursing_pharm:P005", "nursing_pharm:P006"]
+  },
+  {
+    "question_id": "q0109",
+    "stem": "護理師在照護使用 NSAIDs（如 Ibuprofen）的老年病人時，最需優先監測的副作用為何？",
+    "options": {
+      "A": "低血糖反應",
+      "B": "消化道出血及腎功能損害",
+      "C": "呼吸抑制",
+      "D": "骨髓抑制"
+    },
+    "answer": "B",
+    "explanation": "NSAIDs 抑制 COX-1 導致胃黏膜保護性前列腺素減少，引起消化道潰瘍與出血；同時抑制前列腺素對腎臟血流的維持作用，可能引起急性腎損傷。老年人因腎功能生理性下降且常合用多種藥物，風險更高。護理師應監測大便潛血、腎功能指數（BUN、Creatinine）及血壓。",
+    "tags": ["NSAIDs", "Ibuprofen", "消化道出血", "腎毒性"],
+    "_expected_nodes": ["nursing_pharm:P009"]
+  },
+  {
+    "question_id": "q0110",
+    "stem": "心臟衰竭病人因 Warfarin 過量導致 INR 為 12，且出現黑便（消化道出血）。護理師應準備的緊急處置為何？",
+    "options": {
+      "A": "立即靜脈注射 Protamine Sulfate",
+      "B": "立即靜脈緩慢注射 Vitamin K（Phytonadione）並準備輸注新鮮冷凍血漿（FFP）或凝血酶原複合物（PCC）",
+      "C": "立即靜脈注射 Naloxone",
+      "D": "口服額外劑量的 Warfarin 以矯正過量"
+    },
+    "answer": "B",
+    "explanation": "Warfarin 嚴重過量合併活動性出血的緊急處理：停用 Warfarin，靜脈緩慢注射 Vitamin K₁（Phytonadione）5～10 mg（過快注射可引起類過敏反應）；同時給予 FFP 或凝血酶原複合物（PCC）以快速補充凝血因子、即時止血（Vitamin K 需 6～24 小時才起效）。Protamine Sulfate 是 Heparin 的解毒劑，Naloxone 是鴉片類的解毒劑，兩者均不適用。",
+    "tags": ["Warfarin", "INR過高", "出血", "Vitamin K", "緊急處置"],
+    "_expected_nodes": ["nursing_pharm:P016", "nursing_pharm:P017"]
+  },
+  {
+    "question_id": "q0201",
+    "stem": "一位病人被告知需要長期服用「血管收縮素轉化酶抑制劑」控制血壓，詢問護理師此類藥物常見的副作用。護理師應告知最常見的副作用為：",
+    "options": {
+      "A": "下肢水腫與體重增加",
+      "B": "頑固性乾咳",
+      "C": "牙齦增生",
+      "D": "視力模糊"
+    },
+    "answer": "B",
+    "explanation": "血管收縮素轉化酶抑制劑（ACE inhibitor，ACEI）如 Captopril、Enalapril，其最常見副作用為頑固性乾咳（約 10～15% 病人），原因是 ACE 同時分解 Bradykinin，ACEI 使 Bradykinin 蓄積，刺激氣管引起乾咳。若病人無法耐受，可改用血管收縮素受體阻斷劑（ARB）。",
+    "tags": ["ACEI", "ACE抑制劑", "乾咳", "副作用"],
+    "_expected_nodes": ["nursing_pharm:P005"]
+  },
+  {
+    "question_id": "q0202",
+    "stem": "一位心臟衰竭病人主訴：「我最近看東西都有黃綠色的光暈，而且胃口很差、噁心想吐，已經好幾天了。」護理師聯想到病人正在服用哪種藥物最可能引起這些症狀？",
+    "options": {
+      "A": "Furosemide（速尿）",
+      "B": "Spironolactone（螺旋內酯）",
+      "C": "Digoxin（毛地黃）",
+      "D": "Metoprolol（乙型阻斷劑）"
+    },
+    "answer": "C",
+    "explanation": "黃綠視（Xanthopsia/Yellow-green visual disturbance）、噁心嘔吐及食慾不振是 Digoxin 中毒的典型症狀組合。Digoxin 治療指數窄，血中濃度 >2.0 ng/mL 即有毒性風險。護理師應立即通報醫師，暫停 Digoxin，並監測心臟節律與電解質（低血鉀可加重 Digoxin 毒性）。",
+    "tags": ["Digoxin", "毒性", "黃綠視", "心臟衰竭"],
+    "_expected_nodes": ["nursing_pharm:P007", "clinical_ms:M005"]
+  },
+  {
+    "question_id": "q0203",
+    "stem": "病人服用第二型糖尿病藥物「捷諾維（Sitagliptin）」，護理師說明此藥的作用機轉是：",
+    "options": {
+      "A": "促進腎臟排除葡萄糖，降低血糖",
+      "B": "抑制 DPP-4 酵素，間接增加 GLP-1 活性，促進血糖依賴性胰島素分泌",
+      "C": "直接刺激胰島 β 細胞大量分泌胰島素",
+      "D": "抑制腸道葡萄糖吸收"
+    },
+    "answer": "B",
+    "explanation": "Sitagliptin（捷諾維）屬 DPP-4 抑制劑（Dipeptidyl peptidase-4 inhibitor），藉由抑制 DPP-4 酵素（負責分解 GLP-1 與 GIP），延長腸道分泌的 GLP-1 作用時間，以血糖依賴性方式促進胰島素分泌並抑制升糖素。因具血糖依賴性，單獨使用時低血糖風險低。",
+    "tags": ["DPP-4抑制劑", "Sitagliptin", "糖尿病", "機轉"],
+    "_expected_nodes": ["clinical_ms:M010"]
+  },
+  {
+    "question_id": "q0204",
+    "stem": "護理師衛教一位使用胰島素治療的糖尿病病人，關於胰島素注射部位，下列何者吸收速度最快？",
+    "options": {
+      "A": "臀部外上方",
+      "B": "大腿外側",
+      "C": "上臂外側",
+      "D": "腹部（肚臍旁）"
+    },
+    "answer": "D",
+    "explanation": "胰島素各注射部位吸收速度由快到慢：腹部（最快）> 上臂外側 > 大腿外側 > 臀部外上方（最慢）。腹部血流豐富且皮下脂肪均勻，吸收速度最快且最穩定，尤其適合進餐前需快速起效的超短效或短效胰島素。",
+    "tags": ["胰島素", "注射部位", "吸收速度", "糖尿病"],
+    "_expected_nodes": ["clinical_ms:M008"]
+  },
+  {
+    "question_id": "q0205",
+    "stem": "血液透析病人在透析治療中突然出現收縮壓從 130 mmHg 降至 82 mmHg，並主訴頭暈。此最可能是什麼情況，護理師最優先的處置為何？",
+    "options": {
+      "A": "透析失衡症候群，立即停止透析並呼叫醫師",
+      "B": "透析中低血壓，立即停止或降低超過濾速率，將病人置於頭低腳高位並靜脈補充 0.9% 生理食鹽水",
+      "C": "AV 廔管血栓，立即評估廔管的震顫音",
+      "D": "低血鉀，立即靜脈補充氯化鉀"
+    },
+    "answer": "B",
+    "explanation": "透析中低血壓（Intradialytic Hypotension）是血液透析最常見的急性合併症，定義為收縮壓 <90 mmHg 或下降 >20 mmHg。最常見原因為超過濾速率超過血管再充盈速率。緊急處理：立即停止或降低超過濾率、頭低腳高位（Trendelenburg position）、快速靜脈輸注 0.9% NS。",
+    "tags": ["血液透析", "透析中低血壓", "緊急處置"],
+    "_expected_nodes": ["clinical_ms:M013", "clinical_ms:M014"]
+  },
+  {
+    "question_id": "q0206",
+    "stem": "護理師衛教正在使用 Metformin 的糖尿病病人，關於接受電腦斷層攝影（CT scan）注射含碘顯影劑前的注意事項。下列何者最正確？",
+    "options": {
+      "A": "不需停用 Metformin，含碘顯影劑對 Metformin 沒有影響",
+      "B": "接受含碘顯影劑前後 48 小時應暫停 Metformin，以降低乳酸性酸中毒風險",
+      "C": "僅需在顯影劑使用當天停用即可，隔天恢復正常",
+      "D": "若腎功能正常可繼續使用 Metformin，無需暫停"
+    },
+    "answer": "B",
+    "explanation": "含碘顯影劑可能引起腎毒性，若腎功能因此受損，Metformin 無法正常排泄而蓄積，進而引發乳酸性酸中毒（Lactic acidosis），雖罕見但致命。原則上 CT 增強或其他使用含碘顯影劑的檢查前後各暫停 Metformin 48 小時，確認腎功能正常後方可恢復。",
+    "tags": ["Metformin", "顯影劑", "乳酸性酸中毒", "糖尿病"],
+    "_expected_nodes": ["clinical_ms:M011"]
+  },
+  {
+    "question_id": "q0207",
+    "stem": "護理師正在評估腹膜透析（CAPD）的病人，發現病人引流出的透析廢液外觀混濁，並主訴腹痛。護理師應優先懷疑下列哪種合併症？",
+    "options": {
+      "A": "透析液濃度不足，導致脫水效果不良",
+      "B": "腹膜炎（Peritonitis）",
+      "C": "透析管路扭折，導致引流不順",
+      "D": "電解質失衡（高血鉀）"
+    },
+    "answer": "B",
+    "explanation": "腹膜透析最嚴重的合併症為腹膜炎（Peritonitis）。診斷線索：透析廢液混濁（最早且最重要的徵象）、腹痛、發燒；確診需送廢液細胞計數（白血球 >100/μL，中性球 >50%）與培養。護理師發現廢液混濁應立即通報醫師，保留廢液送檢，並準備抗生素腹腔內給藥。",
+    "tags": ["腹膜透析", "CAPD", "腹膜炎", "合併症"],
+    "_expected_nodes": ["clinical_ms:M015"]
+  },
+  {
+    "question_id": "q0208",
+    "stem": "一位心臟衰竭病人（HFrEF）平躺時感到嚴重呼吸困難，需要墊三個枕頭才能入睡，並在凌晨突然被喘醒。護理師應記錄此症狀為：",
+    "options": {
+      "A": "克曙曼呼吸（Kussmaul's breathing）",
+      "B": "端坐呼吸（Orthopnea）合併夜間陣發性呼吸困難（PND）",
+      "C": "比歐呼吸（Biot's breathing）",
+      "D": "潮式呼吸（Cheyne-Stokes breathing）"
+    },
+    "answer": "B",
+    "explanation": "端坐呼吸（Orthopnea）指平躺時呼吸困難加重，需墊高枕頭（詢問幾個枕頭為評估指標）；夜間陣發性呼吸困難（Paroxysmal Nocturnal Dyspnea, PND）指入睡後突然喘醒，兩者均為左心衰竭導致肺靜脈鬱血的特徵性症狀。",
+    "tags": ["心臟衰竭", "端坐呼吸", "PND", "左心衰竭"],
+    "_expected_nodes": ["clinical_ms:M003"]
+  },
+  {
+    "question_id": "q0301",
+    "stem": "護理師照護一位慢性心臟衰竭病人，醫師同時開立了 Furosemide（速尿）與 Digoxin。護理師在監測用藥安全時，應特別注意 Furosemide 可能造成哪種電解質異常，進而增加 Digoxin 毒性風險？",
+    "options": {
+      "A": "高血鉀（Hyperkalemia）",
+      "B": "高血鈉（Hypernatremia）",
+      "C": "低血鉀（Hypokalemia）",
+      "D": "高血鈣（Hypercalcemia）"
+    },
+    "answer": "C",
+    "explanation": "此題跨越藥理學與心臟衰竭護理兩個主題。Furosemide（Loop diuretic）促進腎臟排鉀，常見副作用為低血鉀（Hypokalemia）。低血鉀是 Digoxin 毒性最重要的危險因子，因低血鉀使 Digoxin 更容易與 Na+/K+-ATPase 結合，增加毒性。護理師需定期監測血清鉀離子，必要時補充鉀（如 Potassium Chloride）並避免使用低鉀飲食。",
+    "tags": ["Digoxin毒性", "Furosemide", "低血鉀", "藥物交互", "心臟衰竭"],
+    "_expected_nodes": ["nursing_pharm:P007", "clinical_ms:M004", "clinical_ms:M005"]
+  },
+  {
+    "question_id": "q0302",
+    "stem": "護理師照護一位因心臟衰竭住院的病人，醫師開立 Morphine（嗎啡）靜脈注射用於緩解急性肺水腫症狀。關於此用藥，下列護理措施何者最重要？",
+    "options": {
+      "A": "給藥前確認病人最後一次用餐時間",
+      "B": "給藥前評估呼吸頻率，給藥後持續監測呼吸與血壓，並備妥 Naloxone",
+      "C": "給藥後讓病人保持端坐位並立即下床活動以改善循環",
+      "D": "確認病人對嗎啡無成癮史後才可給藥"
+    },
+    "answer": "B",
+    "explanation": "此題結合心臟衰竭急性護理與鴉片類藥物的安全監測。Morphine 用於急性肺水腫時可擴張靜脈、降低前負荷並緩解焦慮，但其主要風險為呼吸抑制和低血壓。護理師給藥前須評估呼吸（<12 次/分時暫停），給藥後持續監測，並床邊備妥 Naloxone（Narcan）以備緊急逆轉。",
+    "tags": ["Morphine", "心臟衰竭", "急性肺水腫", "呼吸抑制", "Naloxone"],
+    "_expected_nodes": ["nursing_pharm:P011", "nursing_pharm:P012", "clinical_ms:M006"]
+  },
+  {
+    "question_id": "q0303",
+    "stem": "第一型糖尿病病人因感染發燒而住院，護理師發現病人的 Insulin Glargine（Lantus，長效胰島素）被放置在打開超過 40 天的瓶中。護理師應如何處理，並給予病人何種衛教？",
+    "options": {
+      "A": "打開後只需冷藏保存即可，無使用期限限制",
+      "B": "須丟棄此瓶胰島素，衛教病人開封後常溫下（25°C 以下）保存，有效期為 28 天",
+      "C": "打開後需重新放回冰箱冷藏，才能延長使用至 90 天",
+      "D": "外觀若仍清澈即可繼續使用，時間不影響效力"
+    },
+    "answer": "B",
+    "explanation": "胰島素開封後的保存原則：開封的胰島素應於常溫（室溫 25°C 以下）保存，有效使用期限為 28 天，超過即應丟棄（效力會降低）。未開封者需冷藏（2～8°C），但不可冷凍（結冰破壞蛋白質結構）。Lantus（Glargine）外觀清澈，但不可與其他胰島素混合。過期胰島素效力不穩定，可能導致血糖控制不佳。",
+    "tags": ["胰島素", "Glargine", "保存方法", "糖尿病衛教"],
+    "_expected_nodes": ["clinical_ms:M008", "fundamental_ns:F006"]
+  },
+  {
+    "question_id": "q0304",
+    "stem": "護理師在給予血液透析病人 Warfarin 抗凝血治療時，發現病人今天使用了廔管側上臂進行靜脈抽血（因廔管側靜脈明顯）。護理師應立即採取何種護理措施？",
+    "options": {
+      "A": "不需處置，廔管側靜脈抽血可加快化驗效率",
+      "B": "立即通報，評估廔管是否仍有震顫音（Thrill），並記錄此不當操作，教育相關人員",
+      "C": "立即申請緊急 INR 檢驗，確認抗凝效果",
+      "D": "僅需按壓止血即可，不影響廔管功能"
+    },
+    "answer": "B",
+    "explanation": "此題整合抗凝血劑護理與血液透析廔管護理。AV 廔管（動靜脈廔管）是血液透析病人的「生命線」，廔管側肢體嚴格禁止：抽血、量血壓、靜脈注射。任何壓迫或穿刺均可能引起血腫、血栓，導致廔管堵塞失功。護理師須立即評估廔管是否仍有震顫音（Thrill）與血管雜音（Bruit），並通報醫師，記錄並教育相關人員防止再發生。",
+    "tags": ["血液透析", "AV廔管", "廔管保護", "Warfarin"],
+    "_expected_nodes": ["nursing_pharm:P016", "clinical_ms:M013"]
+  },
+  {
+    "question_id": "q0305",
+    "stem": "使用 Heparin 靜脈滴注的深靜脈血栓病人，第 7 天血小板計數從基礎值 220×10³/μL 降至 68×10³/μL，且雙側下肢血栓加重。護理師懷疑此為何種嚴重合併症？應立即停用 Heparin，並準備給予何種替代療法？",
+    "options": {
+      "A": "瀰漫性血管內凝血（DIC），準備給予 FFP 與血小板輸注",
+      "B": "肝素誘導血小板減少症（HIT），準備改用非肝素抗凝血劑如 Argatroban",
+      "C": "過敏性反應，準備給予 Epinephrine 與 Corticosteroid",
+      "D": "骨髓抑制，停用 Heparin 並輸注血小板"
+    },
+    "answer": "B",
+    "explanation": "HIT（Heparin-Induced Thrombocytopenia，第二型）典型特徵：Heparin 使用後 5～10 天，血小板減少 >50%，同時發生矛盾性血栓（因抗 PF4/Heparin 抗體活化血小板）。處理：立即停用所有 Heparin（含 LMWH 沖管），改用非 Heparin 類抗凝血劑（Argatroban、Fondaparinux）。絕對不可輸注血小板（反而增加血栓）。",
+    "tags": ["Heparin", "HIT", "血小板減少", "血栓", "合併症"],
+    "_expected_nodes": ["nursing_pharm:P014"]
+  },
+  {
+    "question_id": "q0306",
+    "stem": "腎功能不全病人（eGFR 25 mL/min）在門診被診斷為第二型糖尿病合併高血壓，醫師考慮給予口服降血糖藥，護理師應提醒醫師此時應避免使用：",
+    "options": {
+      "A": "DPP-4 抑制劑（Sitagliptin，需減量）",
+      "B": "Metformin（因腎功能不全 eGFR <45 mL/min 禁用，乳酸性酸中毒風險）",
+      "C": "SGLT-2 抑制劑（Empagliflozin，需調整劑量）",
+      "D": "Insulin（腎功能不全者優先推薦）"
+    },
+    "answer": "B",
+    "explanation": "此題跨越藥理學與腎衰竭護理。Metformin 在 eGFR <45 mL/min 時禁用（eGFR <30 時絕對禁用），因腎臟排泄受損導致 Metformin 蓄積，乳酸產生增加，引發致命的乳酸性酸中毒。eGFR 25 mL/min 已符合禁用條件。護理師應告知醫師並建議替代藥物。",
+    "tags": ["Metformin", "腎功能不全", "乳酸性酸中毒", "eGFR"],
+    "_expected_nodes": ["clinical_ms:M011", "clinical_ms:M012"]
+  },
+  {
+    "question_id": "q0307",
+    "stem": "護理師在教導新進護理師給藥安全時，強調「高警訊藥物（High-alert Medications）」須雙人核對（Double-check），下列哪一組藥物最符合高警訊藥物的定義？",
+    "options": {
+      "A": "Ibuprofen（Advil）、Acetaminophen（Tylenol）、Vitamin C",
+      "B": "10% 氯化鉀（KCl）、Insulin、Warfarin",
+      "C": "Antacid（制酸劑）、Probiotic（益生菌）、Laxative（瀉藥）",
+      "D": "普通感冒藥、多種維生素、眼藥水"
+    },
+    "answer": "B",
+    "explanation": "高警訊藥物（High-alert Medications）是指一旦使用錯誤可能造成嚴重傷害甚至死亡的藥物。常見高警訊藥物包括：10% 氯化鉀（KCl）、胰島素（Insulin）、Heparin、Warfarin、高濃度電解質溶液、化療藥物等。這類藥物在給藥前須進行雙人核對，護理師需特別謹慎。",
+    "tags": ["高警訊藥物", "給藥安全", "雙人核對", "三讀五對"],
+    "_expected_nodes": ["fundamental_ns:F006", "nursing_pharm:P013"]
+  },
+  {
+    "question_id": "q0308",
+    "stem": "護理師正在照護一位同時使用 Digoxin（心臟衰竭）與 Warfarin（心房顫動預防栓塞）的病人，此病人因肺炎開始服用 Clarithromycin（大環內酯類抗生素）。護理師應特別監測哪些指標？（選擇最完整的答案）",
+    "options": {
+      "A": "僅需監測體溫，確認感染控制",
+      "B": "僅需監測 Digoxin 血中濃度",
+      "C": "需監測 INR（Clarithromycin 抑制 CYP3A4，增強 Warfarin 效果）、Digoxin 濃度（Clarithromycin 增加 Digoxin 吸收）及毒性症狀",
+      "D": "僅需監測 QT 間期，Clarithromycin 不影響 Warfarin 或 Digoxin"
+    },
+    "answer": "C",
+    "explanation": "此題跨越抗生素（大環內酯類）、Warfarin 與 Digoxin 三個藥理主題。Clarithromycin 是強效 CYP3A4 和 P-glycoprotein（P-gp）抑制劑：①與 Warfarin 合用：抑制 CYP2C9/3A4，減少 Warfarin 代謝，INR 升高，出血風險增加；②與 Digoxin 合用：抑制 P-gp，增加 Digoxin 腸道吸收，血中濃度升高，毒性風險增加。護理師需密切監測 INR（出血跡象）、Digoxin 濃度及毒性症狀（噁心、黃綠視、心律不整）。",
+    "tags": ["藥物交互作用", "Clarithromycin", "Warfarin", "Digoxin", "CYP3A4"],
+    "_expected_nodes": ["nursing_pharm:P007", "nursing_pharm:P016", "clinical_ms:M005"]
+  },
+  {
+    "question_id": "q0401",
+    "stem": "產後一週的新手媽媽因情緒低落、哭泣不止、無法入睡前來就診，懷疑是產後憂鬱症。護理師在評估此病人時，最重要的評估應包含：",
+    "options": {
+      "A": "評估手術傷口癒合情況",
+      "B": "評估自傷或傷害嬰兒的意念及社會支持系統",
+      "C": "評估母乳分泌量是否足夠",
+      "D": "評估血壓是否因懷孕而仍然偏高"
+    },
+    "answer": "B",
+    "explanation": "產後憂鬱症（Postpartum Depression）屬精神科/婦產科範疇，並未涵蓋於本書的護理藥理學、內外科護理學或基本護理學教材中。本題屬「負向題」（Tricky negative），測試考生是否能識別此為超出教材範疇的主題。此題無對應節點。",
+    "tags": ["產後憂鬱", "精神護理", "婦產科"],
+    "_expected_nodes": []
+  },
+  {
+    "question_id": "q0402",
+    "stem": "一位住院病人被診斷為急性躁狂發作（Acute Manic Episode），醫師開立 Lithium Carbonate 治療。護理師需監測 Lithium 的有效治療濃度，下列何者正確？",
+    "options": {
+      "A": "Lithium 血中濃度 0.6～1.2 mEq/L（急性期）",
+      "B": "Lithium 血中濃度 5～10 ng/mL",
+      "C": "不需監測血中濃度，依症狀調整劑量即可",
+      "D": "Lithium 為外用製劑，無需監測血中濃度"
+    },
+    "answer": "A",
+    "explanation": "Lithium 用於雙極性情感疾患（Bipolar disorder）的急性躁狂與維持治療，屬精神科護理學範疇，並未涵蓋於本書的護理藥理學、內外科護理學或基本護理學。本題屬「負向題」，測試考生是否能識別此主題不在本教材中，不應有對應的樹節點。",
+    "tags": ["精神科", "Lithium", "雙極性情感疾患"],
+    "_expected_nodes": []
+  },
+  {
+    "question_id": "q0403",
+    "stem": "懷孕 32 週的孕婦發現血壓達 155/100 mmHg，尿蛋白 3+，出現頭痛與視力模糊，診斷為嚴重子癲前症（Severe Preeclampsia）。護理師應準備給予哪種藥物以預防子癲癇（Eclampsia）發作？",
+    "options": {
+      "A": "Furosemide 靜脈注射降壓",
+      "B": "硫酸鎂（Magnesium Sulfate）靜脈點滴預防抽搐",
+      "C": "Digoxin 靜脈注射控制心率",
+      "D": "Heparin 皮下注射預防血栓"
+    },
+    "answer": "B",
+    "explanation": "子癲前症與硫酸鎂的使用屬婦產科護理學/高危險妊娠範疇，並未在本書的護理藥理學（抗生素、止痛藥、抗凝血劑）、內外科護理學或基本護理學中討論。本題屬「負向題」，測試考生不應將此問題與本書節點連結。",
+    "tags": ["婦產科", "子癲前症", "硫酸鎂"],
+    "_expected_nodes": []
+  },
+  {
+    "question_id": "q0404",
+    "stem": "護理師照護一位思覺失調症（Schizophrenia）病人，長期服用 Haloperidol（第一代抗精神病藥），主訴手抖、走路不穩，並出現肌肉僵硬。這是哪種藥物副作用？",
+    "options": {
+      "A": "遲發性運動障礙（Tardive dyskinesia）",
+      "B": "錐體外徑症候群（Extrapyramidal symptoms, EPS）—急性張力異常與帕金森氏症狀",
+      "C": "抗膽鹼副作用（口乾、便秘）",
+      "D": "代謝症候群（體重增加、高血糖）"
+    },
+    "answer": "B",
+    "explanation": "思覺失調症與抗精神病藥物（Haloperidol）屬精神科護理學範疇，並非本書護理藥理學（抗生素、止痛藥、抗凝血劑）所涵蓋的內容。本題屬「負向題」，不應有對應的教材節點。",
+    "tags": ["精神科", "抗精神病藥", "EPS", "思覺失調症"],
+    "_expected_nodes": []
+  },
+  {
+    "question_id": "q0405",
+    "stem": "新生兒因黃疸需接受光療（Phototherapy），護理師在照護中應特別注意：",
+    "options": {
+      "A": "避免嬰兒體溫過低，需包裹保暖衣物進行光療",
+      "B": "保護眼睛（遮眼罩）、補充水分、監測皮膚溫度與黃疸指數",
+      "C": "光療時需暫停所有口服餵食",
+      "D": "使用最高強度光療且不需間歇性中斷"
+    },
+    "answer": "B",
+    "explanation": "新生兒黃疸光療屬兒科護理學（Pediatric Nursing）或婦產科/新生兒護理範疇，並未在本書的護理藥理學、內外科護理學或基本護理學中討論。本題屬「負向題」，不應有對應教材節點。",
+    "tags": ["兒科", "新生兒黃疸", "光療"],
+    "_expected_nodes": []
+  },
+  {
+    "question_id": "q0406",
+    "stem": "護理師照護骨質疏鬆症病人，醫師開立 Alendronate（雙磷酸鹽類）治療。護理師衛教此藥的服用方法，下列何者正確？",
+    "options": {
+      "A": "每日就寢前服用，服後立即躺下以促進吸收",
+      "B": "每週一次，晨起空腹以一整杯清水（至少 200 mL）服下，服藥後 30 分鐘內保持坐姿或站姿，不得躺下",
+      "C": "與牛奶同服以增加吸收，降低胃部不適",
+      "D": "每日三次，飯後服用以減少胃腸刺激"
+    },
+    "answer": "B",
+    "explanation": "骨質疏鬆症藥物（雙磷酸鹽類 Bisphosphonates）屬骨骼/代謝疾病護理，並未在本書的護理藥理學（專注於抗生素、止痛藥、抗凝血劑）、內外科護理學（心臟、糖尿病、腎臟）或基本護理學中涵蓋。本題屬「負向題」，不應有對應節點。",
+    "tags": ["骨質疏鬆", "雙磷酸鹽", "Alendronate"],
+    "_expected_nodes": []
+  },
+  {
+    "question_id": "q0501",
+    "stem": "病人因反覆尿路感染（UTI）服用 Trimethoprim/Sulfamethoxazole（TMP/SMX），主訴服藥後皮膚對陽光特別敏感，出現曬傷樣紅疹。護理師應衛教病人：",
+    "options": {
+      "A": "停用此藥，皮膚對光敏感是嚴重過敏，必須就醫換藥",
+      "B": "此為光敏感性（Photosensitivity）副作用，外出時應防曬（防曬乳、戴帽遮蓋），繼續服藥並告知醫師",
+      "C": "多喝水即可，皮膚反應是正常現象",
+      "D": "同時服用抗過敏藥（Antihistamine）可完全消除此副作用"
+    },
+    "answer": "B",
+    "explanation": "此題使用「尿路感染」與「抗生素皮膚光敏感副作用」的關鍵詞，可能讓考生聯想到抗生素節點（P003～P007）。然而本書涵蓋的抗生素類型為青黴素、頭孢菌素、大環內酯類，並不包含 Sulfonamides（磺胺類）。部分交疊（「抗生素」關鍵詞），但實際上不應連結到本書現有的抗生素節點。本題屬「部分重疊」題。",
+    "tags": ["尿路感染", "抗生素", "磺胺類", "光敏感"],
+    "_expected_nodes": []
+  },
+  {
+    "question_id": "q0502",
+    "stem": "護理師正在評估一位術後出現傷口紅腫、滲出黃白色膿性分泌物的病人。護理師應首先懷疑傷口出現：",
+    "options": {
+      "A": "正常的肉芽組織生長（黃色肉芽）",
+      "B": "傷口感染，需通報醫師，取分泌物培養，並考慮傷口清創與換藥",
+      "C": "傷口脫水，需增加敷料保濕",
+      "D": "過度換藥導致的機械性刺激"
+    },
+    "answer": "B",
+    "explanation": "此題包含「傷口護理」與「抗生素」的關鍵詞，可能讓考生聯想到傷口護理節點（F008/F009）或抗生素節點（P002）。然而題目核心是傷口感染的識別，主要對應傷口護理節點，而非抗生素藥理學節點。考生需辨別主要連結節點（F009 傷口評估），抗生素使用僅為後續處置，且本書抗生素章節重點在給藥護理而非感染識別。",
+    "tags": ["傷口感染", "傷口評估", "換藥"],
+    "_expected_nodes": ["fundamental_ns:F009"]
+  },
+  {
+    "question_id": "q0503",
+    "stem": "護理師為病人測量血壓時，發現若選用小號袖帶為手臂粗壯的病人量血壓，所測得的數值會：",
+    "options": {
+      "A": "偏低，因為袖帶太小無法完全阻斷血流",
+      "B": "偏高，因為需要更大壓力才能阻斷血流",
+      "C": "不受影響，袖帶大小不影響測量結果",
+      "D": "偏低，因為充氣壓力不足導致低估"
+    },
+    "answer": "B",
+    "explanation": "此題涉及生命徵象測量（F004）的血壓袖帶選擇，同時也提到「高血壓」的概念。然而本題的核心考點是血壓測量技術（袖帶寬度不足→讀數偏高），對應基本護理學生命徵象測量節點（F004），而非高血壓藥物治療（內外科護理）或 ACEI/利尿劑藥理節點。部分考生可能誤連到 P005（ACEI）或高血壓護理，但正確的主要節點只有 F004。",
+    "tags": ["血壓測量", "袖帶選擇", "測量誤差", "生命徵象"],
+    "_expected_nodes": ["fundamental_ns:F004"]
+  },
+  {
+    "question_id": "q0504",
+    "stem": "一位長期使用阿斯匹靈（Aspirin 100 mg/天）預防心血管疾病的病人，近期因牙科拔牙手術前詢問是否需要停藥。護理師應告知：",
+    "options": {
+      "A": "無需停藥，Aspirin 劑量低，不影響手術出血",
+      "B": "需與主治醫師及牙科醫師共同評估；一般建議術前 5～7 天停用，因 Aspirin 不可逆抑制血小板",
+      "C": "停藥當天即可進行手術，Aspirin 半衰期短",
+      "D": "改為 NSAIDs（如 Ibuprofen）替代，可逆性抑制血小板，術前一天停用即可"
+    },
+    "answer": "B",
+    "explanation": "此題包含「Aspirin」「抗血小板」「手術前停藥」等關鍵詞，與 P009（NSAIDs 節點，提及 Aspirin COX-1 抑制）和 P010（Aspirin 抗血小板作用節點）有直接連結。然而部分考生可能也想到 Heparin/Warfarin 抗凝節點（P014、P016），但題目重點為 Aspirin 抗血小板，不屬於抗凝血劑範疇。正確連結為 P010（Aspirin 抗血小板），P009 次要。",
+    "tags": ["Aspirin", "抗血小板", "手術停藥", "NSAIDs"],
+    "_expected_nodes": ["nursing_pharm:P010"]
+  },
+  {
+    "question_id": "q0505",
+    "stem": "護理師為術後病人執行傷口換藥，換藥過程中應使用何種技術，以降低院內感染風險？",
+    "options": {
+      "A": "一般清潔技術（Clean technique），使用乾淨手套即可，不需使用無菌器材",
+      "B": "依傷口性質與病人免疫狀態決定：一般手術傷口採清潔技術，但免疫低下或體腔暴露者應採無菌技術（Sterile technique）",
+      "C": "所有傷口換藥一律採最高等級無菌技術",
+      "D": "傷口換藥僅需徒手操作，使用手套反而增加感染風險"
+    },
+    "answer": "B",
+    "explanation": "此題涉及傷口換藥技術（F009）與無菌技術（F010/F011）兩個節點。傷口護理章節（F009）已說明清潔技術 vs 無菌技術的選擇原則；無菌技術章節（F010）進一步闡述無菌操作的核心原則。考生可能誤連到「抗生素（預防感染）」節點，但題目核心是護理操作技術而非藥物。應連結 F009 + F010。",
+    "tags": ["傷口換藥", "無菌技術", "清潔技術", "院內感染"],
+    "_expected_nodes": ["fundamental_ns:F009", "fundamental_ns:F010"]
+  },
+  {
+    "question_id": "q0506",
+    "stem": "護理師在為病人執行靜脈注射 Furosemide（速尿）時，偶然發現護理記錄上上一班護理師已在一小時前給藥一次。護理師最應採取的行動為何？",
+    "options": {
+      "A": "繼續給藥，因 Furosemide 利尿效果快速，再給一次不會有問題",
+      "B": "暫停給藥，核對藥單（三讀五對原則），確認是否為重複給藥，必要時通報醫師及當班護理師長",
+      "C": "減半劑量後再給，以補償上一班已給的劑量",
+      "D": "記錄在護理記錄上，改由下一班護理師決定"
+    },
+    "answer": "B",
+    "explanation": "此題包含「Furosemide 給藥」和「給藥安全核對」兩個主題，考生可能聯想到 F006（三讀五對）、F007（給藥途徑）或 M004（心臟衰竭 Furosemide 使用）。然而題目核心考點是給藥安全的核對原則（三讀五對），重複給藥屬給藥錯誤的識別，應主要連結 F006（三讀五對）。M004 為次要背景知識（Furosemide 用於心臟衰竭），不應作為主要連結節點，以測試演算法的精確性。",
+    "tags": ["給藥安全", "三讀五對", "重複給藥", "Furosemide"],
+    "_expected_nodes": ["fundamental_ns:F006"]
+  },
+  {
+    "question_id": "q0507",
+    "stem": "護理師在評估慢性腎臟病（CKD Stage 4, eGFR 22 mL/min）合併高血壓病人的藥物清單，發現病人長期服用 NSAIDs（Ibuprofen）止痛。護理師應如何回應？",
+    "options": {
+      "A": "NSAIDs 對腎臟是安全的，不需調整",
+      "B": "建議醫師停用 NSAIDs（因抑制前列腺素維持腎血流，加速腎功能惡化），可改用 Acetaminophen 止痛",
+      "C": "減少 NSAIDs 劑量，每日一次即可",
+      "D": "NSAIDs 腎毒性只影響急性腎損傷，慢性腎臟病不受影響"
+    },
+    "answer": "B",
+    "explanation": "此題同時涉及 NSAIDs 腎毒性（P009，NSAIDs 節點）與慢性腎臟病護理（M012）。P009 節點已提及「腎功能不全禁用 NSAIDs」，M012 節點討論 CKD 的藥物調整。此題「部分重疊」在於：考生可能連結 NSAIDs 消化道副作用節點或利尿劑節點（透析飲食），但主要連結應為 P009（NSAIDs 腎毒性）與 M012（CKD 藥物管理）。測試演算法是否能同時連結藥理與臨床護理兩個節點，且不誤連無關節點。",
+    "tags": ["NSAIDs", "腎毒性", "慢性腎臟病", "藥物調整"],
+    "_expected_nodes": ["nursing_pharm:P009", "clinical_ms:M012"]
+  },
+  {
+    "question_id": "q0508",
+    "stem": "護理師使用「外科洗手（surgical hand scrub）」後，準備為病人執行更換腹膜透析導管出口部位敷料。在穿戴無菌手套時，護理師的第一隻手套不慎碰觸到操作台的普通紙張。護理師應採取何種措施？",
+    "options": {
+      "A": "繼續操作，只有碰觸到有菌的物品才需更換",
+      "B": "立即視該手套已污染，重新取用無菌手套",
+      "C": "用酒精棉片擦拭手套外側後繼續操作",
+      "D": "只要另一隻手套仍無菌，不影響操作"
+    },
+    "answer": "B",
+    "explanation": "此題同時涉及無菌技術（F010/F011）和腹膜透析護理（M015，換液無菌操作）。無菌技術原則（F010/F011）清楚規定「疑有污染即視為污染」，碰觸非無菌物品即需更換手套。M015 也強調 CAPD 換液必須採嚴格無菌技術以防腹膜炎。部分考生可能誤連到「抗生素（腹膜炎治療）」節點，但題目核心為無菌技術操作，而非抗生素給藥。",
+    "tags": ["無菌技術", "腹膜透析", "無菌手套", "污染"],
+    "_expected_nodes": ["fundamental_ns:F010", "fundamental_ns:F011", "clinical_ms:M015"]
+  }
+]
