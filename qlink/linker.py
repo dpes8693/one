@@ -137,32 +137,95 @@ class NodeIndex:
                 score *= cfg.leaf_boost
             candidates[node.node_id] = _Candidate(node=node, own=score, details=details)
 
+        self._boost_cross_subject(candidates, set(query))
         self._propagate(candidates)
         return self._select(question, candidates)
 
     # ------------------------------------------------------------------
     def _propagate(self, candidates: dict[str, _Candidate]) -> None:
-        """自底向上：父節點分數 = max(自身, 最強子節點 * parent_decay)。"""
+        """自底向上：父節點分數 = 自身 + 最強子節點 * parent_decay * (1 - own/max_own)。
+
+        與舊版 max() 做法相比，此版本是「加法」傳播：父節點有高自身分數時只獲得
+        少量加成（不需要），低自身分數的父節點則可從子節點獲得更多提升。
+        """
+        # 先求語料庫中的最高自身分數，作為正規化基準。
+        max_own = max((c.own for c in candidates.values()), default=1.0)
+        if max_own <= 0:
+            max_own = 1.0
 
         def resolve(node_id: str) -> float:
             cand = candidates[node_id]
             if cand.final > 0:
                 return cand.final
-            best = cand.own
+
+            # 找最強子節點的 final 分數。
+            best_child_score = 0.0
             best_child: str | None = None
             for child in cand.node.children:
                 if child.node_id not in candidates:
                     continue
-                propagated = resolve(child.node_id) * self.config.parent_decay
-                if propagated > best:
-                    best = propagated
+                child_final = resolve(child.node_id)
+                if child_final > best_child_score:
+                    best_child_score = child_final
                     best_child = child.node_id
-            cand.final = best
-            cand.best_child = best_child
-            return best
+
+            if best_child is not None:
+                # 加法傳播：自身分數越高，從子節點獲得的加成越少。
+                boost = (
+                    best_child_score
+                    * self.config.parent_decay
+                    * (1.0 - cand.own / max_own)
+                )
+                cand.final = cand.own + boost
+                cand.best_child = best_child
+            else:
+                cand.final = cand.own
+                cand.best_child = None
+
+            return cand.final
 
         for node_id in candidates:
             resolve(node_id)
+
+    # ------------------------------------------------------------------
+    def _boost_cross_subject(
+        self,
+        candidates: dict[str, _Candidate],
+        query_tokens: set[str],
+    ) -> None:
+        """跨學科加分：若高分節點 N 與另一科的節點 M 共享查詢詞，給 M 小幅加分。
+
+        條件：
+        - N.own > 0.6，M.own > 0.3
+        - N 與 M 的 doc_id 不同
+        - M 的文字中至少有 2 個查詢 token 與 N 的文字重疊
+        加分：M.own += 0.1（但 M.final 需在 _propagate 之後重算，
+        此方法在 _propagate 之前呼叫，直接調整 own）。
+        """
+        # 先建立 doc_id 映射與預先 tokenize 節點文字。
+        node_tokens: dict[str, set[str]] = {}
+        for cand in candidates.values():
+            node_tokens[cand.node.node_id] = set(
+                tokenize(cand.node.search_text())
+            )
+
+        # 找出高分錨節點（own > 0.6）。
+        anchors = [c for c in candidates.values() if c.own > 0.6]
+
+        for anchor in anchors:
+            anchor_doc = anchor.node.doc_id
+            # 找錨節點與查詢共有的詞。
+            anchor_query_overlap = node_tokens[anchor.node.node_id] & query_tokens
+
+            for cand in candidates.values():
+                if cand.node.doc_id == anchor_doc:
+                    continue  # 同科跳過
+                if cand.own <= 0.3:
+                    continue  # 自身分數太低不值得加成
+                # 檢查 cand 文字與錨節點查詢重疊詞的交集。
+                shared = node_tokens[cand.node.node_id] & anchor_query_overlap
+                if len(shared) >= 2:
+                    cand.own = min(1.0, cand.own + 0.1)
 
     # ------------------------------------------------------------------
     def _select(
@@ -173,18 +236,36 @@ class NodeIndex:
         if not ranked or ranked[0].final < cfg.min_score:
             return []
         best_score = ranked[0].final
-        floor = max(cfg.min_score, best_score * cfg.relative_ratio)
+
+        # 信心差距檢查：若最高分較低且與第二名差距不大，代表題目模糊匹配，
+        # 提高本題的最低分門檻以過濾假陽性。
+        effective_min = cfg.min_score
+        if len(ranked) >= 2:
+            second_score = ranked[1].final
+            if best_score < 0.55 and (best_score - second_score) < 0.15:
+                effective_min = 0.6
+
+        if best_score < effective_min:
+            return []
+
+        floor = max(effective_min, best_score * cfg.relative_ratio)
 
         links: list[Link] = []
-        # covered 收集「已選中」與「因子節點已被涵蓋而跳過」的節點，
-        # 讓傳播鏈上的祖先（父、祖父…）都被一路跳過，只留最精準層級。
+        # covered 收集「已選中」的節點。
+        # 與舊版不同：現在只有在父節點的自身分數 < 最終分數的 30%（即傳播貢獻
+        # 超過 70%）時，才跳過父節點，讓有足夠自身分數的父節點也能入選。
         covered: set[str] = set()
         for cand in ranked:
             if len(links) >= cfg.top_k:
                 break
             if cand.final < floor:
                 break
-            if cand.best_child is not None and cand.best_child in covered:
+            # 只有當分數幾乎完全來自子節點傳播（own < 30% of final）時才跳過。
+            if (
+                cand.best_child is not None
+                and cand.best_child in covered
+                and cand.own < cand.final * 0.3
+            ):
                 covered.add(cand.node.node_id)
                 continue
             covered.add(cand.node.node_id)
