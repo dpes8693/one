@@ -30,22 +30,22 @@ from .textutil import tokenize
 @dataclass
 class LinkerConfig:
     # 混合分數權重（有 embedding provider 時三者會重新正規化）。
-    w_bm25: float = 0.55
-    w_cosine: float = 0.45
+    w_bm25: float = 0.45
+    w_cosine: float = 0.55
     w_embed: float = 0.6
     # BM25 覆蓋率的放大係數：題目通常只會命中節點的部分詞彙，
     # 覆蓋率天花板遠低於 1，乘上此係數後相關題目約落在 0.6~1.0。
-    coverage_scale: float = 3.0
+    coverage_scale: float = 1.75
     # 題目標籤命中節點標題路徑時的加分。
-    tag_bonus: float = 0.08
+    tag_bonus: float = 0.18
     # 每題最多連結幾個節點。
     top_k: int = 5
     # 絕對分數門檻：低於此分數視為無關，不建立連結。
     min_score: float = 0.45
     # 相對門檻：只保留分數 >= 最高分 * relative_ratio 的節點。
-    relative_ratio: float = 0.45
+    relative_ratio: float = 0.25
     # 子節點分數往父節點傳播的衰減係數。
-    parent_decay: float = 0.8
+    parent_decay: float = 0.65
     # 沒有任何子孫的「葉節點」通常最精準，給予小幅加權。
     leaf_boost: float = 1.05
     bm25_k1: float = 1.5
