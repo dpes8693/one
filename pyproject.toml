@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qlink"
+version = "0.1.0"
+description = "PageIndex 教材樹節點與國考題庫的多對多關聯引擎"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
+
+[project.scripts]
+qlink = "qlink.cli:main"
+
+[tool.setuptools]
+packages = ["qlink"]

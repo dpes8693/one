@@ -1,0 +1,106 @@
+[
+  {
+    "question_id": "q0001",
+    "stem": "有關 Thiazide 類利尿劑用於治療高血壓之敘述，下列何者錯誤？",
+    "options": {
+      "A": "為高血壓之第一線用藥",
+      "B": "作用於遠曲小管抑制鈉氯共同運輸蛋白",
+      "C": "常見副作用為高血鉀",
+      "D": "可能造成高尿酸血症"
+    },
+    "answer": "C",
+    "explanation": "Thiazide 類利尿劑的常見副作用為低血鉀，而非高血鉀。",
+    "tags": ["利尿劑", "高血壓"]
+  },
+  {
+    "question_id": "q0002",
+    "stem": "氣喘病人使用下列何種降血壓藥物最可能誘發支氣管收縮？",
+    "options": {
+      "A": "Captopril",
+      "B": "Propranolol",
+      "C": "Hydrochlorothiazide",
+      "D": "Amlodipine"
+    },
+    "answer": "B",
+    "explanation": "Propranolol 為非選擇性 β 阻斷劑，會阻斷支氣管的 β2 受體導致支氣管收縮，氣喘病人禁用。",
+    "tags": ["β-blockers"]
+  },
+  {
+    "question_id": "q0003",
+    "stem": "服用 ACEI 類降血壓藥物之病人，最常見之副作用為下列何者？",
+    "options": {
+      "A": "乾咳",
+      "B": "腹瀉",
+      "C": "低血鉀",
+      "D": "心搏過速"
+    },
+    "answer": "A",
+    "explanation": "ACEI 抑制 bradykinin 分解，常見副作用為乾咳，並可能造成高血鉀。",
+    "tags": ["ACEI"]
+  },
+  {
+    "question_id": "q0004",
+    "stem": "病人服用 Digoxin 出現噁心、視覺呈黃綠色及心律不整，下列何種電解質異常最可能加重其毒性？",
+    "options": {
+      "A": "高血鈉",
+      "B": "低血鉀",
+      "C": "高血鈣",
+      "D": "低血糖"
+    },
+    "answer": "B",
+    "explanation": "低血鉀會增加 Digoxin 與 Na+/K+-ATPase 的結合，加重毛地黃中毒。",
+    "tags": ["Digoxin", "心衰竭"]
+  },
+  {
+    "question_id": "q0005",
+    "stem": "長期服用 Amiodarone 之病人，應定期監測下列何項功能？",
+    "options": {
+      "A": "甲狀腺功能",
+      "B": "胰臟功能",
+      "C": "骨髓功能",
+      "D": "膀胱功能"
+    },
+    "answer": "A",
+    "explanation": "Amiodarone 含碘，長期使用可能造成甲狀腺功能異常，亦須注意肺纖維化。",
+    "tags": ["抗心律不整"]
+  },
+  {
+    "question_id": "q0006",
+    "stem": "有機磷農藥中毒時，下列何者為首選之解毒劑？",
+    "options": {
+      "A": "Atropine",
+      "B": "Naloxone",
+      "C": "Flumazenil",
+      "D": "Vitamin K"
+    },
+    "answer": "A",
+    "explanation": "Atropine 為抗膽鹼藥物，可拮抗有機磷中毒造成的蕈毒鹼症狀。",
+    "tags": ["抗膽鹼"]
+  },
+  {
+    "question_id": "q0007",
+    "stem": "下列關於懷孕期間用藥之敘述，何者正確？",
+    "options": {
+      "A": "懷孕婦女可安全使用 Enalapril 控制血壓",
+      "B": "ACEI 類藥物於懷孕期間禁用",
+      "C": "β 阻斷劑為懷孕高血壓之絕對禁忌",
+      "D": "利尿劑為妊娠高血壓首選"
+    },
+    "answer": "B",
+    "explanation": "ACEI（如 Captopril、Enalapril）具胎兒毒性，懷孕婦女禁用。",
+    "tags": ["ACEI", "高血壓"]
+  },
+  {
+    "question_id": "q0008",
+    "stem": "細菌性肺炎最常見之致病菌為下列何者？",
+    "options": {
+      "A": "肺炎鏈球菌",
+      "B": "大腸桿菌",
+      "C": "綠膿桿菌",
+      "D": "金黃色葡萄球菌"
+    },
+    "answer": "A",
+    "explanation": "社區性肺炎最常見致病菌為肺炎鏈球菌。本題與循環系統藥物教材無關，預期不會建立關聯。",
+    "tags": ["感染"]
+  }
+]

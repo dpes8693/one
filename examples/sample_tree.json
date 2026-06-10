@@ -1,0 +1,83 @@
+{
+  "doc_name": "pharm101.pdf",
+  "structure": [
+    {
+      "title": "第三章 循環系統藥物",
+      "node_id": "0001",
+      "start_index": 41,
+      "end_index": 88,
+      "summary": "介紹作用於心血管系統的藥物，包括抗高血壓藥、心衰竭治療藥物與抗心律不整藥物的機轉、適應症與副作用。",
+      "nodes": [
+        {
+          "title": "3.1 抗高血壓藥物",
+          "node_id": "0002",
+          "start_index": 42,
+          "end_index": 60,
+          "summary": "高血壓的藥物治療原則與各類降壓藥。",
+          "nodes": [
+            {
+              "title": "3.1.1 利尿劑",
+              "node_id": "0003",
+              "start_index": 43,
+              "end_index": 47,
+              "summary": "Thiazide 類利尿劑為高血壓第一線用藥，透過抑制遠曲小管鈉氯共同運輸蛋白增加鈉與水分排出；常見副作用包括低血鉀、高尿酸與高血糖。"
+            },
+            {
+              "title": "3.1.2 乙型交感神經阻斷劑（β-blockers）",
+              "node_id": "0004",
+              "start_index": 48,
+              "end_index": 53,
+              "summary": "Propranolol、Atenolol 等 β 阻斷劑降低心輸出量與腎素分泌；氣喘病人禁用非選擇性 β 阻斷劑，因可能誘發支氣管收縮。"
+            },
+            {
+              "title": "3.1.3 血管收縮素轉化酶抑制劑（ACEI）",
+              "node_id": "0005",
+              "start_index": 54,
+              "end_index": 60,
+              "summary": "Captopril、Enalapril 等 ACEI 抑制 Angiotensin II 生成，常見副作用為乾咳與高血鉀，懷孕婦女禁用。"
+            }
+          ]
+        },
+        {
+          "title": "3.2 心衰竭治療藥物",
+          "node_id": "0006",
+          "start_index": 61,
+          "end_index": 74,
+          "summary": "心衰竭的階段性治療與正性肌力藥物。",
+          "nodes": [
+            {
+              "title": "3.2.1 毛地黃（Digoxin）",
+              "node_id": "0007",
+              "start_index": 62,
+              "end_index": 68,
+              "summary": "Digoxin 抑制 Na+/K+-ATPase 增強心肌收縮力；治療指數窄，中毒症狀包括噁心、視覺黃綠視與心律不整，低血鉀會加重毒性。"
+            }
+          ]
+        },
+        {
+          "title": "3.3 抗心律不整藥物",
+          "node_id": "0008",
+          "start_index": 75,
+          "end_index": 88,
+          "summary": "Vaughan-Williams 分類：第一類鈉通道阻斷劑、第二類 β 阻斷劑、第三類鉀通道阻斷劑（Amiodarone）、第四類鈣通道阻斷劑。Amiodarone 長期使用須注意甲狀腺功能異常與肺纖維化。"
+        }
+      ]
+    },
+    {
+      "title": "第四章 自律神經系統藥物",
+      "node_id": "0009",
+      "start_index": 89,
+      "end_index": 120,
+      "summary": "介紹擬交感神經作用劑、抗膽鹼藥物等自律神經系統用藥。",
+      "nodes": [
+        {
+          "title": "4.1 擬副交感神經藥物與抗膽鹼藥物",
+          "node_id": "0010",
+          "start_index": 90,
+          "end_index": 104,
+          "summary": "Atropine 為抗膽鹼藥物，用於有機磷中毒解毒與心搏過緩；副作用包括口乾、視力模糊、尿滯留與心搏過速。"
+        }
+      ]
+    }
+  ]
+}
