@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>qlink 實驗報告：教材 × 考題自動關聯系統</title>
+<style>
+  :root {
+    --ink: #1f2937;
+    --soft: #6b7280;
+    --line: #e5e7eb;
+    --accent: #2563eb;
+    --accent-bg: #eff6ff;
+    --good: #16a34a;
+    --bad: #dc2626;
+    --warn: #d97706;
+    --card: #f9fafb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    color: var(--ink);
+    line-height: 1.8;
+    margin: 0;
+    background: #fff;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 1.9rem; border-bottom: 3px solid var(--accent); padding-bottom: 12px; }
+  h2 { font-size: 1.4rem; margin-top: 2.5em; color: var(--accent); }
+  h3 { font-size: 1.1rem; margin-top: 1.8em; }
+  .lede { font-size: 1.05rem; color: var(--soft); }
+  table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.95rem; }
+  th, td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
+  th { background: var(--card); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .good { color: var(--good); font-weight: 600; }
+  .bad { color: var(--bad); font-weight: 600; }
+  .warn { color: var(--warn); font-weight: 600; }
+  .term {
+    background: var(--card);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .term b.word { color: var(--accent); }
+  .term .en { color: var(--soft); font-size: 0.88rem; }
+  .analogy { color: var(--soft); font-size: 0.92rem; margin-top: 4px; }
+  .analogy::before { content: "💡 比喻："; }
+  code, pre {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    background: var(--card);
+    border-radius: 4px;
+  }
+  code { padding: 1px 6px; font-size: 0.9em; }
+  pre { padding: 14px 16px; overflow-x: auto; border: 1px solid var(--line); line-height: 1.5; }
+  .flow {
+    background: var(--accent-bg);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; font-size: 0.9rem; }
+  .bar-label { width: 170px; flex-shrink: 0; text-align: right; color: var(--soft); }
+  .bar-track { flex: 1; background: var(--line); border-radius: 6px; height: 22px; position: relative; }
+  .bar-fill { height: 100%; border-radius: 6px; background: var(--accent); display: flex; align-items: center; justify-content: flex-end; color: #fff; font-size: 0.8rem; padding-right: 8px; }
+  .note {
+    border: 1px dashed var(--warn);
+    background: #fffbeb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+  }
+  .toc { background: var(--card); border-radius: 10px; padding: 16px 24px; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc li { margin: 4px 0; }
+  details { margin: 10px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>qlink 實驗報告<br><small style="font-size:0.55em;color:var(--soft);">讓考題自動找到教材、教材自動找到考題的系統</small></h1>
+
+<p class="lede">
+這份報告解釋我們做了什麼實驗、結果如何、每個專有名詞是什麼意思（高中生也能看懂），
+以及下一步「rerank（重排序）」預計能再提升多少、要付出什麼代價。
+</p>
+
+<div class="toc">
+<b>目錄</b>
+<ol>
+  <li><a href="#what">這個系統在做什麼？</a></li>
+  <li><a href="#how">演算法怎麼運作？</a></li>
+  <li><a href="#exp">實驗過程與成績</a></li>
+  <li><a href="#glossary">名詞解釋（高中生版）</a></li>
+  <li><a href="#rerank">Rerank 升級規劃：能變多強？要花多少錢？</a></li>
+</ol>
+</div>
+
+<h2 id="what">1. 這個系統在做什麼？</h2>
+<p>
+準備國考的學生有兩個常見需求：
+</p>
+<ul>
+  <li>寫錯一題考古題 → 想知道「<b>這題對應課本哪一節？</b>」直接翻到那頁複習。</li>
+  <li>讀完課本某一節 → 想知道「<b>這一節歷年考過哪些題？</b>」馬上練習。</li>
+</ul>
+<p>
+qlink 就是自動建立這種「<b>考題 ⇄ 教材章節</b>」雙向連結的引擎。
+一道題可以連到多個章節、一個章節也可以連到多道題（這叫<b>多對多</b>關聯）。
+</p>
+<div class="flow">
+<b>整體流程</b><br>
+新的教材 PDF → 用 <b>PageIndex</b> 解析成樹狀目錄（章 → 節 → 小節，每個小節是一個「知識節點」）<br>
+↓<br>
+<b>關聯演算法</b>自動把題庫裡的每一題，和最相關的知識節點連起來<br>
+↓<br>
+存進資料庫，學生查題目能跳到教材（含頁碼），查教材能列出相關考題
+</div>
+<p>
+重點：<b>不需要人工標記</b>。新 PDF 進來，系統自動跟全部題庫建立關聯；新題目進來，自動跟全部教材建立關聯。
+</p>
+
+<h2 id="how">2. 演算法怎麼運作？</h2>
+<p>核心問題是：「這道題」和「這個章節」到底有多相關？我們用三層計算：</p>
+
+<h3>第一層：把文字變成可以比對的小單位（斷詞）</h3>
+<p>
+中文不像英文有空格，所以我們把句子切成「單字」和「相鄰兩字」：
+「高血壓」→ <code>高</code>、<code>血</code>、<code>壓</code>、<code>高血</code>、<code>血壓</code>。
+英文藥名（如 Digoxin）整個當一個單位。常見但沒有意義的字（的、了、是…）會被過濾掉。
+</p>
+
+<h3>第二層：兩種「相似度分數」混合</h3>
+<ul>
+  <li><b>BM25</b>：看題目的關鍵詞有沒有命中章節內容，命中越稀有的詞分數越高。</li>
+  <li><b>TF-IDF 餘弦相似度</b>：看題目和章節「整體用詞的方向」像不像。</li>
+</ul>
+<p>兩個分數加權平均成一個「混合分數」（0 到 1 之間）。</p>
+
+<h3>第三層：利用「樹狀結構」修正分數</h3>
+<ul>
+  <li><b>層級傳播</b>：小節「毛地黃中毒」分數很高時，它的上層章節「心衰竭治療」也該沾光加一點分。</li>
+  <li><b>挑最精準的層級</b>：但如果父章節的分數幾乎全是從子節點「借來的」，就只保留子節點，不重複連結。</li>
+  <li><b>門檻過濾</b>：分數太低就不建立連結——這讓「跟教材完全無關的題目」不會亂連。</li>
+</ul>
+
+<h2 id="exp">3. 實驗過程與成績</h2>
+<p>
+我們請 AI 生成了一套擬真測試資料：<b>3 科教材（護理藥理學、內外科護理學、基本護理學）共 43 個知識節點</b>、
+<b>40 道國考風格題目</b>，每題都先標好「正確答案應該連到哪些節點」（這叫 ground truth），
+其中 7 題故意出「教材完全沒教」的內容（精神科、產科…），測試系統會不會亂連。
+</p>
+<p>然後分兩輪、共派出 6 個 AI agent 並行優化，每一輪的改動都用同一套標準答案打分數：</p>
+
+<table>
+<tr><th>版本</th><th>Macro F1<br>（綜合分）</th><th>Top-1 命中率<br>（最高分節點就是正解）</th><th>誤連<br>(FP)</th><th>漏連<br>(FN)</th><th>無關題防禦<br>（不亂連）</th></tr>
+<tr><td>最初版本</td><td class="num">0.779</td><td class="num">93.9%</td><td class="num bad">15</td><td class="num">11</td><td class="num bad">71.4%</td></tr>
+<tr><td>第一輪優化後</td><td class="num">0.832</td><td class="num">97.0%</td><td class="num">5</td><td class="num bad">16</td><td class="num good">100%</td></tr>
+<tr><td><b>第二輪優化後（目前）</b></td><td class="num good"><b>0.840</b></td><td class="num good"><b>97.0%</b></td><td class="num good"><b>8</b></td><td class="num"><b>12</b></td><td class="num good"><b>100%</b></td></tr>
+</table>
+
+<div class="bar-row"><div class="bar-label">最初版本</div><div class="bar-track"><div class="bar-fill" style="width:77.9%">0.779</div></div></div>
+<div class="bar-row"><div class="bar-label">第一輪優化</div><div class="bar-track"><div class="bar-fill" style="width:83.2%">0.832</div></div></div>
+<div class="bar-row"><div class="bar-label">第二輪優化（目前）</div><div class="bar-track"><div class="bar-fill" style="width:84.0%;background:var(--good)">0.840</div></div></div>
+
+<h3>每一輪做了什麼？</h3>
+<details open>
+<summary>第一輪：修演算法的「結構性」問題</summary>
+<ul>
+  <li><b>分數正規化修正</b>：原本「跟教材無關的題目」也會拿到高分（因為分數是按每題的最大值縮放）。改成用「查詢覆蓋率」做絕對標準後，無關題分數貼近 0，可以用門檻擋掉 → 無關題防禦從 71.4% 變 100%。</li>
+  <li><b>層級傳播改良</b>：父章節自身分數越高，從子節點「借分」越少，避免章節標題膨脹。</li>
+  <li><b>醫護領域斷詞</b>：擴充停用字（護、師、診…）、加入醫學縮寫對照（NSAIDs → 非類固醇消炎）。</li>
+  <li><b>參數掃描</b>：程式自動嘗試約 10 萬種參數組合找最佳值。<span class="warn">把關發現：</span>掃描工具用的「快速估算」會高估分數，所有候選參數都改用完整流程重新驗證後才採用。</li>
+</ul>
+</details>
+<details open>
+<summary>第二輪：補「漏連」（recall）的弱點</summary>
+<ul>
+  <li><b>先逐題診斷</b>：把 16 個漏連逐一分析——有 4 個是「分數夠高但被去重邏輯誤殺」、有 5 個卡在門檻邊緣、剩下是詞彙完全對不上（需要語意理解）。</li>
+  <li><b>父節點去重修正</b>：原本只要子節點被選中，父節點一律跳過。改成「父節點自身內容也很相關時保留」，精掃門檻找到甜蜜區（0.73–0.77）。</li>
+  <li><b>跨科加分</b>：題目同時涉及兩科時（如 Digoxin 既在藥理學也在內外科），給第二科的節點按共享關鍵詞數量比例加分。</li>
+  <li><span class="warn">把關發現：</span>有些 agent 的改動單看自己的報告是進步，疊加後卻互相打架（Top-1 從 97% 掉到 91%）。最終逐項實測，只保留真正有淨效益的組合。</li>
+</ul>
+</details>
+
+<div class="note">
+<b>剩下的 12 個漏連是什麼？</b>
+幾乎都是「跨科第二關聯」——例如題目描述毛地黃中毒症狀（黃綠視、噁心），
+系統正確連到內外科的「Digoxin 中毒護理」，但藥理學的「毛地黃」章節因為<b>用詞完全不同</b>而連不到。
+這是純「比對字面」方法的天花板，需要下一節的 rerank 才能突破。
+</div>
+
+<h2 id="glossary">4. 名詞解釋（高中生版）</h2>
+
+<div class="term">
+<b class="word">知識節點</b> <span class="en">knowledge node</span><br>
+教材樹狀目錄裡的一個單位，例如「第三章 → 3.1 抗高血壓藥 → 3.1.1 利尿劑」中的每一層都是一個節點。
+<div class="analogy">課本的目錄展開成一棵樹，每個章、節、小節都是樹上的一顆果實。</div>
+</div>
+
+<div class="term">
+<b class="word">PageIndex</b><br>
+一個開源工具，能把 PDF 自動解析成上面說的樹狀目錄（JSON 格式），包含每節的標題、摘要、頁碼。
+<div class="analogy">把一本沒有目錄的書，自動整理出一份詳細目錄。</div>
+</div>
+
+<div class="term">
+<b class="word">斷詞（Tokenize）</b> <span class="en">tokenization</span><br>
+把句子切成電腦能比對的小單位。中文我們切成單字＋相鄰兩字（bigram）：「高血壓」→ 高、血、壓、高血、血壓。
+<div class="analogy">把一串珍珠項鍊拆成一顆顆珍珠（和相鄰兩顆一組），才能數兩條項鍊有幾顆一樣。</div>
+</div>
+
+<div class="term">
+<b class="word">BM25</b><br>
+搜尋引擎常用的計分公式。題目的詞命中章節越多次、且那個詞越「稀有」，分數越高。
+「的」到處都有所以不值錢；「毛地黃」很少見，命中就值很多分。
+<div class="analogy">尋寶遊戲：撿到石頭不算分，撿到鑽石算大分。</div>
+</div>
+
+<div class="term">
+<b class="word">TF-IDF 與餘弦相似度</b> <span class="en">cosine similarity</span><br>
+把一段文字變成「每個詞的重要性清單」（TF-IDF），再比較兩段文字的清單方向像不像（餘弦相似度，0 到 1）。
+<div class="analogy">兩個人的歌單：比較曲風比例像不像，而不是只看有沒有同一首歌。</div>
+</div>
+
+<div class="term">
+<b class="word">混合計分</b> <span class="en">hybrid scoring</span><br>
+BM25 和餘弦相似度各有強項（一個看關鍵詞命中、一個看整體風格），加權平均後比單用一種更準。
+<div class="analogy">面試同時看筆試和口試成績，比只看一項更公平。</div>
+</div>
+
+<div class="term">
+<b class="word">層級傳播</b> <span class="en">hierarchical propagation</span><br>
+子節點（小節）分數很高時，分一點給父節點（章），因為小節相關通常整章也有點相關。
+<div class="analogy">班上有人得奧運金牌，全班一起上台領獎——但獎金主要還是給選手本人。</div>
+</div>
+
+<div class="term">
+<b class="word">門檻（Threshold）</b><br>
+分數要超過一個最低標準才建立連結，避免「有點像但其實無關」的誤連。
+<div class="analogy">及格線：59 分就是不及格，寧缺勿濫。</div>
+</div>
+
+<div class="term">
+<b class="word">Ground Truth（標準答案）</b><br>
+人工（或這次由 AI）預先標好的正確答案：「這題應該連到哪些節點」。有了它才能幫演算法打分數。
+<div class="analogy">考卷的解答本。沒有解答本，就不知道學生考幾分。</div>
+</div>
+
+<div class="term">
+<b class="word">Precision（精準率）／ FP（誤連）</b><br>
+系統建立的連結中，有多少比例是對的。連錯的叫 False Positive（誤報）。
+<div class="analogy">漁夫撒網抓到 10 條魚，其中 8 條是目標魚 → 精準率 80%，另外 2 條雜魚就是 FP。</div>
+</div>
+
+<div class="term">
+<b class="word">Recall（召回率）／ FN（漏連）</b><br>
+所有「應該連」的連結中，系統抓到了多少。該連卻沒連到的叫 False Negative（漏報）。
+<div class="analogy">池塘裡有 12 條目標魚，漁夫抓到 8 條 → 召回率 67%，漏掉的 4 條就是 FN。</div>
+</div>
+
+<div class="term">
+<b class="word">F1 分數</b><br>
+精準率和召回率的調和平均，兩者都高 F1 才會高——防止「只求準不求全」或「亂槍打鳥」。
+Macro F1 是每題各算一個 F1 再平均。
+<div class="analogy">學期成績同時要求平時分和期末考，偏科就拉低總分。</div>
+</div>
+
+<div class="term">
+<b class="word">Top-1 命中率</b><br>
+系統給的「第一名」節點就是正確答案的比例。對學生最重要——點開的第一個推薦就要是對的。
+<div class="analogy">Google 搜尋第一條結果就是你要的網頁的機率。</div>
+</div>
+
+<div class="term">
+<b class="word">參數掃描</b> <span class="en">parameter sweep</span><br>
+演算法有很多可調的旋鈕（權重、門檻…），讓程式自動嘗試成千上萬種組合，找出成績最好的設定。
+<div class="analogy">調咖啡配方：自動試 1000 種「咖啡粉：水：奶」比例，找最好喝的那組。</div>
+</div>
+
+<div class="term">
+<b class="word">Embedding（向量嵌入）</b><br>
+用 AI 模型把一句話變成一串數字（一個高維空間中的點），<b>意思相近的句子會落在相近的位置</b>——即使用詞完全不同。
+「看東西有黃綠色光暈」和「毛地黃中毒視覺症狀」字面幾乎沒交集，但 embedding 空間中距離很近。
+<div class="analogy">把每句話變成地圖上的一個點，意思像的句子住在同一個社區。</div>
+</div>
+
+<div class="term">
+<b class="word">Rerank（重排序）</b><br>
+先用快速方法（BM25 等）選出前 10 名候選，再請更聰明（但更慢、更貴）的模型細看這 10 個，重新排出真正的名次。
+<div class="analogy">海選用初試快速刷掉大部分人，決賽才請大評審一個一個面談。</div>
+</div>
+
+<div class="term">
+<b class="word">LLM（大型語言模型）</b><br>
+像 Claude、GPT 這類能讀懂文意的 AI。能判斷「這題在考毛地黃中毒，這節在講毛地黃藥理，相關！」——這是字面比對做不到的。
+<div class="analogy">真人家教：不只看關鍵字，是真的讀懂題目在考什麼。</div>
+</div>
+
+<h2 id="rerank">5. Rerank 升級規劃：能變多強？要花多少代價？</h2>
+
+<p>
+目前純字面比對的成績是 <b>Macro F1 0.840 / Top-1 97%</b>，剩餘錯誤（12 漏連 + 8 誤連）
+多數需要「讀懂語意」才能解決。以下是三個升級方案的完整評估：
+</p>
+
+<table>
+<tr>
+  <th></th>
+  <th>方案 A<br>本地 Embedding</th>
+  <th>方案 B<br>LLM Rerank</th>
+  <th>方案 C（推薦）<br>A + B 混合</th>
+</tr>
+<tr>
+  <td><b>做法</b></td>
+  <td>用中文向量模型（如 BGE 系列）把節點與題目轉成向量，加入混合分數第三項（介面已寫好，注入即用）</td>
+  <td>每題取前 10 名候選節點，請 LLM 勾選真正相關的</td>
+  <td>Embedding 全量跑；只有「分數模糊」（約 0.35–0.6）或跨科候選的題目才送 LLM</td>
+</tr>
+<tr>
+  <td><b>預估成績<br>（Macro F1）</b></td>
+  <td class="num">0.840 → <b>0.87–0.90</b><br>漏連 12 → 約 6–8</td>
+  <td class="num">0.840 → <b>0.91–0.95</b><br>Top-1 接近 100%</td>
+  <td class="num"><b>0.91–0.94</b><br>兼顧成本與效果</td>
+</tr>
+<tr>
+  <td><b>要多裝什麼</b></td>
+  <td>pip 安裝 sentence-transformers + PyTorch：<span class="warn">磁碟約 2–3 GB</span>；模型檔 bge-small-zh 約 100 MB（或 bge-m3 約 2.3 GB），首次下載需網路</td>
+  <td>pip 安裝 anthropic SDK（&lt;10 MB）+ 一把 API key</td>
+  <td>兩邊都裝（合計約 2–3 GB + API key）</td>
+</tr>
+<tr>
+  <td><b>跑多久</b></td>
+  <td>建索引：43 節點數秒內（CPU）；每題加 10–50 ms；萬題等級約 10–30 分鐘（CPU）／GPU 快 10 倍</td>
+  <td>每題 1–2 秒（可 10 路平行 → 100 題約 30 秒；1 萬題約 30–60 分鐘）；用 Batch API 不趕時間可隔夜跑</td>
+  <td>LLM 只處理約 20–30% 的題 → 時間是方案 B 的 1/3–1/5</td>
+</tr>
+<tr>
+  <td><b>記憶體</b></td>
+  <td class="num">約 1–2 GB（載入模型）</td>
+  <td class="num">幾乎不增加（計算在雲端）</td>
+  <td class="num">約 1–2 GB</td>
+</tr>
+<tr>
+  <td><b>LLM token 費用</b></td>
+  <td class="good"><b>$0</b>（完全本地，不用 API）</td>
+  <td>每題約 1,500–2,500 input + 50–150 output tokens。<br>以 Claude Haiku 計（$1/M in、$5/M out）：<br>100 題 ≈ <b>$0.2–0.3 美元</b><br>1 萬題 ≈ <b>$20–30 美元</b><br>（Batch API 再省 50%）</td>
+  <td>約方案 B 的 1/3–1/5：<br>1 萬題 ≈ <b>$5–10 美元</b></td>
+</tr>
+<tr>
+  <td><b>其他副作用</b></td>
+  <td>安裝體積大；舊機器（無 AVX）可能跑不動；模型授權需確認（BGE 系列為 MIT，OK）</td>
+  <td>依賴網路與外部服務（會有當機/限流風險，要寫重試）；費用隨題庫成長；題目內容會送到雲端（國考考古題多為公開資料，敏感性低，但校內自編題需評估）</td>
+  <td>兩者副作用都有，但 LLM 面降到最低；架構最複雜（多一層「要不要送 LLM」的判斷邏輯）</td>
+</tr>
+<tr>
+  <td><b>離線可用？</b></td>
+  <td class="good">可以</td>
+  <td class="bad">不行</td>
+  <td>Embedding 部分可離線；LLM 部分不行（斷網時退回純 embedding 結果即可，系統不會壞）</td>
+</tr>
+</table>
+
+<h3>成本的關鍵特性：增量計算</h3>
+<p>
+費用<b>不是每次查詢都要付</b>。關聯是「建立時算一次、之後查詢免費」：
+</p>
+<ul>
+  <li>新 PDF 進系統 → 只需把「既有題庫 × 新文件節點」重算一次。題庫 1,000 題、用方案 C → 一次約 <b>$0.5–1 美元</b>。</li>
+  <li>新題目進系統 → 只算「新題 × 既有節點」。每 100 新題約 <b>$0.05–0.1 美元</b>。</li>
+  <li>學生日常查詢（題目→教材、教材→題目）→ 直接讀資料庫，<b>$0、毫秒級</b>。</li>
+</ul>
+
+<h3>建議路線</h3>
+<ol>
+  <li><b>先上方案 A</b>（本地 embedding）：零 API 費用、離線可用，程式介面（<code>embeddings.py</code>）已預留好，預期 F1 上 0.87+。</li>
+  <li><b>再視預算加方案 B 變成方案 C</b>：只對模糊案例動用 LLM，1 萬題的整批重建也只要幾美元，把 F1 推到 0.91 以上、Top-1 接近滿分。</li>
+  <li>所有預估皆需用本報告的 benchmark（40 題標準答案）實測驗證——本次實驗已兩度證明「自報分數」和「實測分數」可能有落差。</li>
+</ol>
+
+<div class="note">
+<b>數字怎麼來的？</b>
+成績預估基於：剩餘 12 個漏連中約 8–10 個屬於「語意可解」類型（同義改寫、跨科描述）；
+embedding 對此類型的文獻典型增益、以及 LLM 對 top-10 候選判斷的高準確率。
+費用以 2026 年中 Claude Haiku 定價估算，token 數以「題幹+選項+10 個節點摘要」的實際長度推估。
+這些是<b>規劃值</b>，正式採用前應以小樣本實測校正。
+</div>
+
+<hr style="margin-top:48px;border:none;border-top:1px solid var(--line);">
+<p style="color:var(--soft);font-size:0.85rem;">
+qlink 實驗報告 · 資料集：3 科 43 節點 / 40 題（含 7 題負面測試）· 全部成績皆以同一 benchmark 實測
+</p>
+
+</div>
+</body>
+</html>
