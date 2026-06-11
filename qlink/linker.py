@@ -271,21 +271,16 @@ class NodeIndex:
         floor = max(effective_min, best_score * cfg.relative_ratio)
 
         links: list[Link] = []
-        # covered 收集「已選中」或「因傳播鏈而跳過」的節點。
-        # 跳過邏輯：若父節點的基礎分（不含 tag_bonus）低於最終分的 78%，
-        # 說明其分數主要來自子節點傳播，跳過以避免重複選擇。
-        # tag_bonus 可能讓父章節人為拉高 own，用 base_own 更準確反映內容相關性。
         covered: set[str] = set()
         for cand in ranked:
             if len(links) >= cfg.top_k:
                 break
             if cand.final < floor:
                 break
-            base_own = cand.own - cand.details.get("tag_bonus", 0.0)
             if (
                 cand.best_child is not None
                 and cand.best_child in covered
-                and base_own < cand.final * 0.78
+                and cand.own < cand.final * 0.75
             ):
                 covered.add(cand.node.node_id)
                 continue
